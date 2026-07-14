@@ -1,50 +1,54 @@
 # SuelosAR
 
-Sitio web oficial de **SuelosAR**, una aplicación Android para descubrir y comprender los suelos de Argentina.
+Production-ready website for **SuelosAR**, an Android application focused on the soils of Argentina.
 
-## Requisitos
+## Requirements
 
-- Node.js 22.13 o superior
-- npm 10 o superior
-- Visual Studio Code (recomendado)
+- Node.js 20.9 or newer
+- npm 10 or newer
+- Visual Studio Code (recommended)
 
-## Ejecutar localmente
+## Run locally
 
-1. Descomprimí el proyecto.
-2. Abrí la carpeta del proyecto en Visual Studio Code.
-3. Abrí una terminal integrada (`Terminal > New Terminal`).
-4. Instalá las dependencias:
-
-   ```bash
-   npm install
-   ```
-
-5. Iniciá el entorno de desarrollo:
-
-   ```bash
-   npm run dev
-   ```
-
-6. Abrí la dirección local que aparezca en la terminal, normalmente `http://localhost:3000`.
-
-## Comandos disponibles
+Open this folder in Visual Studio Code, open the integrated terminal, and run:
 
 ```bash
-npm run dev      # Servidor local con recarga automática
-npm run build    # Compilación de producción
-npm run start    # Ejecutar la compilación de producción
-npm run lint     # Análisis estático del código
-npm test         # Compilación y prueba básica del HTML generado
+npm install
+npm run dev
 ```
 
-## Estructura principal
+Then open [http://localhost:3000](http://localhost:3000).
+
+No environment variables, external services, database, deployment account, or additional setup are required.
+
+## Commands
+
+```bash
+npm run dev      # Start the development server
+npm run build    # Create a production build
+npm run start    # Run the production build
+npm run lint     # Run ESLint
+npm test         # Run project structure tests
+```
+
+## Project structure
 
 ```text
-app/          Rutas, layout, metadatos y estilos globales
-components/   Componentes reutilizables de interfaz
-lib/          Configuración y utilidades compartidas
-public/       Recursos estáticos
-styles/       Tokens de color y tipografía
+app/          Next.js routes, root layout, metadata, and global CSS
+components/   Reusable brand, home, layout, and theme components
+lib/          Shared site configuration
+public/       Static files
+styles/       Design tokens for color and typography
+tests/        Lightweight project tests
 ```
 
-La página implementada incluye el encabezado, hero mínimo, pie de página, modo claro/oscuro, animaciones y metadatos SEO. La arquitectura queda preparada para agregar nuevas secciones sin incluir contenido provisional.
+## Included features
+
+- Next.js App Router and TypeScript
+- Tailwind CSS
+- React and Framer Motion
+- Lucide React icons
+- Responsive Material Design 3-inspired interface
+- Persistent light and dark modes
+- Accessible landmarks, labels, focus styles, and reduced-motion support
+- SEO metadata and semantic HTML
