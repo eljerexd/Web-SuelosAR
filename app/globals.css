@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--surface);
+  --color-foreground: var(--on-surface);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-surface-container: var(--surface-container);
+  --color-outline: var(--outline);
+  --font-sans: var(--font-sans);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  min-width: 320px;
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+html.dark { color-scheme: dark; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: radial-gradient(circle at 50% 46%, var(--hero-glow) 0, transparent 42%), var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, a { -webkit-tap-highlight-color: transparent; }
+
+button:focus-visible, a:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+::selection { background: var(--selection); color: var(--on-surface); }
+
+.site-shell {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  translate: 0 -160%;
+  border-radius: 999px;
+  background: var(--inverse-surface);
+  color: var(--inverse-on-surface);
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 650;
+  transition: translate 160ms ease;
+}
+
+.skip-link:focus { translate: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

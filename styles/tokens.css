@@ -1,0 +1,40 @@
+:root {
+  --font-sans: "Inter", "Segoe UI Variable", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --surface: #f8faf5;
+  --surface-container: #eef2e9;
+  --surface-container-high: #e7ece1;
+  --on-surface: #191d18;
+  --on-surface-variant: #434940;
+  --primary: #2f6842;
+  --on-primary: #ffffff;
+  --primary-container: #b2f0c0;
+  --on-primary-container: #0b4f2a;
+  --outline: #747a70;
+  --outline-variant: #c3c9bf;
+  --inverse-surface: #2e312d;
+  --inverse-on-surface: #f0f2ed;
+  --hero-glow: rgb(178 240 192 / 0.34);
+  --focus-ring: #006d3a;
+  --selection: rgb(178 240 192 / 0.72);
+  --shadow-soft: 0 18px 60px rgb(29 58 38 / 0.1);
+}
+
+.dark {
+  --surface: #10140f;
+  --surface-container: #1c211b;
+  --surface-container-high: #272c26;
+  --on-surface: #e1e4dd;
+  --on-surface-variant: #c3c9bf;
+  --primary: #96d5a5;
+  --on-primary: #003919;
+  --primary-container: #17522d;
+  --on-primary-container: #b2f0c0;
+  --outline: #8d9389;
+  --outline-variant: #434940;
+  --inverse-surface: #e1e4dd;
+  --inverse-on-surface: #2e312d;
+  --hero-glow: rgb(47 104 66 / 0.27);
+  --focus-ring: #96d5a5;
+  --selection: rgb(47 104 66 / 0.82);
+  --shadow-soft: 0 18px 60px rgb(0 0 0 / 0.34);
+}
