@@ -1,34 +1,67 @@
 import type { Metadata, Viewport } from "next";
 
+import { I18nProvider } from "@/components/i18n/i18n-provider";
+import { SkipLink } from "@/components/i18n/skip-link";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { defaultLocale, dictionaries } from "@/lib/i18n/dictionaries";
 
 import "./globals.css";
 
+const defaultDictionary = dictionaries[defaultLocale];
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://suelosar.app"),
-  title: { default: "SuelosAR | Conocé el suelo argentino", template: "%s | SuelosAR" },
-  description: "SuelosAR es una aplicación Android para descubrir y comprender los suelos de Argentina.",
+
+  title: {
+    default: defaultDictionary.meta.title,
+    template: "%s | SuelosAR",
+  },
+
+  description: defaultDictionary.meta.description,
+
   applicationName: "SuelosAR",
-  keywords: ["SuelosAR", "suelos de Argentina", "Android", "ciencia del suelo"],
+
+  keywords: [
+    "SuelosAR",
+    "suelos de Buenos Aires",
+    "INTA",
+    "Android",
+    "Windows",
+    "cartografía de suelos",
+    "GIS",
+    "mapas de suelos",
+    "agronomía",
+  ],
+
   authors: [{ name: "SuelosAR" }],
   creator: "SuelosAR",
-  alternates: { canonical: "/" },
+
+  alternates: {
+    canonical: "/",
+  },
+
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png", sizes: "256x256" }],
+    shortcut: "/icon.png",
+    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
+  },
+
   openGraph: {
     type: "website",
     locale: "es_AR",
     url: "/",
     siteName: "SuelosAR",
-    title: "SuelosAR | Conocé el suelo argentino",
-    description: "Una aplicación Android para descubrir y comprender los suelos de Argentina.",
+    title: defaultDictionary.meta.title,
+    description: defaultDictionary.meta.description,
   },
+
   twitter: {
     card: "summary",
-    title: "SuelosAR | Conocé el suelo argentino",
-    description: "Una aplicación Android para descubrir y comprender los suelos de Argentina.",
+    title: defaultDictionary.meta.title,
+    description: defaultDictionary.meta.description,
   },
-  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
 };
 
 export const viewport: Viewport = {
@@ -42,16 +75,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es-AR" suppressHydrationWarning>
+    <html lang={defaultLocale} suppressHydrationWarning>
       <body>
-        <ThemeProvider>
-          <a className="skip-link" href="#contenido">Saltar al contenido</a>
-          <div className="site-shell">
-            <Navbar />
-            {children}
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <I18nProvider>
+          <ThemeProvider>
+            <SkipLink />
+            <div className="site-shell">
+              <Navbar />
+              {children}
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </I18nProvider>
       </body>
     </html>
   );
