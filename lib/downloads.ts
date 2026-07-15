@@ -1,3 +1,22 @@
-/** Central download targets. Replace these paths when signed release installers are published. */
-export const ANDROID_DOWNLOAD_URL = "/downloads/SuelosAR-Android.apk";
-export const WINDOWS_DOWNLOAD_URL = "/downloads/SuelosAR-Windows.exe";
+export const downloads = {
+  android: {
+    route: "/download/android",
+    filename: "SuelosAR-Android.apk",
+    contentType: "application/vnd.android.package-archive",
+  },
+  windows: {
+    route: "/download/windows",
+    filename: "SuelosAR-Windows.exe",
+    contentType: "application/vnd.microsoft.portable-executable",
+  },
+} as const;
+
+export type DownloadPlatform = keyof typeof downloads;
+
+/** Stable download routes. Adding the installer files requires no component changes. */
+export const ANDROID_DOWNLOAD_URL = downloads.android.route;
+export const WINDOWS_DOWNLOAD_URL = downloads.windows.route;
+
+export function isDownloadPlatform(value: string): value is DownloadPlatform {
+  return value in downloads;
+}

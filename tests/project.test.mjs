@@ -28,7 +28,7 @@ test("contains the required local Next.js structure and i18n foundation", async 
   assert.match(page, /<FinalCta \/>/);
   assert.match(themeProvider, /suelosar-theme/);
   assert.match(dictionaries, /defaultLocale: Locale = "es-AR"/);
-  assert.match(dictionaries, /"Official INTA soil cartography for Buenos Aires Province/);
+  assert.match(dictionaries, /independent GIS application based on soil cartography published by INTA/);
   assert.match(dictionaries, /Android 10 or later and Windows 10\/11/);
   assert.match(i18nProvider, /useSyncExternalStore/);
 });

@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
@@ -27,10 +27,16 @@ export function Features() {
   const { dictionary } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
-  const features = featureOrder.map((sourceIndex) => ({
+  const features = useMemo(() => featureOrder.map((sourceIndex) => ({
     ...dictionary.features.items[sourceIndex],
     ...featureImages[sourceIndex],
-  }));
+  })), [dictionary.features.items]);
+  const stepCallbacks = useMemo(
+    () => features.map((_, index) => (step: HTMLElement | null) => {
+      stepRefs.current[index] = step;
+    }),
+    [features],
+  );
   const activeFeature = features[activeIndex];
 
   useEffect(() => {
@@ -77,7 +83,7 @@ export function Features() {
   return (
     <section id="features" className="scroll-mt-20 px-5 py-20 sm:px-8 sm:py-24 lg:py-28" aria-labelledby="features-title">
       <div className="mx-auto w-full max-w-7xl">
-        <motion.div className="mx-auto max-w-3xl text-center" initial={reducedMotion ? false : { opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: reducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}>
+        <motion.div className="mx-auto max-w-3xl text-center" initial={reducedMotion ? false : { opacity: 1, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: reducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}>
           <h2 id="features-title" className="text-4xl font-bold tracking-[-0.045em] text-[var(--on-surface)] sm:text-5xl">{dictionary.features.title}</h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{dictionary.features.subtitle}</p>
         </motion.div>
@@ -90,9 +96,7 @@ export function Features() {
                 index={index}
                 total={features.length}
                 active={activeIndex === index}
-                stepRef={(step) => {
-                  stepRefs.current[index] = step;
-                }}
+                stepRef={stepCallbacks[index]}
                 reducedMotion={Boolean(reducedMotion)}
               />
             ))}

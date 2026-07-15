@@ -2,11 +2,16 @@
 
 import { Code2, Database, Mail } from "lucide-react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
+import { siteConfig } from "@/lib/site";
 
 export function Footer() {
   const { dictionary } = useI18n();
+  const pathname = usePathname();
+
+  const resolveQuickLink = (href: string) => pathname === "/" ? href : `/${href}`;
 
   return (
     <footer className="w-full border-t border-[var(--outline-variant)] bg-[var(--surface-container)]/45" aria-label={dictionary.accessibility.footer}>
@@ -23,7 +28,7 @@ export function Footer() {
           <nav aria-label={dictionary.footer.quickLinksTitle}>
             <h2 className="text-sm font-semibold text-[var(--on-surface)]">{dictionary.footer.quickLinksTitle}</h2>
             <ul className="mt-4 space-y-3 text-sm text-[var(--on-surface-variant)]">
-              {dictionary.footer.quickLinks.map((link) => <li key={link.href}><a className="rounded-md transition-colors hover:text-[var(--primary)]" href={link.href}>{link.label}</a></li>)}
+              {dictionary.footer.quickLinks.map((link) => <li key={link.href}><a className="rounded-md transition-colors hover:text-[var(--primary)]" href={resolveQuickLink(link.href)}>{link.label}</a></li>)}
             </ul>
           </nav>
 
@@ -32,7 +37,7 @@ export function Footer() {
             <ul className="mt-4 space-y-3 text-sm text-[var(--on-surface-variant)]">
               {dictionary.footer.legalItems.map((item) => (
                 <li key={item.label}>
-                  {item.href ? <a className="rounded-md transition-colors hover:text-[var(--primary)]" href={item.href}>{item.label}</a> : <span>{item.label}</span>}
+                  <a className="rounded-md transition-colors hover:text-[var(--primary)]" href={item.href}>{item.label}</a>
                 </li>
               ))}
             </ul>
@@ -41,8 +46,8 @@ export function Footer() {
           <div>
             <h2 className="text-sm font-semibold text-[var(--on-surface)]">{dictionary.footer.contactTitle}</h2>
             <ul className="mt-4 space-y-3 text-sm text-[var(--on-surface-variant)]">
-              <li className="flex items-center gap-2"><Code2 aria-hidden="true" size={17} /><span>{dictionary.footer.github}</span></li>
-              <li className="flex items-center gap-2"><Mail aria-hidden="true" size={17} /><span>{dictionary.footer.email}</span></li>
+              <li><a className="inline-flex items-center gap-2 rounded-md transition-colors hover:text-[var(--primary)]" href={siteConfig.githubUrl} target="_blank" rel="noreferrer"><Code2 aria-hidden="true" size={17} /><span>{dictionary.footer.github}</span></a></li>
+              <li><a className="inline-flex items-center gap-2 rounded-md transition-colors hover:text-[var(--primary)]" href={`mailto:${siteConfig.contactEmail}`}><Mail aria-hidden="true" size={17} /><span>{dictionary.footer.email}</span></a></li>
             </ul>
           </div>
         </div>

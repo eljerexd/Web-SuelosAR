@@ -1,0 +1,84 @@
+import assert from "node:assert/strict";
+import { access, readFile } from "node:fs/promises";
+import test from "node:test";
+
+const root = new URL("../", import.meta.url);
+
+test("download routes handle missing installers without a 404", async () => {
+  const [downloads, route] = await Promise.all([
+    readFile(new URL("lib/downloads.ts", root), "utf8"),
+    readFile(new URL("app/download/[platform]/route.ts", root), "utf8"),
+  ]);
+
+  assert.match(downloads, /route: "\/download\/android"/);
+  assert.match(downloads, /route: "\/download\/windows"/);
+  assert.match(route, /fetch\(assetUrl/);
+  assert.match(route, /download-unavailable/);
+  assert.match(route, /Content-Disposition/);
+});
+
+test("legal, discovery, and social metadata routes exist", async () => {
+  const requiredFiles = [
+    "app/privacy/page.tsx",
+    "app/terms/page.tsx",
+    "app/data-sources/page.tsx",
+    "app/disclaimer/page.tsx",
+    "app/robots.ts",
+    "app/sitemap.ts",
+    "app/opengraph-image.tsx",
+    "components/seo/software-application-json-ld.tsx",
+  ];
+
+  await Promise.all(requiredFiles.map((path) => access(new URL(path, root))));
+
+  const openGraphImage = await readFile(new URL("app/opengraph-image.tsx", root), "utf8");
+  assert.match(openGraphImage, /width: 1200, height: 630/);
+});
+
+test("footer contains real legal and contact destinations", async () => {
+  const [dictionary, footer, site] = await Promise.all([
+    readFile(new URL("lib/i18n/dictionaries.ts", root), "utf8"),
+    readFile(new URL("components/layout/footer.tsx", root), "utf8"),
+    readFile(new URL("lib/site.ts", root), "utf8"),
+  ]);
+
+  assert.doesNotMatch(dictionary, /coming soon|próximamente/i);
+  assert.match(dictionary, /href: "\/privacy"/);
+  assert.match(dictionary, /href: "\/terms"/);
+  assert.match(dictionary, /href: "\/data-sources"/);
+  assert.match(dictionary, /href: "\/disclaimer"/);
+  assert.match(footer, /siteConfig\.githubUrl/);
+  assert.match(footer, /mailto:/);
+  assert.match(site, /github\.com\/eljerexd\/Web-SuelosAR/);
+});
+
+test("critical marketing content is visible in server-rendered motion states", async () => {
+  const files = [
+    "components/home/hero.tsx",
+    "components/platforms/available-platforms.tsx",
+    "components/platforms/platform-card.tsx",
+    "components/gallery/screenshot-gallery.tsx",
+    "components/faq/faq.tsx",
+    "components/cta/final-cta.tsx",
+  ];
+  const contents = await Promise.all(files.map((path) => readFile(new URL(path, root), "utf8")));
+
+  for (const content of contents) {
+    assert.doesNotMatch(content, /initial=\{[^\n]*opacity:\s*0/);
+  }
+});
+
+test("every referenced product screenshot exists", async () => {
+  const sourceFiles = [
+    "components/home/hero-device-showcase.tsx",
+    "components/features/features.tsx",
+    "lib/i18n/dictionaries.ts",
+  ];
+  const contents = await Promise.all(sourceFiles.map((path) => readFile(new URL(path, root), "utf8")));
+  const screenshots = new Set(
+    contents.flatMap((content) => [...content.matchAll(/"(\/images\/screenshots\/[^"]+)"/g)].map((match) => match[1])),
+  );
+
+  assert.ok(screenshots.size > 0);
+  await Promise.all([...screenshots].map((path) => access(new URL(`public${path}`, root))));
+});

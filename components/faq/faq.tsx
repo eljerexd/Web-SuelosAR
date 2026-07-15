@@ -56,13 +56,13 @@ export function Faq() {
   return (
     <section ref={sectionRef} id="faq" className="scroll-mt-20 px-5 py-20 sm:px-8 sm:py-24 lg:py-28" aria-labelledby="faq-title">
       <div className="mx-auto w-full max-w-4xl">
-        <motion.div className="mx-auto max-w-2xl text-center" initial={reducedMotion ? false : { opacity: 0, y: 18 }} animate={reducedMotion || hasReachedSection ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }} transition={{ duration: reducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}>
+        <motion.div className="mx-auto max-w-2xl text-center" initial={reducedMotion ? false : { opacity: 1, y: 18 }} animate={reducedMotion || hasReachedSection ? { opacity: 1, y: 0 } : { opacity: 1, y: 18 }} transition={{ duration: reducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}>
           <h2 id="faq-title" className="text-4xl font-bold tracking-[-0.045em] text-[var(--on-surface)] sm:text-5xl">{dictionary.faq.title}</h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{dictionary.faq.subtitle}</p>
         </motion.div>
         <motion.div className="mt-12 grid gap-3 sm:mt-14" initial={reducedMotion ? false : "hidden"} animate={reducedMotion || hasReachedSection ? "visible" : "hidden"} variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.06 } } }}>
           {dictionary.faq.items.map((item) => (
-            <motion.div key={item.question} variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0, transition: { duration: reducedMotion ? 0 : 0.48, ease: [0.22, 1, 0.36, 1] } } }}>
+            <motion.div key={item.question} variants={{ hidden: { opacity: 1, y: 18 }, visible: { opacity: 1, y: 0, transition: { duration: reducedMotion ? 0 : 0.48, ease: [0.22, 1, 0.36, 1] } } }}>
               <FaqItem question={item.question} answer={item.answer} />
             </motion.div>
           ))}

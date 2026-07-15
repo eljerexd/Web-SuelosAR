@@ -6,13 +6,14 @@ import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { defaultLocale, dictionaries } from "@/lib/i18n/dictionaries";
+import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
 
 const defaultDictionary = dictionaries[defaultLocale];
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://suelosar.app"),
+  metadataBase: new URL(siteConfig.url),
 
   title: {
     default: defaultDictionary.meta.title,
@@ -51,17 +52,22 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_AR",
+    alternateLocale: ["en_US"],
     url: "/",
     siteName: "SuelosAR",
     title: defaultDictionary.meta.title,
     description: defaultDictionary.meta.description,
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "SuelosAR — cartografía digital de suelos" }],
   },
 
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: defaultDictionary.meta.title,
     description: defaultDictionary.meta.description,
+    images: ["/opengraph-image"],
   },
+
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
@@ -76,6 +82,13 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang={defaultLocale} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("suelosar-theme");var d=t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",d)}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body>
         <I18nProvider>
           <ThemeProvider>

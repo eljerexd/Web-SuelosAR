@@ -1,6 +1,6 @@
 # SuelosAR
 
-Production-ready website for **SuelosAR**, an Android application focused on the soils of Argentina.
+Production-ready website for **SuelosAR**, an independent GIS application for Android and Windows focused on soil cartography for Buenos Aires Province.
 
 ## Requirements
 
@@ -34,9 +34,9 @@ npm test         # Run project structure tests
 ## Project structure
 
 ```text
-app/          Next.js routes, root layout, metadata, and global CSS
-components/   Reusable brand, home, layout, and theme components
-lib/          Shared site configuration
+app/          Next.js routes, legal pages, metadata, and global CSS
+components/   Reusable product, layout, legal, i18n, and theme components
+lib/          Shared configuration, downloads, translations, and metadata
 public/       Static files
 styles/       Design tokens for color and typography
 tests/        Lightweight project tests
@@ -52,3 +52,5 @@ tests/        Lightweight project tests
 - Persistent light and dark modes
 - Accessible landmarks, labels, focus styles, and reduced-motion support
 - SEO metadata and semantic HTML
+- Legal and data-source information
+- Graceful installer availability handling

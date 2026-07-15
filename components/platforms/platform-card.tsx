@@ -20,7 +20,7 @@ export function PlatformCard({ icon: Icon, title, description, versionLabel, ver
   return (
     <motion.article
       className="group flex h-full flex-col rounded-[1.75rem] border border-[var(--outline-variant)] bg-[var(--surface-container)]/72 p-6 shadow-[var(--shadow-soft)] transition-[background-color,box-shadow] duration-300 hover:bg-[var(--surface-container-high)] hover:shadow-md sm:p-7"
-      initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+      initial={reducedMotion ? false : { opacity: 1, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: reducedMotion ? 0 : 0.56, delay: reducedMotion ? 0 : index * 0.08, ease: [0.22, 1, 0.36, 1] }}

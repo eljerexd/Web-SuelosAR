@@ -22,11 +22,11 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === "undefined") return "light";
-    const savedTheme = window.localStorage.getItem("suelosar-theme") as Theme | null;
+    const savedTheme = window.localStorage.getItem("suelosar-theme");
     const systemTheme: Theme = window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
-    return savedTheme ?? systemTheme;
+    return savedTheme === "light" || savedTheme === "dark" ? savedTheme : systemTheme;
   });
   const mounted = useSyncExternalStore(
     () => () => undefined,
@@ -36,14 +36,25 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
-    window.localStorage.setItem("suelosar-theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    if (window.localStorage.getItem("suelosar-theme")) return;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateFromSystem = (event: MediaQueryListEvent) => setTheme(event.matches ? "dark" : "light");
+    media.addEventListener("change", updateFromSystem);
+    return () => media.removeEventListener("change", updateFromSystem);
+  }, []);
 
   const value = useMemo(
     () => ({
       theme,
       mounted,
-      toggleTheme: () => setTheme((current) => (current === "light" ? "dark" : "light")),
+      toggleTheme: () => setTheme((current) => {
+        const nextTheme = current === "light" ? "dark" : "light";
+        window.localStorage.setItem("suelosar-theme", nextTheme);
+        return nextTheme;
+      }),
     }),
     [mounted, theme],
   );

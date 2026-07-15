@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { RefCallback } from "react";
+import { memo, type RefCallback } from "react";
 
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
 
@@ -18,7 +18,7 @@ interface FeatureStoryProps {
 }
 
 /** One scroll chapter in the Features product tour, with its mobile screenshot. */
-export function FeatureStory({ title, description, imageAlt, src, index, total, active, stepRef, reducedMotion = false }: FeatureStoryProps) {
+export const FeatureStory = memo(function FeatureStory({ title, description, imageAlt, src, index, total, active, stepRef, reducedMotion = false }: FeatureStoryProps) {
   const label = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
   const progress = (index + 1) / total;
 
@@ -43,8 +43,8 @@ export function FeatureStory({ title, description, imageAlt, src, index, total, 
       <p className="mt-5 max-w-lg text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{description}</p>
 
       <div className="mt-9 lg:hidden">
-        <LaptopMockup screenSrc={src} screenAlt={imageAlt} deviceLabel={title} className="w-full" priority={index === 0} />
+        <LaptopMockup screenSrc={src} screenAlt={imageAlt} deviceLabel={title} className="w-full" />
       </div>
     </motion.article>
   );
-}
+});

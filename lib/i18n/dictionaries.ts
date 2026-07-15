@@ -8,7 +8,7 @@ const es = {
   },
   meta: {
     title: "SuelosAR | Cartografía digital de suelos",
-    description: "Cartografía oficial de suelos del INTA para la provincia de Buenos Aires, disponible sin conexión.",
+    description: "Aplicación GIS independiente basada en cartografía de suelos publicada por el INTA para la Provincia de Buenos Aires.",
   },
   language: {
     selectorLabel: "Seleccionar idioma",
@@ -20,7 +20,6 @@ const es = {
     siteHeader: "Encabezado del sitio",
     mainNavigation: "Navegación principal",
     homeLink: "SuelosAR, inicio",
-    logoPlaceholder: "Logo de SuelosAR",
     footer: "Pie de página",
     deviceMockup: "Dispositivo Android",
     androidDevice: "SuelosAR en un teléfono Android",
@@ -53,7 +52,7 @@ const es = {
   },
   features: {
     title: "Todo lo que necesitás para el trabajo de campo",
-    subtitle: "Pensada para profesionales de la agronomía, estudiantes e investigadores que necesitan acceder rápidamente y sin conexión a información oficial de suelos.",
+    subtitle: "Recorré las herramientas clave de SuelosAR y descubrí cómo acompañan el análisis y la consulta en el campo.",
     items: [
       { title: "Mapa GIS interactivo", description: "Explorá la cartografía oficial de suelos con un mapa GIS rápido e intuitivo, diseñado para el trabajo de campo.", imageAlt: "Mapa GIS interactivo de SuelosAR con cartografía oficial de suelos" },
       { title: "Cartografía oficial", description: "Accedé a información detallada sobre unidades cartográficas, series de suelo y descripciones del paisaje directamente desde el mapa.", imageAlt: "Detalle de una unidad cartográfica y sus series de suelo en SuelosAR" },
@@ -65,7 +64,7 @@ const es = {
   },
   gallery: {
     title: "SuelosAR en Android",
-    subtitle: "La experiencia completa de SuelosAR, optimizada para Android y disponible sin conexión.",
+    subtitle: "Mapas, documentos y ajustes pensados para un flujo de trabajo móvil ágil.",
     screenAltSuffix: "en SuelosAR",
     items: [
       { src: "/images/screenshots/gis.jpg", title: "Flujo de trabajo móvil", description: "Accedé rápidamente a mapas, documentos y herramientas desde tu teléfono.", screenPosition: "50% 0%" },
@@ -83,6 +82,21 @@ const es = {
       { question: "¿Es gratuita?", answer: "Sí. SuelosAR se puede descargar y utilizar de forma gratuita." },
       { question: "¿Qué dispositivos son compatibles?", answer: "SuelosAR es compatible con Android 10 o posterior y Windows 10/11." },
     ],
+  },
+  downloadUnavailable: {
+    eyebrow: "Descarga temporalmente no disponible",
+    title: "La versión para {platform} todavía no está publicada.",
+    description: "Estamos preparando el instalador para su distribución pública. Volvé a intentarlo más adelante o escribinos si necesitás información sobre la próxima versión.",
+    android: "Android",
+    windows: "Windows",
+    backHome: "Volver al inicio",
+    contact: "Contactar",
+  },
+  notFound: {
+    eyebrow: "Error 404",
+    title: "No encontramos esta página.",
+    description: "Es posible que el enlace haya cambiado o que la dirección no sea correcta.",
+    action: "Volver al inicio",
   },
   cta: {
     title: "Llevá la cartografía oficial al campo.",
@@ -105,10 +119,10 @@ const es = {
     ],
     legalTitle: "Legal",
     legalItems: [
-      { label: "Política de privacidad (próximamente)", href: "" },
-      { label: "Términos de uso (próximamente)", href: "" },
-      { label: "Aviso legal", href: "#data-sources" },
-      { label: "Fuentes de datos", href: "#data-sources" },
+      { label: "Política de privacidad", href: "/privacy" },
+      { label: "Términos de uso", href: "/terms" },
+      { label: "Aviso legal", href: "/disclaimer" },
+      { label: "Fuentes de datos", href: "/data-sources" },
     ],
     dataSourcesTitle: "Fuentes de datos",
     dataSource: "Cartografía oficial de suelos publicada por el INTA.",
@@ -117,9 +131,57 @@ const es = {
     coverage: "Provincia de Buenos Aires.",
     futureCoverage: "Las futuras versiones podrán incluir provincias adicionales.",
     contactTitle: "Contacto",
-    github: "GitHub (próximamente)",
-    email: "Correo electrónico (próximamente)",
+    github: "GitHub",
+    email: "Correo electrónico",
     copyright: "© 2026 SuelosAR",
+  },
+  legal: {
+    backHome: "Volver al inicio",
+    lastUpdated: "Última actualización",
+    updatedDate: "15 de julio de 2026",
+    pages: {
+      privacy: {
+        title: "Política de privacidad",
+        intro: "Esta política describe cómo el sitio web y la aplicación SuelosAR tratan la información necesaria para ofrecer sus funciones.",
+        sections: [
+          { heading: "Información del sitio web", paragraphs: ["El sitio no requiere crear una cuenta ni completar formularios. Las preferencias de idioma y tema se guardan localmente en el navegador para mantener la configuración elegida."] },
+          { heading: "Ubicación y funciones del dispositivo", paragraphs: ["SuelosAR puede solicitar acceso a la ubicación cuando se utilizan herramientas GPS. El permiso es administrado por el sistema operativo y puede desactivarse desde la configuración del dispositivo.", "La aplicación está diseñada para funcionar localmente y sin conexión. Las funciones de ubicación se utilizan para representar la posición y asistir el trabajo cartográfico dentro de la aplicación."] },
+          { heading: "Servicios de terceros", paragraphs: ["Los enlaces externos, las plataformas de distribución y los repositorios de código pueden aplicar sus propias políticas de privacidad. SuelosAR no controla las prácticas de esos servicios."] },
+          { heading: "Contacto", paragraphs: ["Las consultas relacionadas con privacidad pueden enviarse al correo de contacto publicado en el pie de página."] },
+        ],
+      },
+      terms: {
+        title: "Términos de uso",
+        intro: "Al utilizar SuelosAR aceptás estos términos y reconocés el alcance informativo y técnico de la aplicación.",
+        sections: [
+          { heading: "Uso permitido", paragraphs: ["SuelosAR puede utilizarse con fines profesionales, académicos, educativos y de consulta. El usuario es responsable de emplear la información de acuerdo con la legislación y las prácticas aplicables a su actividad."] },
+          { heading: "Disponibilidad", paragraphs: ["La aplicación y sus instaladores se ofrecen según disponibilidad. Las funciones, requisitos, cobertura y contenidos pueden cambiar entre versiones para mejorar la estabilidad o actualizar la información disponible."] },
+          { heading: "Decisiones profesionales", paragraphs: ["SuelosAR es una herramienta de consulta y no reemplaza relevamientos, análisis especializados, asesoramiento profesional ni verificaciones realizadas sobre el terreno."] },
+          { heading: "Propiedad intelectual", paragraphs: ["La aplicación, su identidad visual y su código pertenecen a sus respectivos titulares. La información cartográfica, marcas y contenidos de terceros conservan la titularidad y las condiciones definidas por sus organizaciones de origen."] },
+          { heading: "Cambios en estos términos", paragraphs: ["Estos términos pueden actualizarse cuando cambien la aplicación, sus canales de distribución o los requisitos legales. La fecha de actualización se indica al comienzo de la página."] },
+        ],
+      },
+      dataSources: {
+        title: "Fuentes de datos",
+        intro: "SuelosAR organiza y presenta información cartográfica para facilitar su consulta en dispositivos Android y Windows.",
+        sections: [
+          { heading: "Fuente cartográfica", paragraphs: ["La información de suelos se basa en cartografía oficial publicada por el Instituto Nacional de Tecnología Agropecuaria (INTA)."] },
+          { heading: "Titularidad", paragraphs: ["Los datos, documentos, denominaciones y materiales originales pertenecen a sus respectivas organizaciones y titulares. Su inclusión en SuelosAR no transfiere derechos de propiedad ni implica patrocinio."] },
+          { heading: "Cobertura actual", paragraphs: ["La versión actual incluye la Provincia de Buenos Aires. La cobertura puede ampliarse en versiones futuras cuando existan fuentes adecuadas y se complete su integración técnica."] },
+          { heading: "Actualización y verificación", paragraphs: ["La fecha, escala y precisión dependen de cada fuente original. Para decisiones críticas se recomienda consultar también la publicación oficial correspondiente y verificar la información sobre el terreno."] },
+        ],
+      },
+      disclaimer: {
+        title: "Aviso legal",
+        intro: "SuelosAR es un proyecto independiente creado para facilitar el acceso y la consulta de cartografía de suelos.",
+        sections: [
+          { heading: "Independencia institucional", paragraphs: ["SuelosAR no está afiliado, administrado, patrocinado ni respaldado oficialmente por el INTA. La referencia al organismo identifica la procedencia de la información cartográfica y no implica una relación institucional."] },
+          { heading: "Alcance de la información", paragraphs: ["La cartografía y los documentos se proporcionan con fines informativos. Pueden existir diferencias de escala, fecha, interpretación, precisión o actualización respecto de las condiciones actuales del terreno."] },
+          { heading: "Limitación de responsabilidad", paragraphs: ["Las decisiones productivas, técnicas, académicas o económicas deben complementarse con asesoramiento profesional y verificaciones apropiadas. El uso de la aplicación y de la información consultada queda bajo responsabilidad del usuario."] },
+          { heading: "Marcas y contenidos", paragraphs: ["INTA y las demás denominaciones mencionadas pertenecen a sus respectivos titulares. SuelosAR respeta la autoría, atribución y titularidad de las fuentes utilizadas."] },
+        ],
+      },
+    },
   },
 } as const;
 
@@ -139,7 +201,7 @@ const en: Dictionary = {
   },
   meta: {
     title: "SuelosAR | Offline soil cartography",
-    description: "Official INTA soil cartography for Buenos Aires Province, available offline.",
+    description: "An independent GIS application based on soil cartography published by INTA for Buenos Aires Province.",
   },
   language: {
     selectorLabel: "Select language",
@@ -151,7 +213,6 @@ const en: Dictionary = {
     siteHeader: "Site header",
     mainNavigation: "Main navigation",
     homeLink: "SuelosAR, home",
-    logoPlaceholder: "SuelosAR logo",
     footer: "Footer",
     deviceMockup: "Android device",
     androidDevice: "SuelosAR on an Android phone",
@@ -184,7 +245,7 @@ const en: Dictionary = {
   },
   features: {
     title: "Everything you need in the field",
-    subtitle: "Designed for agronomists, students and researchers who need fast offline access to official soil information.",
+    subtitle: "Explore SuelosAR’s core tools and see how they support field analysis and consultation.",
     items: [
       { title: "Interactive GIS Map", description: "Explore official soil cartography with a fast and intuitive GIS map designed for field work.", imageAlt: "Interactive SuelosAR GIS map displaying official soil cartography" },
       { title: "Official Cartography", description: "Access detailed information for mapping units, soil series and landscape descriptions directly from the map.", imageAlt: "SuelosAR mapping unit details with soil series and landscape information" },
@@ -196,7 +257,7 @@ const en: Dictionary = {
   },
   gallery: {
     title: "SuelosAR on Android",
-    subtitle: "The complete SuelosAR experience, optimized for Android and fully available offline.",
+    subtitle: "Maps, documents and settings for an efficient mobile workflow. Screenshots are currently shown in Spanish.",
     screenAltSuffix: "in SuelosAR",
     items: [
       { src: "/images/screenshots/gis.jpg", title: "Mobile workflow", description: "Quickly access maps, documents and tools directly from your phone.", screenPosition: "50% 0%" },
@@ -214,6 +275,21 @@ const en: Dictionary = {
       { question: "Is it free?", answer: "Yes. SuelosAR can be downloaded and used free of charge." },
       { question: "Which devices are supported?", answer: "SuelosAR supports Android 10 or later and Windows 10/11." },
     ],
+  },
+  downloadUnavailable: {
+    eyebrow: "Download temporarily unavailable",
+    title: "The {platform} version has not been published yet.",
+    description: "We are preparing the installer for public distribution. Please try again later or contact us for information about the next release.",
+    android: "Android",
+    windows: "Windows",
+    backHome: "Back to home",
+    contact: "Contact us",
+  },
+  notFound: {
+    eyebrow: "Error 404",
+    title: "We couldn’t find this page.",
+    description: "The link may have changed or the address may be incorrect.",
+    action: "Back to home",
   },
   cta: {
     title: "Take official soil cartography into the field.",
@@ -236,10 +312,10 @@ const en: Dictionary = {
     ],
     legalTitle: "Legal",
     legalItems: [
-      { label: "Privacy Policy (coming soon)", href: "" },
-      { label: "Terms of Use (coming soon)", href: "" },
-      { label: "Disclaimer", href: "#data-sources" },
-      { label: "Data Sources", href: "#data-sources" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Use", href: "/terms" },
+      { label: "Disclaimer", href: "/disclaimer" },
+      { label: "Data Sources", href: "/data-sources" },
     ],
     dataSourcesTitle: "Data Sources",
     dataSource: "Official soil cartography published by INTA.",
@@ -248,9 +324,57 @@ const en: Dictionary = {
     coverage: "Buenos Aires Province.",
     futureCoverage: "Future versions may include additional provinces.",
     contactTitle: "Contact",
-    github: "GitHub (coming soon)",
-    email: "Email (coming soon)",
+    github: "GitHub",
+    email: "Email",
     copyright: "© 2026 SuelosAR",
+  },
+  legal: {
+    backHome: "Back to home",
+    lastUpdated: "Last updated",
+    updatedDate: "July 15, 2026",
+    pages: {
+      privacy: {
+        title: "Privacy Policy",
+        intro: "This policy explains how the SuelosAR website and application handle the information required to provide their functions.",
+        sections: [
+          { heading: "Website information", paragraphs: ["The website does not require an account or forms. Language and theme preferences are stored locally in the browser to preserve the selected configuration."] },
+          { heading: "Location and device features", paragraphs: ["SuelosAR may request location access when GPS tools are used. Permission is managed by the operating system and can be disabled in the device settings.", "The application is designed to work locally and offline. Location features are used to display position and support cartographic work inside the application."] },
+          { heading: "Third-party services", paragraphs: ["External links, distribution platforms and code repositories may apply their own privacy policies. SuelosAR does not control the practices of those services."] },
+          { heading: "Contact", paragraphs: ["Privacy-related questions can be sent to the contact email published in the footer."] },
+        ],
+      },
+      terms: {
+        title: "Terms of Use",
+        intro: "By using SuelosAR, you accept these terms and acknowledge the informational and technical scope of the application.",
+        sections: [
+          { heading: "Permitted use", paragraphs: ["SuelosAR may be used for professional, academic, educational and consultation purposes. Users are responsible for using the information in accordance with the laws and practices applicable to their activity."] },
+          { heading: "Availability", paragraphs: ["The application and its installers are provided subject to availability. Features, requirements, coverage and content may change between releases to improve stability or update available information."] },
+          { heading: "Professional decisions", paragraphs: ["SuelosAR is a consultation tool and does not replace surveys, specialized analysis, professional advice or field verification."] },
+          { heading: "Intellectual property", paragraphs: ["The application, its visual identity and its code belong to their respective owners. Cartographic information, trademarks and third-party content retain the ownership and conditions established by their source organizations."] },
+          { heading: "Changes to these terms", paragraphs: ["These terms may be updated when the application, its distribution channels or legal requirements change. The update date is shown at the top of this page."] },
+        ],
+      },
+      dataSources: {
+        title: "Data Sources",
+        intro: "SuelosAR organizes and presents cartographic information for easier consultation on Android and Windows devices.",
+        sections: [
+          { heading: "Cartographic source", paragraphs: ["Soil information is based on official cartography published by Argentina’s National Agricultural Technology Institute (INTA)."] },
+          { heading: "Ownership", paragraphs: ["Original data, documents, names and materials belong to their respective organizations and owners. Their inclusion in SuelosAR does not transfer ownership or imply sponsorship."] },
+          { heading: "Current coverage", paragraphs: ["The current version covers Buenos Aires Province. Coverage may expand in future releases when suitable sources are available and their technical integration is complete."] },
+          { heading: "Updates and verification", paragraphs: ["Date, scale and accuracy depend on each original source. For critical decisions, users should also consult the corresponding official publication and verify information in the field."] },
+        ],
+      },
+      disclaimer: {
+        title: "Disclaimer",
+        intro: "SuelosAR is an independent project created to make soil cartography easier to access and consult.",
+        sections: [
+          { heading: "Institutional independence", paragraphs: ["SuelosAR is not affiliated with, managed by, sponsored by or officially endorsed by INTA. References to the organization identify the source of cartographic information and do not imply an institutional relationship."] },
+          { heading: "Scope of information", paragraphs: ["Cartography and documents are provided for informational purposes. Scale, date, interpretation, accuracy or update differences may exist compared with current field conditions."] },
+          { heading: "Limitation of liability", paragraphs: ["Productive, technical, academic or economic decisions should be supported by professional advice and appropriate verification. Use of the application and consulted information remains the user’s responsibility."] },
+          { heading: "Trademarks and content", paragraphs: ["INTA and all other names mentioned belong to their respective owners. SuelosAR respects the authorship, attribution and ownership of the sources it uses."] },
+        ],
+      },
+    },
   },
 };
 
