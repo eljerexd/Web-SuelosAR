@@ -21,7 +21,7 @@ export function HeroDeviceShowcase({ androidAlt, windowsAlt, androidLabel, windo
 
         <div className="relative z-20 mx-auto w-[11rem] sm:absolute sm:-left-[4%] sm:top-[15%] sm:w-[10.75rem] md:-left-[8%] md:top-[17%] md:w-[11.5rem] lg:-left-[25%] lg:top-[calc(24%+3rem)] lg:w-[11.25rem] xl:-left-[26%] xl:top-[calc(26%+3rem)] xl:w-[12.375rem]">
           <div>
-            <DeviceMockup screenSrc="/images/screenshots/hero-android.png" screenAlt={androidAlt} deviceLabel={androidLabel} screenFit="contain" className="w-full" priority />
+            <DeviceMockup screenSrc="/images/screenshots/hero-android.png" screenAlt={androidAlt} deviceLabel={androidLabel} screenFit="contain" className="w-full" />
           </div>
         </div>
 

@@ -23,30 +23,23 @@ export const metadata: Metadata = {
   description: defaultDictionary.meta.description,
 
   applicationName: "SuelosAR",
-
-  keywords: [
-    "SuelosAR",
-    "suelos de Buenos Aires",
-    "INTA",
-    "Android",
-    "Windows",
-    "cartografía de suelos",
-    "GIS",
-    "mapas de suelos",
-    "agronomía",
-  ],
-
   authors: [{ name: "SuelosAR" }],
   creator: "SuelosAR",
+  publisher: "SuelosAR",
+  verification: {
+    google: "IWmswU9kU0hLrcM3uDjO4uBnj_v65zD5CfaPV5kz-Mo",
+  },
+  category: "GIS Application",
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    address: false,
+    email: false,
+    telephone: false,
+  },
+  manifest: "/manifest.webmanifest",
 
   alternates: {
     canonical: "/",
-  },
-
-  icons: {
-    icon: [{ url: "/icon.png", type: "image/png", sizes: "256x256" }],
-    shortcut: "/icon.png",
-    apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
   },
 
   openGraph: {
@@ -57,17 +50,28 @@ export const metadata: Metadata = {
     siteName: "SuelosAR",
     title: defaultDictionary.meta.title,
     description: defaultDictionary.meta.description,
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "SuelosAR — cartografía digital de suelos" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "SuelosAR, mapas de suelos y herramientas GIS para la Provincia de Buenos Aires" }],
   },
 
   twitter: {
     card: "summary_large_image",
     title: defaultDictionary.meta.title,
     description: defaultDictionary.meta.description,
-    images: ["/opengraph-image"],
+    images: [{ url: "/opengraph-image", alt: "SuelosAR, mapas de suelos y herramientas GIS para la Provincia de Buenos Aires" }],
   },
 
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export const viewport: Viewport = {

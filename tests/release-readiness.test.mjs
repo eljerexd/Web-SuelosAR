@@ -25,6 +25,7 @@ test("legal, discovery, and social metadata routes exist", async () => {
     "app/disclaimer/page.tsx",
     "app/robots.ts",
     "app/sitemap.ts",
+    "app/manifest.ts",
     "app/opengraph-image.tsx",
     "components/seo/software-application-json-ld.tsx",
   ];

@@ -118,7 +118,6 @@ export function Features() {
                     screenAlt={activeFeature.imageAlt}
                     deviceLabel={activeFeature.title}
                     className="w-full"
-                    priority
                     screenContent={
                       <AnimatePresence initial={false} mode="sync">
                         <motion.div
