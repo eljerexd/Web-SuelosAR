@@ -14,7 +14,7 @@ export const downloads = {
 export type DownloadPlatform = keyof typeof downloads;
 
 /** Stable download routes. Adding the installer files requires no component changes. */
-export const ANDROID_DOWNLOAD_URL = downloads.android.route;
+export const ANDROID_DOWNLOAD_URL = "https://github.com/eljerexd/Web-SuelosAR/releases/latest/download/SuelosAR-Android.apk";
 export const WINDOWS_DOWNLOAD_URL = downloads.windows.route;
 
 export function isDownloadPlatform(value: string): value is DownloadPlatform {
