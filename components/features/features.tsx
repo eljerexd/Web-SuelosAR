@@ -130,7 +130,7 @@ export function Features() {
                           transition={{ duration: reducedMotion ? 0 : 0.46, ease: easing }}
                           style={{ willChange: "transform, opacity, filter" }}
                         >
-                          <Image src={activeFeature.src} alt={activeFeature.imageAlt} fill sizes="52vw" className="object-contain" />
+                          <Image src={activeFeature.src} alt={activeFeature.imageAlt} fill sizes="52vw" />
                         </motion.div>
                       </AnimatePresence>
                     }

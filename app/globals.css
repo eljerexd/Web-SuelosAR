@@ -68,6 +68,27 @@ button:focus-visible, a:focus-visible {
 
 .skip-link:focus { translate: 0; }
 
+/* Keep the Hero's two devices centered as one unit without viewport clipping. */
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .hero-device-showcase { left: -1.25rem; }
+  .hero-device-composition { scale: 0.62; }
+}
+
+@media (min-width: 1400px) and (max-width: 1549px) {
+  .hero-device-showcase { left: -1.25rem; }
+  .hero-device-composition { scale: 0.68; }
+}
+
+@media (min-width: 1550px) and (max-width: 1799px) {
+  .hero-device-showcase { left: -1.25rem; }
+  .hero-device-composition { scale: 0.76; }
+}
+
+@media (min-width: 1800px) {
+  .hero-device-showcase { left: 5.5rem; }
+  .hero-device-composition { scale: 0.9; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
