@@ -36,6 +36,24 @@ test("legal, discovery, and social metadata routes exist", async () => {
   assert.match(openGraphImage, /width: 1200, height: 630/);
 });
 
+test("SEO discovery routes share the production origin without blocking noindex pages", async () => {
+  const [site, layout, sitemap, robots, structuredData] = await Promise.all([
+    readFile(new URL("lib/site.ts", root), "utf8"),
+    readFile(new URL("app/layout.tsx", root), "utf8"),
+    readFile(new URL("app/sitemap.ts", root), "utf8"),
+    readFile(new URL("app/robots.ts", root), "utf8"),
+    readFile(new URL("components/seo/software-application-json-ld.tsx", root), "utf8"),
+  ]);
+
+  assert.match(site, /url: "https:\/\/web-suelos-ar\.vercel\.app"/);
+  assert.doesNotMatch(site, /suelosar\.app/);
+  assert.match(layout, /metadataBase: new URL\(siteConfig\.url\)/);
+  assert.match(sitemap, /siteConfig\.url/);
+  assert.match(robots, /siteConfig\.url/);
+  assert.doesNotMatch(robots, /download-unavailable/);
+  assert.match(structuredData, /siteConfig\.url/);
+});
+
 test("footer contains real legal and contact destinations", async () => {
   const [dictionary, footer, site] = await Promise.all([
     readFile(new URL("lib/i18n/dictionaries.ts", root), "utf8"),
