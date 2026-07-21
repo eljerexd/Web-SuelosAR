@@ -4,10 +4,14 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useId, useState } from "react";
 
-interface FaqItemProps { question: string; answer: string; }
+interface FaqItemProps {
+  question: string;
+  answer: string;
+  link?: { href: string; label: string };
+}
 
 /** Accessible accordion row that can be reused as the FAQ grows. */
-export function FaqItem({ question, answer }: FaqItemProps) {
+export function FaqItem({ question, answer, link }: FaqItemProps) {
   const [open, setOpen] = useState(false);
   const reducedMotion = useReducedMotion();
   const contentId = useId();
@@ -25,7 +29,17 @@ export function FaqItem({ question, answer }: FaqItemProps) {
       <AnimatePresence initial={false}>
         {open ? (
           <motion.div id={contentId} initial={reducedMotion ? false : { height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={reducedMotion ? { opacity: 0 } : { height: 0, opacity: 0 }} transition={{ duration: reducedMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}>
-            <p className="px-5 pb-6 pr-16 text-sm leading-6 text-[var(--on-surface-variant)] sm:px-7 sm:pb-7 sm:pr-20 sm:text-base sm:leading-7">{answer}</p>
+            <p className="px-5 pb-6 pr-16 text-sm leading-6 text-[var(--on-surface-variant)] sm:px-7 sm:pb-7 sm:pr-20 sm:text-base sm:leading-7">
+              {answer}
+              {link ? (
+                <>
+                  {" "}
+                  <a href={link.href} className="font-medium text-[var(--primary)] underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:decoration-[var(--primary)]">
+                    {link.label}
+                  </a>
+                </>
+              ) : null}
+            </p>
           </motion.div>
         ) : null}
       </AnimatePresence>

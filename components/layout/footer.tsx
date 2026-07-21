@@ -56,7 +56,9 @@ export function Footer() {
           <div className="grid size-11 place-items-center rounded-2xl bg-[var(--primary-container)] text-[var(--on-primary-container)]"><Database aria-hidden="true" size={21} strokeWidth={1.8} /></div>
           <div>
             <h2 className="text-sm font-semibold text-[var(--on-surface)]">{dictionary.footer.dataSourcesTitle}</h2>
-            <p className="mt-2 text-sm leading-6 text-[var(--on-surface-variant)]">{dictionary.footer.dataSource}</p>
+            <p className="mt-2 text-sm leading-6 text-[var(--on-surface-variant)]">
+              <a className="rounded-md transition-colors hover:text-[var(--primary)]" href="/data-sources">{dictionary.footer.dataSource}</a>
+            </p>
             <p className="mt-3 text-sm leading-6 text-[var(--on-surface-variant)]">{dictionary.footer.disclaimer}</p>
             <p className="mt-3 text-sm leading-6 text-[var(--on-surface-variant)]"><span className="font-semibold text-[var(--on-surface)]">{dictionary.footer.coverageLabel}:</span> {dictionary.footer.coverage} {dictionary.footer.futureCoverage}</p>
           </div>

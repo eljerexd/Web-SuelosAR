@@ -6,6 +6,7 @@ interface DeviceMockupProps {
   deviceLabel: string;
   screenPosition?: string;
   screenFit?: "cover" | "contain";
+  sizes?: string;
   className?: string;
   priority?: boolean;
 }
@@ -17,6 +18,7 @@ export function DeviceMockup({
   deviceLabel,
   screenPosition = "center top",
   screenFit = "cover",
+  sizes = "(max-width: 639px) 248px, 288px",
   className = "",
   priority = false,
 }: DeviceMockupProps) {
@@ -34,7 +36,7 @@ export function DeviceMockup({
               alt={screenAlt}
               fill
               priority={priority}
-              sizes="(max-width: 639px) 248px, 288px"
+              sizes={sizes}
               style={{ objectFit: screenFit, objectPosition: screenPosition }}
             />
             <div className="pointer-events-none absolute left-1/2 top-[0.62rem] z-20 size-[0.66rem] -translate-x-1/2 rounded-full border border-white/10 bg-[#050605] shadow-[0_0_0_1px_rgb(0_0_0/0.85),inset_0_0_3px_rgb(61_87_70/0.55)]" aria-hidden="true" />

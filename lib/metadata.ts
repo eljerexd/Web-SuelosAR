@@ -2,10 +2,24 @@ import type { Metadata } from "next";
 
 import { siteConfig } from "@/lib/site";
 
+export const indexableRobots: NonNullable<Metadata["robots"]> = {
+  index: true,
+  follow: true,
+  googleBot: {
+    index: true,
+    follow: true,
+    noimageindex: false,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
+  },
+};
+
 export function createPageMetadata(title: string, description: string, path: string): Metadata {
   return {
     title,
     description,
+    robots: indexableRobots,
     alternates: { canonical: path },
     openGraph: {
       type: "website",

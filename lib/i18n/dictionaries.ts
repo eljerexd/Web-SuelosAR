@@ -7,8 +7,8 @@ const es = {
     name: "SuelosAR",
   },
   meta: {
-    title: "SuelosAR | Mapas de suelos y GIS de Buenos Aires",
-    description: "Aplicación independiente para consultar mapas y Cartas de Suelo de la Provincia de Buenos Aires, basados en cartografía publicada por el INTA, con herramientas GIS.",
+    title: "Mapas de Suelos de Buenos Aires y GIS | SuelosAR",
+    description: "Consultá mapas y Cartas de Suelo de Buenos Aires sin conexión con SuelosAR, una app GIS gratuita para Android y Windows basada en fuentes del INTA.",
   },
   language: {
     selectorLabel: "Seleccionar idioma",
@@ -34,7 +34,7 @@ const es = {
     label: "Disponible para Android y Windows",
     titleLineOne: "Cartografía oficial de suelos de la Provincia de Buenos Aires.",
     titleLineTwo: "En cualquier lugar. Incluso sin conexión.",
-    description: "Consultá mapas, documentos PDF y herramientas GPS desde una aplicación independiente diseñada para trabajar completamente offline.",
+    description: "Consultá mapas de suelos, Cartas de Suelo en PDF y herramientas GPS desde una aplicación independiente diseñada para trabajar completamente offline.",
     downloadAndroid: "Descargar para Android",
     downloadWindows: "Descargar para Windows",
     compatibility: "Compatible con Android 10+ y Windows 10/11",
@@ -51,8 +51,8 @@ const es = {
     ],
   },
   features: {
-    title: "Todo lo que necesitás para el trabajo de campo",
-    subtitle: "Explorá mapas de suelos, Cartas de Suelo y herramientas GIS para analizar información de la Provincia de Buenos Aires en el campo.",
+    title: "Mapas de suelos y herramientas GIS para el campo",
+    subtitle: "Mapas de suelos, Cartas de Suelo y herramientas GIS para la agronomía y la planificación agrícola en Buenos Aires, Argentina. Pensado para productores agropecuarios, consultores, investigadores y estudiantes.",
     items: [
       { title: "Mapa GIS interactivo", description: "Explorá mapas de suelos de la Provincia de Buenos Aires en un entorno GIS rápido e intuitivo, diseñado para el trabajo de campo.", imageAlt: "Mapa GIS interactivo de SuelosAR con cartografía de suelos de la Provincia de Buenos Aires" },
       { title: "Cartografía oficial", description: "Consultá Cartas de Suelo con información de unidades cartográficas, series de suelo y descripciones del paisaje directamente desde el mapa.", imageAlt: "Carta de Suelo con unidades cartográficas y series de suelo en SuelosAR" },
@@ -67,18 +67,18 @@ const es = {
     subtitle: "Mapas, documentos y ajustes pensados para un flujo de trabajo móvil ágil.",
     screenAltSuffix: "en SuelosAR",
     items: [
-      { src: "/images/screenshots/gis.jpg", title: "Flujo de trabajo móvil", description: "Accedé rápidamente a mapas, documentos y herramientas desde tu teléfono.", screenPosition: "50% 0%" },
-      { src: "/images/screenshots/configuracion.jpg", title: "Configuración", description: "Personalizá la experiencia según tu dispositivo y forma de trabajo.", screenPosition: "50% 0%" },
+      { src: "/images/screenshots/gis.jpg", title: "Flujo de trabajo móvil", description: "Accedé rápidamente a mapas, documentos y herramientas desde tu teléfono.", imageAlt: "Mapa GIS y accesos a documentos y herramientas en SuelosAR para Android", screenPosition: "50% 0%" },
+      { src: "/images/screenshots/configuracion.jpg", title: "Configuración", description: "Personalizá la experiencia según tu dispositivo y forma de trabajo.", imageAlt: "Opciones de configuración de SuelosAR para Android", screenPosition: "50% 0%" },
     ],
   },
   faq: {
     title: "Preguntas frecuentes",
     subtitle: "Todo lo esencial sobre SuelosAR, su cobertura y su funcionamiento.",
     items: [
-      { question: "¿Qué es SuelosAR?", answer: "SuelosAR es una aplicación independiente para Android y Windows que permite consultar cartografía de suelos y utilizar herramientas GIS." },
+      { question: "¿Qué es SuelosAR?", answer: "SuelosAR es una aplicación independiente para Android y Windows que permite consultar cartografía de suelos y trabajar con herramientas GIS." },
       { question: "¿Funciona sin internet?", answer: "Sí. La cartografía y las herramientas principales siguen disponibles sin conexión." },
       { question: "¿Qué provincias incluye actualmente?", answer: "La versión actual incluye exclusivamente la Provincia de Buenos Aires." },
-      { question: "¿De dónde provienen los datos?", answer: "La información proviene de Cartas de Suelo y cartografía oficial publicada por el INTA." },
+      { question: "¿De dónde provienen los datos?", answer: "La información proviene de Cartas de Suelo y cartografía oficial publicada por el INTA.", link: { href: "/data-sources", label: "Consultá las fuentes de cartografía de suelos." } },
       { question: "¿Es gratuita?", answer: "Sí. SuelosAR se puede descargar y utilizar de forma gratuita." },
       { question: "¿Qué dispositivos son compatibles?", answer: "SuelosAR es compatible con Android 10 o posterior y Windows 10/11." },
     ],
@@ -162,8 +162,8 @@ const es = {
         ],
       },
       dataSources: {
-        title: "Fuentes de datos",
-        intro: "SuelosAR organiza y presenta información cartográfica para facilitar su consulta en dispositivos Android y Windows.",
+        title: "Fuentes de cartografía de suelos",
+        intro: "SuelosAR organiza y presenta cartografía de suelos de la Provincia de Buenos Aires para facilitar su consulta en dispositivos Android y Windows.",
         sections: [
           { heading: "Fuente cartográfica", paragraphs: ["La información de suelos se basa en cartografía oficial publicada por el Instituto Nacional de Tecnología Agropecuaria (INTA)."] },
           { heading: "Titularidad", paragraphs: ["Los datos, documentos, denominaciones y materiales originales pertenecen a sus respectivas organizaciones y titulares. Su inclusión en SuelosAR no transfiere derechos de propiedad ni implica patrocinio."] },
@@ -200,8 +200,8 @@ const en: Dictionary = {
     name: "SuelosAR",
   },
   meta: {
-    title: "SuelosAR | Buenos Aires soil maps and GIS",
-    description: "An independent GIS application for Buenos Aires Province soil maps and soil surveys, based on cartography published by INTA, with offline access on Android and Windows.",
+    title: "Buenos Aires Soil Maps and GIS | SuelosAR",
+    description: "Explore Buenos Aires soil maps and soil surveys offline with SuelosAR, a free GIS app for Android and Windows based on cartographic sources from INTA.",
   },
   language: {
     selectorLabel: "Select language",
@@ -227,7 +227,7 @@ const en: Dictionary = {
     label: "Available for Android and Windows",
     titleLineOne: "Official soil cartography of Buenos Aires Province.",
     titleLineTwo: "Anywhere. Even Offline.",
-    description: "Consult maps, PDF documents and GPS tools in an independent application designed to work completely offline.",
+    description: "Consult soil maps, PDF soil surveys and GPS tools in an independent application designed to work completely offline.",
     downloadAndroid: "Download for Android",
     downloadWindows: "Download for Windows",
     compatibility: "Compatible with Android 10+ and Windows 10/11",
@@ -244,8 +244,8 @@ const en: Dictionary = {
     ],
   },
   features: {
-    title: "Everything you need in the field",
-    subtitle: "Explore Buenos Aires soil maps, soil surveys and GIS tools for field analysis.",
+    title: "Soil maps and GIS tools for field work",
+    subtitle: "Soil maps, soil surveys and GIS tools for agronomy and agricultural planning in Buenos Aires Province, Argentina. Built for agricultural producers, consultants, researchers and students.",
     items: [
       { title: "Interactive GIS Map", description: "Explore Buenos Aires soil maps in a fast, intuitive GIS environment designed for field work.", imageAlt: "Interactive SuelosAR GIS map displaying Buenos Aires Province soil maps" },
       { title: "Official Cartography", description: "Consult soil surveys with mapping units, soil series and landscape descriptions directly from the map.", imageAlt: "SuelosAR soil survey with mapping units, soil series and landscape information" },
@@ -260,18 +260,18 @@ const en: Dictionary = {
     subtitle: "Maps, documents and settings for an efficient mobile workflow. Screenshots are currently shown in Spanish.",
     screenAltSuffix: "in SuelosAR",
     items: [
-      { src: "/images/screenshots/gis.jpg", title: "Mobile workflow", description: "Quickly access maps, documents and tools directly from your phone.", screenPosition: "50% 0%" },
-      { src: "/images/screenshots/configuracion.jpg", title: "Settings", description: "Personalize the experience for your device and the way you work.", screenPosition: "50% 0%" },
+      { src: "/images/screenshots/gis.jpg", title: "Mobile workflow", description: "Quickly access maps, documents and tools directly from your phone.", imageAlt: "GIS map with document and tool access in SuelosAR for Android", screenPosition: "50% 0%" },
+      { src: "/images/screenshots/configuracion.jpg", title: "Settings", description: "Personalize the experience for your device and the way you work.", imageAlt: "SuelosAR configuration options on Android", screenPosition: "50% 0%" },
     ],
   },
   faq: {
     title: "Frequently asked questions",
     subtitle: "Essential information about SuelosAR, its coverage and how it works.",
     items: [
-      { question: "What is SuelosAR?", answer: "SuelosAR is an independent Android and Windows application for consulting soil cartography and using GIS tools." },
+      { question: "What is SuelosAR?", answer: "SuelosAR is an independent Android and Windows application for consulting soil cartography and working with GIS tools." },
       { question: "Does it work without internet?", answer: "Yes. The cartography and core tools remain available without a connection." },
       { question: "Which provinces are currently included?", answer: "The current version exclusively covers Buenos Aires Province." },
-      { question: "Where does the data come from?", answer: "The information comes from official INTA soil maps and soil survey publications." },
+      { question: "Where does the data come from?", answer: "The information comes from official INTA soil maps and soil survey publications.", link: { href: "/data-sources", label: "Review the soil cartography sources." } },
       { question: "Is it free?", answer: "Yes. SuelosAR can be downloaded and used free of charge." },
       { question: "Which devices are supported?", answer: "SuelosAR supports Android 10 or later and Windows 10/11." },
     ],
@@ -355,8 +355,8 @@ const en: Dictionary = {
         ],
       },
       dataSources: {
-        title: "Data Sources",
-        intro: "SuelosAR organizes and presents cartographic information for easier consultation on Android and Windows devices.",
+        title: "Soil Cartography Sources",
+        intro: "SuelosAR organizes and presents Buenos Aires Province soil cartography for easier consultation on Android and Windows devices.",
         sections: [
           { heading: "Cartographic source", paragraphs: ["Soil information is based on official cartography published by Argentina’s National Agricultural Technology Institute (INTA)."] },
           { heading: "Ownership", paragraphs: ["Original data, documents, names and materials belong to their respective organizations and owners. Their inclusion in SuelosAR does not transfer ownership or imply sponsorship."] },

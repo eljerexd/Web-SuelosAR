@@ -60,18 +60,6 @@ export const metadata: Metadata = {
     images: [{ url: "/opengraph-image", alt: "SuelosAR, mapas de suelos y herramientas GIS para la Provincia de Buenos Aires" }],
   },
 
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
 };
 
 export const viewport: Viewport = {

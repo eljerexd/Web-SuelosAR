@@ -63,7 +63,7 @@ export function Faq() {
         <motion.div className="mt-12 grid gap-3 sm:mt-14" initial={reducedMotion ? false : "hidden"} animate={reducedMotion || hasReachedSection ? "visible" : "hidden"} variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.06 } } }}>
           {dictionary.faq.items.map((item) => (
             <motion.div key={item.question} variants={{ hidden: { opacity: 1, y: 18 }, visible: { opacity: 1, y: 0, transition: { duration: reducedMotion ? 0 : 0.48, ease: [0.22, 1, 0.36, 1] } } }}>
-              <FaqItem question={item.question} answer={item.answer} />
+              <FaqItem question={item.question} answer={item.answer} link={"link" in item ? item.link : undefined} />
             </motion.div>
           ))}
         </motion.div>
