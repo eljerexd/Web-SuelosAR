@@ -8,14 +8,15 @@ interface LaptopMockupProps {
   className?: string;
   priority?: boolean;
   screenContent?: ReactNode;
+  displayAspectRatio?: string;
 }
 
 /** Reusable premium laptop frame for wide desktop application captures. */
-export function LaptopMockup({ screenSrc, screenAlt, deviceLabel, className = "", priority = false, screenContent }: LaptopMockupProps) {
+export function LaptopMockup({ screenSrc, screenAlt, deviceLabel, className = "", priority = false, screenContent, displayAspectRatio = "1919 / 1079" }: LaptopMockupProps) {
   return (
     <figure className={`relative pb-[1.65%] ${className}`} aria-label={deviceLabel}>
       <div className="relative left-1/2 w-[106%] -translate-x-1/2 overflow-hidden rounded-[1.15rem] border border-white/15 bg-gradient-to-br from-[#343934] via-[#111411] to-[#050605] p-[0.14rem] shadow-[0_36px_90px_rgb(14_20_14/0.24),0_12px_28px_rgb(14_20_14/0.16),inset_0_1px_0_rgb(255_255_255/0.16)] dark:border-white/10 dark:shadow-[0_40px_100px_rgb(0_0_0/0.5),inset_0_1px_0_rgb(255_255_255/0.12)]">
-        <div className="relative aspect-[1919/1079] w-full overflow-hidden rounded-[1.01rem] bg-black ring-1 ring-inset ring-black/90">
+        <div className="relative w-full overflow-hidden rounded-[1.01rem] bg-black ring-1 ring-inset ring-black/90" style={{ aspectRatio: displayAspectRatio }}>
           <div className="absolute inset-0 overflow-hidden rounded-[1.01rem] bg-black [&_img]:object-contain [&_img]:object-center">
             {screenContent ?? <Image src={screenSrc} alt={screenAlt} fill priority={priority} sizes="(max-width: 639px) 92vw, (max-width: 1023px) 72vw, 46vw" />}
           </div>

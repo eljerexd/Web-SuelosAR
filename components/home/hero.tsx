@@ -23,7 +23,7 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_76%_43%,transparent_38%,var(--surface)_92%)] opacity-[0.18]" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.025] dark:opacity-[0.018]" style={{ backgroundImage: "radial-gradient(rgba(38,55,40,0.7) 0.55px, transparent 0.55px)", backgroundSize: "4px 4px" }} aria-hidden="true" />
 
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 xl:gap-24">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 xl:gap-24 2xl:max-w-[96rem] 2xl:grid-cols-[33.3rem_40.7rem]">
         <motion.div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left" initial={reducedMotion ? false : "hidden"} animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.085, delayChildren: reducedMotion ? 0 : 0.08 } } }}>
           <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.58, ease: easing }} className="inline-flex items-center gap-2 rounded-full border border-[var(--outline-variant)] bg-[var(--surface-container)]/72 px-3.5 py-1.5 text-xs font-semibold tracking-[0.04em] text-[var(--on-surface-variant)] shadow-sm backdrop-blur-md">
             <span className="size-1.5 rounded-full bg-[var(--primary)]" aria-hidden="true" />

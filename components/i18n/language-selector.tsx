@@ -107,7 +107,7 @@ export function LanguageSelector() {
         aria-controls={isOpen ? menuId : undefined}
         onClick={() => setIsOpen((open) => !open)}
         onKeyDown={handleTriggerKeyDown}
-        className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full px-3 text-sm font-medium text-[var(--on-surface-variant)] transition-colors duration-200 hover:bg-[var(--surface-container-high)] hover:text-[var(--on-surface)]"
+        className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-full px-3 text-sm font-medium text-[var(--on-surface-variant)] transition-[background-color,color,transform] duration-150 ease-out hover:-translate-y-px hover:bg-[var(--surface-container-high)] hover:text-[var(--on-surface)] motion-reduce:transform-none motion-reduce:transition-none"
       >
         <Languages aria-hidden="true" size={18} />
         <span>{options[selectedIndex].label}</span>
@@ -115,7 +115,7 @@ export function LanguageSelector() {
           aria-hidden="true"
           size={15}
           strokeWidth={2}
-          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          className={`transition-transform duration-150 ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -129,7 +129,7 @@ export function LanguageSelector() {
             initial={reducedMotion ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
-            transition={{ duration: reducedMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: reducedMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
             className="absolute right-0 top-full z-50 mt-2 w-48 origin-top-right rounded-[22px] border border-[var(--outline-variant)]/70 bg-[var(--surface-container)] p-2.5 text-[var(--on-surface)] shadow-[0_14px_36px_rgb(47_104_66/0.16)] dark:shadow-[0_18px_40px_rgb(0_0_0/0.36)]"
           >
             <div className="flex flex-col gap-1.5">

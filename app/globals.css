@@ -68,6 +68,16 @@ button:focus-visible, a:focus-visible {
 
 .skip-link:focus { translate: 0; }
 
+@media (min-width: 1280px) {
+  section[aria-labelledby="hero-title"] { min-height: calc(94svh - 5rem); }
+
+  p:has(+ #hero-title) {
+    gap: 0.625rem;
+    padding: 0.4375rem 0.9375rem;
+    line-height: 1.25rem;
+  }
+}
+
 /* Keep the Hero's two devices centered as one unit without viewport clipping. */
 @media (min-width: 1024px) and (max-width: 1399px) {
   .hero-device-showcase { left: -1.25rem; }

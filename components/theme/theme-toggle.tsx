@@ -14,7 +14,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className="grid size-11 cursor-pointer place-items-center rounded-full text-[var(--on-surface-variant)] transition-colors hover:bg-[var(--surface-container-high)] hover:text-[var(--on-surface)]"
+      className="grid size-11 cursor-pointer place-items-center rounded-full text-[var(--on-surface-variant)] transition-[background-color,color,transform] duration-150 ease-out hover:-translate-y-px hover:bg-[var(--surface-container-high)] hover:text-[var(--on-surface)] motion-reduce:transform-none motion-reduce:transition-none"
       onClick={toggleTheme}
       aria-label={label}
       title={label}

@@ -34,7 +34,7 @@ export function HeroDeviceShowcase({ androidAlt, windowsAlt, androidLabel, windo
 
         <div className="relative z-10 mx-auto mt-10 w-full max-w-[38rem] sm:absolute sm:-right-[4%] sm:top-[5.25rem] sm:mt-0 sm:w-[104%] sm:max-w-none md:-right-[6%] md:w-[108%] lg:-right-[12%] lg:top-[7%] lg:w-[116%] xl:-right-[14%] xl:w-[119%]">
           <div>
-            <LaptopMockup screenSrc="/images/screenshots/hero-windows.png" screenAlt={windowsAlt} deviceLabel={windowsLabel} className="w-full" priority />
+            <LaptopMockup screenSrc="/images/screenshots/hero-windows.png" screenAlt={windowsAlt} deviceLabel={windowsLabel} displayAspectRatio="1919 / 1007" className="w-full" priority />
           </div>
         </div>
       </div>
