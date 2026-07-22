@@ -42,6 +42,10 @@ const es = {
     androidScreenAlt: "Mapa de suelos abierto en SuelosAR para Android",
     windowsScreenAlt: "Mapa de suelos y búsqueda cartográfica en SuelosAR para Windows",
   },
+  downloads: {
+    loading: "Buscando la última versión en GitHub…",
+    fallback: "No pudimos verificar el instalador. Se abrirá una página con más información.",
+  },
   platforms: {
     title: "Plataformas compatibles",
     subtitle: "Elegí la versión compatible con tu dispositivo.",
@@ -234,6 +238,10 @@ const en: Dictionary = {
     badges: ["Free", "Offline", "INTA cartographic sources", "Independent project"],
     androidScreenAlt: "Soil map open in SuelosAR for Android",
     windowsScreenAlt: "Soil map and cartography search in SuelosAR for Windows",
+  },
+  downloads: {
+    loading: "Checking the latest version on GitHub…",
+    fallback: "We could not verify the installer. A page with more information will open instead.",
   },
   platforms: {
     title: "Supported Platforms",

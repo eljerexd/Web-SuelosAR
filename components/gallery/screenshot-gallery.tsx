@@ -27,7 +27,7 @@ export function ScreenshotGallery({ screenshots }: ScreenshotGalleryProps) {
           {items.map((screenshot, index) => (
             <motion.article key={screenshot.src} data-screenshot-index={index} className="flex min-w-0 flex-col items-center text-center" initial={reducedMotion ? false : { opacity: 1, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.12 }} transition={{ duration: reducedMotion ? 0 : 0.62, delay: reducedMotion ? 0 : (index % 3) * 0.09, ease: [0.22, 1, 0.36, 1] }}>
               <motion.div className="flex w-full justify-center" whileHover={reducedMotion ? undefined : { y: -4, transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] } }}>
-                <DeviceMockup screenSrc={screenshot.src} screenAlt={screenshot.imageAlt ?? `${screenshot.title} ${dictionary.gallery.screenAltSuffix}`} deviceLabel={dictionary.accessibility.deviceMockup} screenPosition={screenshot.screenPosition} screenFit="contain" className="w-full max-w-[17.25rem] sm:max-w-[18.25rem] xl:max-w-[19.5rem]" />
+                <DeviceMockup screenSrc={screenshot.src} screenAlt={screenshot.imageAlt ?? `${screenshot.title} ${dictionary.gallery.screenAltSuffix}`} deviceLabel={dictionary.accessibility.deviceMockup} screenPosition={screenshot.screenPosition} screenFit="cover" className="w-full max-w-[17.25rem] sm:max-w-[18.25rem] xl:max-w-[19.5rem]" />
               </motion.div>
               <h3 className="mt-6 text-xl font-semibold tracking-[-0.025em] text-[var(--on-surface)]">{screenshot.title}</h3>
               <p className="mt-2 max-w-xs text-sm leading-6 text-[var(--on-surface-variant)]">{screenshot.description}</p>

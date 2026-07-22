@@ -1,11 +1,11 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { CircleDollarSign, Database, PanelsTopLeft, ShieldCheck, Smartphone, WifiOff } from "lucide-react";
+import { CircleDollarSign, Database, ShieldCheck, WifiOff } from "lucide-react";
 
+import { ReleaseDownloadLink } from "@/components/downloads/release-download-link";
 import { HeroDeviceShowcase } from "@/components/home/hero-device-showcase";
 import { useI18n } from "@/components/i18n/i18n-provider";
-import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
 
 const trustIcons = [CircleDollarSign, WifiOff, Database, ShieldCheck] as const;
 const easing = [0.22, 1, 0.36, 1] as const;
@@ -38,12 +38,8 @@ export function Hero() {
           <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.62, ease: easing }} className="mx-auto mt-9 max-w-lg text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8 lg:mx-0">{dictionary.hero.description}</motion.p>
 
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.6, ease: easing }} className="mt-11 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            <motion.a href={ANDROID_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-5 py-3 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
-              <Smartphone aria-hidden="true" size={18} /> {dictionary.hero.downloadAndroid}
-            </motion.a>
-            <motion.a href={WINDOWS_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-5 py-3 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
-              <PanelsTopLeft aria-hidden="true" size={18} /> {dictionary.hero.downloadWindows}
-            </motion.a>
+            <ReleaseDownloadLink platform="android" label={dictionary.hero.downloadAndroid} loadingMessage={dictionary.downloads.loading} fallbackMessage={dictionary.downloads.fallback} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-5 py-3 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }} />
+            <ReleaseDownloadLink platform="windows" label={dictionary.hero.downloadWindows} loadingMessage={dictionary.downloads.loading} fallbackMessage={dictionary.downloads.fallback} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-5 py-3 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }} />
           </motion.div>
 
           <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.5, ease: easing }} className="mt-3 text-center text-xs font-medium text-[var(--on-surface-variant)]/90">{dictionary.hero.compatibility}</motion.p>

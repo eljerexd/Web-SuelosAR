@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
-import { LaptopMockup } from "@/components/ui/laptop-mockup";
+import { DeviceShowcase } from "@/components/ui/device-showcase";
+import { LAPTOP_SCREEN_SIZES } from "@/components/ui/laptop-mockup";
 import { getActiveFeatureIndex } from "@/lib/product-tour-scroll";
 import { FeatureStory } from "./feature-story";
 
@@ -103,40 +104,37 @@ export function Features() {
           </div>
 
           <div className="sticky top-20 hidden h-[calc(100svh-5rem)] items-center lg:flex">
-            <div className="relative left-1/2 w-[108%] -translate-x-1/2">
-              <motion.div
-                className="pointer-events-none absolute inset-[7%] rounded-[44%] bg-[var(--primary)] blur-[76px] dark:opacity-[0.04]"
-                animate={{ opacity: glowOpacity[activeIndex] }}
-                transition={{ duration: reducedMotion ? 0 : 0.45, ease: easing }}
-                aria-hidden="true"
-              />
-              <div className="pointer-events-none absolute inset-x-[7%] bottom-[8%] h-[18%] rounded-[50%] bg-black/20 blur-3xl dark:bg-black/35" aria-hidden="true" />
-              <div className="relative aspect-[1.72] w-full">
-                <div className="absolute inset-0 flex items-center">
-                  <LaptopMockup
-                    screenSrc={activeFeature.src}
-                    screenAlt={activeFeature.imageAlt}
-                    deviceLabel={activeFeature.title}
-                    className="w-full"
-                    screenContent={
-                      <AnimatePresence initial={false} mode="sync">
-                        <motion.div
-                          key={activeFeature.src}
-                          className="absolute inset-0"
-                          initial={reducedMotion ? false : { opacity: 0, scale: 0.98, filter: "blur(1.5px)" }}
-                          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                          exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985, filter: "blur(1.5px)" }}
-                          transition={{ duration: reducedMotion ? 0 : 0.46, ease: easing }}
-                          style={{ willChange: "transform, opacity, filter" }}
-                        >
-                          <Image src={activeFeature.src} alt={activeFeature.imageAlt} fill sizes="52vw" />
-                        </motion.div>
-                      </AnimatePresence>
-                    }
-                  />
-                </div>
-              </div>
-            </div>
+            <DeviceShowcase
+              laptopScreenSrc={activeFeature.src}
+              laptopScreenAlt={activeFeature.imageAlt}
+              laptopLabel={activeFeature.title}
+              phoneScreenSrc="/images/screenshots/gis.jpg"
+              phoneScreenAlt={dictionary.hero.androidScreenAlt}
+              phoneLabel={dictionary.accessibility.androidDevice}
+              laptopScreenContent={
+                <AnimatePresence initial={false} mode="sync">
+                  <motion.div
+                    key={activeFeature.src}
+                    className="absolute inset-0"
+                    initial={reducedMotion ? false : { opacity: 0, scale: 0.98, filter: "blur(1.5px)" }}
+                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                    exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985, filter: "blur(1.5px)" }}
+                    transition={{ duration: reducedMotion ? 0 : 0.46, ease: easing }}
+                    style={{ willChange: "transform, opacity, filter" }}
+                  >
+                    <Image src={activeFeature.src} alt={activeFeature.imageAlt} fill sizes={LAPTOP_SCREEN_SIZES} />
+                  </motion.div>
+                </AnimatePresence>
+              }
+              backdrop={
+                <motion.div
+                  className="pointer-events-none absolute inset-[7%] rounded-[44%] bg-[var(--primary)] blur-[76px] dark:opacity-[0.04]"
+                  animate={{ opacity: glowOpacity[activeIndex] }}
+                  transition={{ duration: reducedMotion ? 0 : 0.45, ease: easing }}
+                  aria-hidden="true"
+                />
+              }
+            />
           </div>
         </div>
       </div>

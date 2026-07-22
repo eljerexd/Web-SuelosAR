@@ -1,5 +1,6 @@
 import { siteConfig } from "@/lib/site";
-import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
+import brandIcon from "@/public/icons/icon-512.png";
+import { downloads } from "@/lib/downloads";
 
 export function SoftwareApplicationJsonLd() {
   const organizationId = `${siteConfig.url}/#organization`;
@@ -12,7 +13,7 @@ export function SoftwareApplicationJsonLd() {
         "@id": organizationId,
         name: "SuelosAR",
         url: siteConfig.url,
-        logo: `${siteConfig.url}/icon.png`,
+        logo: new URL(brandIcon.src, siteConfig.url).toString(),
         email: siteConfig.contactEmail,
         sameAs: [siteConfig.githubUrl],
       },
@@ -41,8 +42,8 @@ export function SoftwareApplicationJsonLd() {
         operatingSystem: ["Android 10 or later", "Windows 10", "Windows 11"],
         softwareRequirements: "Android 10 or later, or Windows 10/11",
         downloadUrl: [
-          ANDROID_DOWNLOAD_URL,
-          new URL(WINDOWS_DOWNLOAD_URL, siteConfig.url).toString(),
+          new URL(downloads.android.route, siteConfig.url).toString(),
+          new URL(downloads.windows.route, siteConfig.url).toString(),
         ],
         isAccessibleForFree: true,
         offers: {

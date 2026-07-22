@@ -4,17 +4,31 @@ import test from "node:test";
 
 const root = new URL("../", import.meta.url);
 
-test("download routes handle missing installers without a 404", async () => {
-  const [downloads, route] = await Promise.all([
+test("download links resolve the newest GitHub release assets without fixed filenames", async () => {
+  const [downloads, route, button, hero, cta] = await Promise.all([
     readFile(new URL("lib/downloads.ts", root), "utf8"),
     readFile(new URL("app/download/[platform]/route.ts", root), "utf8"),
+    readFile(new URL("components/downloads/release-download-link.tsx", root), "utf8"),
+    readFile(new URL("components/home/hero.tsx", root), "utf8"),
+    readFile(new URL("components/cta/final-cta.tsx", root), "utf8"),
   ]);
 
   assert.match(downloads, /route: "\/download\/android"/);
   assert.match(downloads, /route: "\/download\/windows"/);
-  assert.match(route, /fetch\(assetUrl/);
+  assert.match(downloads, /api\.github\.com\/repos\/eljerexd\/suelosar\/releases\/latest/);
+  assert.match(downloads, /browser_download_url/);
+  assert.match(downloads, /extension: "\.apk"/);
+  assert.match(downloads, /extension: "\.exe"/);
+  assert.match(downloads, /preferredName: "android"/);
+  assert.match(downloads, /preferredName: "setup"/);
+  assert.match(downloads, /cachedRelease/);
+  assert.doesNotMatch(downloads, /releases\/latest\/download/);
+  assert.match(route, /getLatestReleaseAssets/);
   assert.match(route, /download-unavailable/);
-  assert.match(route, /Content-Disposition/);
+  assert.match(button, /data-release-status/);
+  assert.match(button, /downloads\[platform\]\.route/);
+  assert.match(hero, /ReleaseDownloadLink/);
+  assert.match(cta, /ReleaseDownloadLink/);
 });
 
 test("legal, discovery, and social metadata routes exist", async () => {

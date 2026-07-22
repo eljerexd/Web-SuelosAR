@@ -7,6 +7,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { defaultLocale, dictionaries } from "@/lib/i18n/dictionaries";
 import { siteConfig } from "@/lib/site";
+import brandIcon from "@/public/icons/icon-512.png";
 
 import "./globals.css";
 
@@ -37,6 +38,11 @@ export const metadata: Metadata = {
     telephone: false,
   },
   manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [{ url: brandIcon.src, type: "image/png", sizes: "512x512" }],
+    shortcut: [{ url: brandIcon.src, type: "image/png" }],
+    apple: [{ url: brandIcon.src, type: "image/png", sizes: "512x512" }],
+  },
 
   alternates: {
     canonical: "/",

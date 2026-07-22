@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { dictionaries, defaultLocale } from "@/lib/i18n/dictionaries";
+import brandIcon from "@/public/icons/icon-512.png";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
@@ -17,13 +18,7 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["education", "productivity", "utilities"],
     icons: [
       {
-        src: "/icons/icon-192.png",
-        sizes: "192x192",
-        type: "image/png",
-        purpose: "any",
-      },
-      {
-        src: "/icons/icon-512.png",
+        src: brandIcon.src,
         sizes: "512x512",
         type: "image/png",
         purpose: "any",
