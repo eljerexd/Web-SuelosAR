@@ -1,60 +1,20 @@
 import { NextResponse } from "next/server";
 
-import { downloads, isDownloadPlatform } from "@/lib/downloads";
+import { isDownloadPlatform, resolveLatestDownloadUrl } from "@/lib/downloads";
 
 export const runtime = "nodejs";
 
-function resolveInstaller(platform: string) {
-  if (!isDownloadPlatform(platform)) return null;
+async function resolveDownload(context: { params: Promise<{ platform: string }> }) {
+  const { platform } = await context.params;
+  if (!isDownloadPlatform(platform)) return new NextResponse(null, { status: 404 });
 
-  const download = downloads[platform];
-  return download;
+  return NextResponse.redirect(await resolveLatestDownloadUrl(platform), 307);
 }
 
-export async function GET(request: Request, context: { params: Promise<{ platform: string }> }) {
-  const { platform } = await context.params;
-  const installer = resolveInstaller(platform);
-
-  if (!installer) return new NextResponse(null, { status: 404 });
-
-  const assetUrl = new URL(`/downloads/${installer.filename}`, request.url);
-  const assetResponse = await fetch(assetUrl, { cache: "no-store" });
-
-  if (!assetResponse.ok || !assetResponse.body) {
-    return NextResponse.redirect(new URL(`/download-unavailable?platform=${platform}`, request.url), 307);
-  }
-
-  return new Response(assetResponse.body, {
-    headers: {
-      "Content-Type": installer.contentType,
-      ...(assetResponse.headers.get("content-length") ? { "Content-Length": assetResponse.headers.get("content-length")! } : {}),
-      "Content-Disposition": `attachment; filename="${installer.filename}"`,
-      "Cache-Control": "private, no-store",
-      "X-Content-Type-Options": "nosniff",
-    },
-  });
+export async function GET(_request: Request, context: { params: Promise<{ platform: string }> }) {
+  return resolveDownload(context);
 }
 
-export async function HEAD(request: Request, context: { params: Promise<{ platform: string }> }) {
-  const { platform } = await context.params;
-  const installer = resolveInstaller(platform);
-
-  if (!installer) return new NextResponse(null, { status: 404 });
-
-  const assetUrl = new URL(`/downloads/${installer.filename}`, request.url);
-  const assetResponse = await fetch(assetUrl, { method: "HEAD", cache: "no-store" });
-
-  if (!assetResponse.ok) {
-    return NextResponse.redirect(new URL(`/download-unavailable?platform=${platform}`, request.url), 307);
-  }
-
-  return new Response(null, {
-    headers: {
-      "Content-Type": installer.contentType,
-      ...(assetResponse.headers.get("content-length") ? { "Content-Length": assetResponse.headers.get("content-length")! } : {}),
-      "Content-Disposition": `attachment; filename="${installer.filename}"`,
-      "Cache-Control": "private, no-store",
-      "X-Content-Type-Options": "nosniff",
-    },
-  });
+export async function HEAD(_request: Request, context: { params: Promise<{ platform: string }> }) {
+  return resolveDownload(context);
 }
