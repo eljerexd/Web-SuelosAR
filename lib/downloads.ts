@@ -36,29 +36,54 @@ interface GitHubReleaseAsset {
 }
 
 interface GitHubRelease {
+  tag_name?: string;
+  published_at?: string;
   assets?: GitHubReleaseAsset[];
 }
 
-/** Resolves the newest matching release asset and preserves the existing URL as fallback. */
-export async function resolveLatestDownloadUrl(platform: DownloadPlatform) {
-  const download = downloads[platform];
+export interface LatestReleaseMetadata {
+  version: string;
+  publishedAt: string;
+}
 
+async function fetchLatestRelease() {
   try {
     const response = await fetch(GITHUB_RELEASES_API_URL, {
       headers: { Accept: "application/vnd.github+json" },
       next: { revalidate: 300 },
     });
 
-    if (!response.ok) return download.fallbackUrl;
+    if (!response.ok) return null;
 
-    const release = await response.json() as GitHubRelease;
-    const asset = release.assets?.find(({ name, browser_download_url: url }) => (
-      name.toLowerCase().endsWith(download.extension)
-      && url.startsWith("https://")
-    ));
-
-    return asset?.browser_download_url ?? download.fallbackUrl;
+    return await response.json() as GitHubRelease;
   } catch {
-    return download.fallbackUrl;
+    return null;
   }
+}
+
+export async function getLatestReleaseMetadata(): Promise<LatestReleaseMetadata | null> {
+  const release = await fetchLatestRelease();
+
+  if (
+    !release?.tag_name
+    || !release.published_at
+    || Number.isNaN(Date.parse(release.published_at))
+  ) return null;
+
+  return {
+    version: release.tag_name,
+    publishedAt: release.published_at,
+  };
+}
+
+/** Resolves the newest matching release asset and preserves the existing URL as fallback. */
+export async function resolveLatestDownloadUrl(platform: DownloadPlatform) {
+  const download = downloads[platform];
+  const release = await fetchLatestRelease();
+  const asset = release?.assets?.find(({ name, browser_download_url: url }) => (
+    name.toLowerCase().endsWith(download.extension)
+    && url.startsWith("https://")
+  ));
+
+  return asset?.browser_download_url ?? download.fallbackUrl;
 }
