@@ -1,12 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { Landmark, MapPinned, PanelsTopLeft, Smartphone, WifiOff } from "lucide-react";
+import { Grid2x2, Map, MapPinned, Smartphone, WifiOff } from "lucide-react";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
 
-const trustIcons = [MapPinned, Landmark, WifiOff] as const;
+const trustIcons = [MapPinned, Map, WifiOff] as const;
 const easing = [0.22, 1, 0.36, 1] as const;
 
 export function FinalCta() {
@@ -20,11 +20,17 @@ export function FinalCta() {
         <h2 id="final-cta-title" className="mx-auto max-w-4xl text-4xl font-bold tracking-[-0.05em] text-[var(--on-surface)] sm:text-5xl lg:text-6xl">{dictionary.cta.title}</h2>
         <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{dictionary.cta.description}</p>
         <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-          <motion.a href={ANDROID_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-[var(--on-primary)] shadow-[0_10px_28px_rgb(47_104_66/0.14)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_14px_34px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, scale: 1.012, transition: { duration: 0.26, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.985 }}>
-            <Smartphone aria-hidden="true" size={18} /> {dictionary.cta.downloadAndroid}
+          <motion.a href={ANDROID_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+            <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">
+              <Smartphone size={26} strokeWidth={2.2} />
+            </span>
+            <span>{dictionary.cta.downloadAndroid}</span>
           </motion.a>
-          <motion.a href={WINDOWS_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-[var(--on-primary)] shadow-[0_10px_28px_rgb(47_104_66/0.14)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_14px_34px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, scale: 1.012, transition: { duration: 0.26, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.985 }}>
-            <PanelsTopLeft aria-hidden="true" size={18} /> {dictionary.cta.downloadWindows}
+          <motion.a href={WINDOWS_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+            <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">
+              <Grid2x2 size={25} strokeWidth={2.2} />
+            </span>
+            <span>{dictionary.cta.downloadWindows}</span>
           </motion.a>
         </div>
         <ul className="mt-7 flex flex-wrap justify-center gap-x-5 gap-y-3" aria-label={dictionary.cta.trustLabel}>

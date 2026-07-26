@@ -86,6 +86,20 @@ export function Features() {
         <motion.div className="mx-auto max-w-3xl text-center" initial={reducedMotion ? false : { opacity: 1, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: reducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}>
           <h2 id="features-title" className="text-4xl font-bold tracking-[-0.045em] text-[var(--on-surface)] sm:text-5xl">{dictionary.features.title}</h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{dictionary.features.subtitle}</p>
+          <p className="mt-6 text-center text-sm font-medium text-[var(--on-surface-variant)] opacity-80">{dictionary.features.statisticsIntro}</p>
+          <dl className="mt-3 grid h-[68px] grid-cols-3">
+            {dictionary.features.statistics.map((statistic) => (
+              <div key={statistic.label} className="flex min-w-0 flex-col items-center justify-center border-l border-[var(--outline-variant)] px-1 first:border-l-0 sm:px-4">
+                <dt className="order-2 mt-1 whitespace-nowrap text-[0.65rem] font-medium text-[var(--on-surface-variant)] sm:text-xs">
+                  <span className="sm:hidden">{statistic.shortLabel}</span>
+                  <span className="hidden sm:inline">{statistic.label}</span>
+                </dt>
+                <dd className="order-1 text-2xl font-semibold tracking-[-0.035em] text-[var(--on-surface)] sm:text-3xl">
+                  {statistic.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </motion.div>
         <div className="mt-12 lg:mt-20 lg:grid lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-start lg:gap-16 xl:gap-24">
           <div className="space-y-8 lg:space-y-0">

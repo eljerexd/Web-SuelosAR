@@ -53,6 +53,12 @@ const es = {
   features: {
     title: "Mapas de suelos y herramientas GIS para el campo",
     subtitle: "Mapas de suelos, Cartas de Suelo y herramientas GIS para la agronomía y la planificación agrícola en Buenos Aires, Argentina. Pensado para productores agropecuarios, consultores, investigadores y estudiantes.",
+    statisticsIntro: "SuelosAR actualmente cuenta con",
+    statistics: [
+      { value: "386", label: "Cartas de Suelo", shortLabel: "Cartas" },
+      { value: "407", label: "Series de suelo", shortLabel: "Series" },
+      { value: "2.274", label: "Polígonos GIS", shortLabel: "Polígonos" },
+    ],
     items: [
       { title: "Mapa GIS interactivo", description: "Explorá mapas de suelos de la Provincia de Buenos Aires en un entorno GIS rápido e intuitivo, diseñado para el trabajo de campo.", imageAlt: "Mapa GIS interactivo de SuelosAR con cartografía de suelos de la Provincia de Buenos Aires" },
       { title: "Cartografía oficial", description: "Consultá Cartas de Suelo con información de unidades cartográficas, series de suelo y descripciones del paisaje directamente desde el mapa.", imageAlt: "Carta de Suelo con unidades cartográficas y series de suelo en SuelosAR" },
@@ -101,8 +107,8 @@ const es = {
   cta: {
     title: "Llevá la cartografía oficial al campo.",
     description: "Descargá SuelosAR y accedé a la cartografía oficial de suelos de la Provincia de Buenos Aires, incluso sin conexión.",
-    downloadAndroid: "Descargar para Android (.apk)",
-    downloadWindows: "Descargar para Windows (.exe)",
+    downloadAndroid: "Descargar para Android",
+    downloadWindows: "Descargar para Windows",
     trustLabel: "Información de confianza",
     badges: ["Provincia de Buenos Aires", "Basado en cartografía oficial del INTA", "Funciona sin conexión"],
   },
@@ -246,6 +252,12 @@ const en: Dictionary = {
   features: {
     title: "Soil maps and GIS tools for field work",
     subtitle: "Soil maps, soil surveys and GIS tools for agronomy and agricultural planning in Buenos Aires Province, Argentina. Built for agricultural producers, consultants, researchers and students.",
+    statisticsIntro: "SuelosAR currently includes",
+    statistics: [
+      { value: "386", label: "Soil Maps", shortLabel: "Maps" },
+      { value: "407", label: "Soil Series", shortLabel: "Series" },
+      { value: "2,274", label: "GIS Polygons", shortLabel: "Polygons" },
+    ],
     items: [
       { title: "Interactive GIS Map", description: "Explore Buenos Aires soil maps in a fast, intuitive GIS environment designed for field work.", imageAlt: "Interactive SuelosAR GIS map displaying Buenos Aires Province soil maps" },
       { title: "Official Cartography", description: "Consult soil surveys with mapping units, soil series and landscape descriptions directly from the map.", imageAlt: "SuelosAR soil survey with mapping units, soil series and landscape information" },
@@ -294,8 +306,8 @@ const en: Dictionary = {
   cta: {
     title: "Take official soil cartography into the field.",
     description: "Download SuelosAR and access official soil maps of Buenos Aires Province, even offline.",
-    downloadAndroid: "Download for Android (.apk)",
-    downloadWindows: "Download for Windows (.exe)",
+    downloadAndroid: "Download for Android",
+    downloadWindows: "Download for Windows",
     trustLabel: "Trusted information",
     badges: ["Buenos Aires Province", "Based on official INTA soil cartography", "Works offline"],
   },

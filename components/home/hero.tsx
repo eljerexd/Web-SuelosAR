@@ -1,13 +1,13 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { CircleDollarSign, Database, Grid2x2, ShieldCheck, Smartphone, WifiOff } from "lucide-react";
+import { CircleDollarSign, Grid2x2, MapPinned, Smartphone, Sparkles, WifiOff } from "lucide-react";
 
 import { HeroDeviceShowcase } from "@/components/home/hero-device-showcase";
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
 
-const trustIcons = [CircleDollarSign, WifiOff, Database, ShieldCheck] as const;
+const trustIcons = [CircleDollarSign, WifiOff, MapPinned, Sparkles] as const;
 const easing = [0.22, 1, 0.36, 1] as const;
 const textItem = { hidden: { opacity: 1, y: 18 }, visible: { opacity: 1, y: 0 } };
 
