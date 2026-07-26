@@ -11,12 +11,14 @@ interface PlatformCardProps {
   version: string;
   requirementsLabel: string;
   requirements: string;
+  downloadSizeLabel: string;
+  downloadSize: string;
   index: number;
   reducedMotion: boolean;
 }
 
 /** Reusable installer card for current and future SuelosAR platforms. */
-export function PlatformCard({ icon: Icon, title, description, versionLabel, version, requirementsLabel, requirements, index, reducedMotion }: PlatformCardProps) {
+export function PlatformCard({ icon: Icon, title, description, versionLabel, version, requirementsLabel, requirements, downloadSizeLabel, downloadSize, index, reducedMotion }: PlatformCardProps) {
   return (
     <motion.article
       className="group flex h-full flex-col rounded-[1.75rem] border border-[var(--outline-variant)] bg-[var(--surface-container)]/72 p-6 shadow-[var(--shadow-soft)] transition-[background-color,box-shadow] duration-300 hover:bg-[var(--surface-container-high)] hover:shadow-md sm:p-7"
@@ -37,6 +39,10 @@ export function PlatformCard({ icon: Icon, title, description, versionLabel, ver
         <div>
           <dt className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--on-surface-variant)]">{requirementsLabel}</dt>
           <dd className="mt-1 text-sm leading-6 text-[var(--on-surface-variant)]">{requirements}</dd>
+        </div>
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--on-surface-variant)]">{downloadSizeLabel}</dt>
+          <dd className="mt-1 text-sm font-semibold text-[var(--on-surface)] sm:text-base">{downloadSize}</dd>
         </div>
       </dl>
     </motion.article>

@@ -43,11 +43,12 @@ const es = {
     windowsScreenAlt: "Mapa de suelos y búsqueda cartográfica en SuelosAR para Windows",
   },
   platforms: {
+    overline: "Plataformas",
     title: "Plataformas compatibles",
     subtitle: "Elegí la versión compatible con tu dispositivo.",
     cards: [
-      { title: "Android", description: "Para teléfonos y tablets Android.", versionLabel: "Versión compatible", version: "Android 10 o posterior", requirementsLabel: "Requisitos", requirements: "Dispositivo Android con espacio disponible para la cartografía offline." },
-      { title: "Windows", description: "Para computadoras de escritorio y notebooks.", versionLabel: "Versión compatible", version: "Windows 10 u 11", requirementsLabel: "Requisitos", requirements: "Equipo con Windows y espacio disponible para la cartografía offline." },
+      { title: "Android", description: "Compatible con teléfonos y tablets Android.", versionLabel: "Versión compatible", version: "Android 10 o posterior", requirementsLabel: "Ideal para", requirements: "Trabajo de campo completamente offline.", downloadSizeLabel: "Tamaño de descarga", downloadSize: "418 MB" },
+      { title: "Windows", description: "Compatible con computadoras de escritorio y notebooks.", versionLabel: "Versión compatible", version: "Windows 10/11", requirementsLabel: "Ideal para", requirements: "Consulta y planificación desde PC.", downloadSizeLabel: "Tamaño de descarga", downloadSize: "219 MB" },
     ],
   },
   features: {
@@ -242,11 +243,12 @@ const en: Dictionary = {
     windowsScreenAlt: "Soil map and cartography search in SuelosAR for Windows",
   },
   platforms: {
+    overline: "Platforms",
     title: "Supported Platforms",
     subtitle: "Choose the version compatible with your device.",
     cards: [
-      { title: "Android", description: "For Android phones and tablets.", versionLabel: "Supported version", version: "Android 10 or later", requirementsLabel: "Requirements", requirements: "Android device with available storage for offline cartography." },
-      { title: "Windows", description: "For desktop and laptop computers.", versionLabel: "Supported version", version: "Windows 10 or 11", requirementsLabel: "Requirements", requirements: "Windows computer with available storage for offline cartography." },
+      { title: "Android", description: "Compatible with Android phones and tablets.", versionLabel: "Supported version", version: "Android 10 or later", requirementsLabel: "Ideal for", requirements: "Completely offline field work.", downloadSizeLabel: "Download size", downloadSize: "418 MB" },
+      { title: "Windows", description: "Compatible with desktop and laptop computers.", versionLabel: "Supported version", version: "Windows 10/11", requirementsLabel: "Ideal for", requirements: "Consultation and planning from a PC.", downloadSizeLabel: "Download size", downloadSize: "219 MB" },
     ],
   },
   features: {
