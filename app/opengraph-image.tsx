@@ -8,8 +8,8 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OpenGraphImage() {
-  const iconBase64 = readFileSync(join(process.cwd(), "app/icon.png")).toString("base64");
-  const iconSrc = `data:image/png;base64,${iconBase64}`;
+  const logoBase64 = readFileSync(join(process.cwd(), "public/images/brand/logo-og.jpg")).toString("base64");
+  const logoSrc = `data:image/jpeg;base64,${logoBase64}`;
 
   return new ImageResponse(
     (
@@ -33,7 +33,7 @@ export default function OpenGraphImage() {
         <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", width: 820, padding: "72px 78px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 18, fontSize: 28, fontWeight: 700, letterSpacing: "-0.02em" }}>
             {/* eslint-disable-next-line @next/next/no-img-element -- next/image is unsupported inside next/og's ImageResponse (satori) rendering */}
-            <img src={iconSrc} width={54} height={54} alt="" style={{ borderRadius: 16 }} />
+            <img src={logoSrc} width={54} height={54} alt="" style={{ borderRadius: 16, objectFit: "cover" }} />
             SuelosAR
           </div>
           <div style={{ marginTop: 54, fontSize: 64, lineHeight: 1.04, letterSpacing: "-0.055em", fontWeight: 800 }}>
