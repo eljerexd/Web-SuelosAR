@@ -141,6 +141,12 @@ const es = {
     github: "GitHub",
     email: "Correo electrónico",
     copyright: "© 2026 SuelosAR",
+    social: {
+      youtube: "SuelosAR en YouTube",
+      tiktok: "SuelosAR en TikTok",
+      instagram: "SuelosAR en Instagram",
+      facebook: "SuelosAR en Facebook",
+    },
   },
   legal: {
     backHome: "Volver al inicio",
@@ -341,6 +347,12 @@ const en: Dictionary = {
     github: "GitHub",
     email: "Email",
     copyright: "© 2026 SuelosAR",
+    social: {
+      youtube: "SuelosAR on YouTube",
+      tiktok: "SuelosAR on TikTok",
+      instagram: "SuelosAR on Instagram",
+      facebook: "SuelosAR on Facebook",
+    },
   },
   legal: {
     backHome: "Back to home",

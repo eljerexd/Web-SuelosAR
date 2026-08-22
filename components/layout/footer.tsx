@@ -5,7 +5,9 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
+import { FacebookIcon, InstagramIcon, TiktokIcon, YoutubeIcon } from "@/components/ui/social-icons";
 import { siteConfig } from "@/lib/site";
+import { socialLinks } from "@/lib/social";
 
 export function Footer() {
   const { dictionary } = useI18n();
@@ -64,8 +66,30 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-[var(--outline-variant)] pt-6 text-sm text-[var(--on-surface-variant)]">
+        <div className="mt-8 flex flex-col gap-4 border-t border-[var(--outline-variant)] pt-6 text-sm text-[var(--on-surface-variant)] sm:flex-row sm:items-center sm:justify-between">
           <p>{dictionary.footer.copyright}</p>
+          <ul className="flex items-center gap-4">
+            <li>
+              <a href={socialLinks.youtube} target="_blank" rel="noopener noreferrer" aria-label={dictionary.footer.social.youtube} title={dictionary.footer.social.youtube} className="inline-flex text-[var(--on-surface-variant)] transition-colors hover:text-[var(--primary)]">
+                <YoutubeIcon width={17} height={17} />
+              </a>
+            </li>
+            <li>
+              <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer" aria-label={dictionary.footer.social.tiktok} title={dictionary.footer.social.tiktok} className="inline-flex text-[var(--on-surface-variant)] transition-colors hover:text-[var(--primary)]">
+                <TiktokIcon width={17} height={17} />
+              </a>
+            </li>
+            <li>
+              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label={dictionary.footer.social.instagram} title={dictionary.footer.social.instagram} className="inline-flex text-[var(--on-surface-variant)] transition-colors hover:text-[var(--primary)]">
+                <InstagramIcon width={17} height={17} />
+              </a>
+            </li>
+            <li>
+              <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" aria-label={dictionary.footer.social.facebook} title={dictionary.footer.social.facebook} className="inline-flex text-[var(--on-surface-variant)] transition-colors hover:text-[var(--primary)]">
+                <FacebookIcon width={17} height={17} />
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>
