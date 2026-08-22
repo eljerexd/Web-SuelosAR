@@ -1,12 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { Grid2x2, Smartphone } from "lucide-react";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { PlatformCard } from "@/components/platforms/platform-card";
+import type { Platform } from "@/components/ui/platform-icon";
 
-const platformIcons = [Smartphone, Grid2x2] as const;
+const platformKeys: readonly Platform[] = ["android", "windows"];
 
 export function AvailablePlatforms() {
   const reducedMotion = useReducedMotion();
@@ -23,7 +23,7 @@ export function AvailablePlatforms() {
 
         <div className="mt-12 grid gap-5 md:grid-cols-2 md:gap-6 lg:mt-14">
           {dictionary.platforms.cards.map((platform, index) => (
-            <PlatformCard key={platform.title} icon={platformIcons[index]} {...platform} index={index} reducedMotion={Boolean(reducedMotion)} />
+            <PlatformCard key={platform.title} platform={platformKeys[index]} {...platform} index={index} reducedMotion={Boolean(reducedMotion)} />
           ))}
         </div>
       </div>

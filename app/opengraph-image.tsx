@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import { ImageResponse } from "next/og";
 
 export const alt = "SuelosAR, mapas de suelos y herramientas GIS para la Provincia de Buenos Aires";
@@ -5,6 +8,9 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OpenGraphImage() {
+  const iconBase64 = readFileSync(join(process.cwd(), "app/icon.png")).toString("base64");
+  const iconSrc = `data:image/png;base64,${iconBase64}`;
+
   return new ImageResponse(
     (
       <div
@@ -26,7 +32,8 @@ export default function OpenGraphImage() {
 
         <div style={{ position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", width: 820, padding: "72px 78px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 18, fontSize: 28, fontWeight: 700, letterSpacing: "-0.02em" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 54, height: 54, borderRadius: 16, background: "#b2f0c0", color: "#0b4f2a", fontSize: 30, fontWeight: 800 }}>S</div>
+            {/* eslint-disable-next-line @next/next/no-img-element -- next/image is unsupported inside next/og's ImageResponse (satori) rendering */}
+            <img src={iconSrc} width={54} height={54} alt="" style={{ borderRadius: 16 }} />
             SuelosAR
           </div>
           <div style={{ marginTop: 54, fontSize: 64, lineHeight: 1.04, letterSpacing: "-0.055em", fontWeight: 800 }}>

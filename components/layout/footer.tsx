@@ -1,6 +1,6 @@
 "use client";
 
-import { Code2, Database, Mail } from "lucide-react";
+import { Code2, Mail, Map } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -55,7 +55,7 @@ export function Footer() {
         </div>
 
         <div id="data-sources" className="mt-12 grid gap-5 rounded-[1.5rem] border border-[var(--outline-variant)] bg-[var(--surface-container)]/72 p-5 sm:p-6 lg:grid-cols-[auto_1fr] lg:gap-6">
-          <div className="grid size-11 place-items-center rounded-2xl bg-[var(--primary-container)] text-[var(--on-primary-container)]"><Database aria-hidden="true" size={21} strokeWidth={1.8} /></div>
+          <div className="grid size-11 place-items-center rounded-2xl bg-[var(--primary-container)] text-[var(--on-primary-container)]"><Map aria-hidden="true" size={21} strokeWidth={1.8} /></div>
           <div>
             <h2 className="text-sm font-semibold text-[var(--on-surface)]">{dictionary.footer.dataSourcesTitle}</h2>
             <p className="mt-2 text-sm leading-6 text-[var(--on-surface-variant)]">

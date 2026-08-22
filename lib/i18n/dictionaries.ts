@@ -7,8 +7,8 @@ const es = {
     name: "SuelosAR",
   },
   meta: {
-    title: "Mapas de Suelos de Buenos Aires y GIS | SuelosAR",
-    description: "Consultá mapas y Cartas de Suelo de Buenos Aires sin conexión con SuelosAR, una app GIS gratuita para Android y Windows basada en fuentes del INTA.",
+    title: "SuelosAR | Mapas de suelos y GIS de Buenos Aires",
+    description: "Mapas de suelos, Cartas de Suelo y herramientas GIS para la Provincia de Buenos Aires. Disponible para Android y Windows.",
   },
   language: {
     selectorLabel: "Seleccionar idioma",

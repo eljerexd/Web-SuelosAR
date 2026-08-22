@@ -1,10 +1,11 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { CircleDollarSign, Grid2x2, MapPinned, Smartphone, Sparkles, WifiOff } from "lucide-react";
+import { CircleDollarSign, MapPinned, Sparkles, WifiOff } from "lucide-react";
 
 import { HeroDeviceShowcase } from "@/components/home/hero-device-showcase";
 import { useI18n } from "@/components/i18n/i18n-provider";
+import { PlatformIcon } from "@/components/ui/platform-icon";
 import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
 
 const trustIcons = [CircleDollarSign, WifiOff, MapPinned, Sparkles] as const;
@@ -44,7 +45,7 @@ export function Hero({ releaseLabel }: HeroProps) {
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.6, ease: easing }} className="mt-11 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <motion.a href={ANDROID_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">
-                <Smartphone size={26} strokeWidth={2.2} />
+                <PlatformIcon platform="android" size={20} />
               </span>
               <span className="flex flex-col items-center">
                 <span>{dictionary.hero.downloadAndroid}</span>
@@ -53,7 +54,7 @@ export function Hero({ releaseLabel }: HeroProps) {
             </motion.a>
             <motion.a href={WINDOWS_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">
-                <Grid2x2 size={25} strokeWidth={2.2} />
+                <PlatformIcon platform="windows" size={19} />
               </span>
               <span className="flex flex-col items-center">
                 <span>{dictionary.hero.downloadWindows}</span>
