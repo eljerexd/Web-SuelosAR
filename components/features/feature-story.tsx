@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { memo, type RefCallback } from "react";
 
+import { ImageLightbox } from "@/components/ui/image-lightbox";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
 
 interface FeatureStoryProps {
@@ -43,7 +44,9 @@ export const FeatureStory = memo(function FeatureStory({ title, description, ima
       <p className="mt-5 max-w-lg text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{description}</p>
 
       <div className="mt-9 lg:hidden">
-        <LaptopMockup screenSrc={src} screenAlt={imageAlt} deviceLabel={title} className="w-full" />
+        <ImageLightbox src={src} alt={imageAlt}>
+          <LaptopMockup screenSrc={src} screenAlt={imageAlt} deviceLabel={title} className="w-full" />
+        </ImageLightbox>
       </div>
     </motion.article>
   );

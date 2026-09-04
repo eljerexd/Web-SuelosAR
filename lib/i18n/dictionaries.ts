@@ -7,8 +7,8 @@ const es = {
     name: "SuelosAR",
   },
   meta: {
-    title: "SuelosAR | Mapas de suelos y GIS de Buenos Aires",
-    description: "Mapas de suelos, Cartas de Suelo y herramientas GIS para la Provincia de Buenos Aires. Disponible para Android y Windows.",
+    title: "SuelosAR | Mapas de Suelos de Buenos Aires y GIS",
+    description: "Mapas de suelos y Cartas de Suelo de la Provincia de Buenos Aires: cartografía oficial del INTA, herramientas GIS y uso offline. Disponible para Android y Windows.",
   },
   language: {
     selectorLabel: "Seleccionar idioma",
@@ -32,9 +32,9 @@ const es = {
   },
   hero: {
     label: "Disponible para Android y Windows",
-    titleLineOne: "Cartografía oficial de suelos de la Provincia de Buenos Aires.",
+    titleLineOne: "Mapas de suelos y cartografía oficial de la Provincia de Buenos Aires.",
     titleLineTwo: "En cualquier lugar. Incluso sin conexión.",
-    description: "Consultá mapas de suelos, Cartas de Suelo en PDF y herramientas GPS desde una aplicación independiente diseñada para trabajar completamente offline.",
+    description: "Consultá mapas y cartografía de suelos, Cartas de Suelo en PDF y herramientas GPS desde una aplicación independiente diseñada para trabajar completamente offline.",
     downloadAndroid: "Descargar para Android",
     downloadWindows: "Descargar para Windows",
     compatibility: "Compatible con Android 10+ y Windows 10/11",
@@ -85,6 +85,7 @@ const es = {
       { question: "¿Qué es SuelosAR?", answer: "SuelosAR es una aplicación independiente para Android y Windows que permite consultar cartografía de suelos y trabajar con herramientas GIS." },
       { question: "¿Funciona sin internet?", answer: "Sí. La cartografía y las herramientas principales siguen disponibles sin conexión." },
       { question: "¿Qué provincias incluye actualmente?", answer: "La versión actual incluye exclusivamente la Provincia de Buenos Aires." },
+      { question: "¿Dónde puedo ver el mapa de suelos de la Provincia de Buenos Aires?", answer: "Podés explorarlo directamente desde SuelosAR, o conocer en detalle qué representa y cómo consultarlo.", link: { href: "/mapa-suelos-buenos-aires", label: "Mapa de suelos de la Provincia de Buenos Aires." } },
       { question: "¿De dónde provienen los datos?", answer: "La información proviene de Cartas de Suelo y cartografía oficial publicada por el INTA.", link: { href: "/data-sources", label: "Consultá las fuentes de cartografía de suelos." } },
       { question: "¿Es gratuita?", answer: "Sí. SuelosAR se puede descargar y utilizar de forma gratuita." },
       { question: "¿Qué dispositivos son compatibles?", answer: "SuelosAR es compatible con Android 10 o posterior y Windows 10/11." },
@@ -126,6 +127,7 @@ const es = {
     ],
     legalTitle: "Legal",
     legalItems: [
+      { label: "Mapa de suelos de Buenos Aires", href: "/mapa-suelos-buenos-aires" },
       { label: "Política de privacidad", href: "/privacy" },
       { label: "Términos de uso", href: "/terms" },
       { label: "Aviso legal", href: "/disclaimer" },

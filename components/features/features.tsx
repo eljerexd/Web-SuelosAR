@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
+import { ImageLightbox } from "@/components/ui/image-lightbox";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
 import { getActiveFeatureIndex } from "@/lib/product-tour-scroll";
 import { FeatureStory } from "./feature-story";
@@ -127,27 +128,29 @@ export function Features() {
               <div className="pointer-events-none absolute inset-x-[7%] bottom-[8%] h-[18%] rounded-[50%] bg-black/20 blur-3xl dark:bg-black/35" aria-hidden="true" />
               <div className="relative aspect-[1.72] w-full">
                 <div className="absolute inset-0 flex items-center">
-                  <LaptopMockup
-                    screenSrc={activeFeature.src}
-                    screenAlt={activeFeature.imageAlt}
-                    deviceLabel={activeFeature.title}
-                    className="w-full"
-                    screenContent={
-                      <AnimatePresence initial={false} mode="sync">
-                        <motion.div
-                          key={activeFeature.src}
-                          className="absolute inset-0"
-                          initial={reducedMotion ? false : { opacity: 0, scale: 0.98, filter: "blur(1.5px)" }}
-                          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                          exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985, filter: "blur(1.5px)" }}
-                          transition={{ duration: reducedMotion ? 0 : 0.46, ease: easing }}
-                          style={{ willChange: "transform, opacity, filter" }}
-                        >
-                          <Image src={activeFeature.src} alt={activeFeature.imageAlt} fill sizes="52vw" />
-                        </motion.div>
-                      </AnimatePresence>
-                    }
-                  />
+                  <ImageLightbox src={activeFeature.src} alt={activeFeature.imageAlt}>
+                    <LaptopMockup
+                      screenSrc={activeFeature.src}
+                      screenAlt={activeFeature.imageAlt}
+                      deviceLabel={activeFeature.title}
+                      className="w-full"
+                      screenContent={
+                        <AnimatePresence initial={false} mode="sync">
+                          <motion.div
+                            key={activeFeature.src}
+                            className="absolute inset-0"
+                            initial={reducedMotion ? false : { opacity: 0, scale: 0.98, filter: "blur(1.5px)" }}
+                            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                            exit={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.985, filter: "blur(1.5px)" }}
+                            transition={{ duration: reducedMotion ? 0 : 0.46, ease: easing }}
+                            style={{ willChange: "transform, opacity, filter" }}
+                          >
+                            <Image src={activeFeature.src} alt={activeFeature.imageAlt} fill sizes="52vw" />
+                          </motion.div>
+                        </AnimatePresence>
+                      }
+                    />
+                  </ImageLightbox>
                 </div>
               </div>
             </div>
