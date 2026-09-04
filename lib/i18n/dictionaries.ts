@@ -25,6 +25,8 @@ const es = {
     androidDevice: "SuelosAR en un teléfono Android",
     windowsDevice: "SuelosAR en una notebook con Windows",
     applicationCapabilities: "Funciones de la aplicación",
+    expandImage: "Ampliar imagen: {alt}",
+    closeImage: "Cerrar imagen ampliada",
   },
   theme: {
     activateLight: "Activar tema claro",
@@ -90,6 +92,63 @@ const es = {
       { question: "¿Es gratuita?", answer: "Sí. SuelosAR se puede descargar y utilizar de forma gratuita." },
       { question: "¿Qué dispositivos son compatibles?", answer: "SuelosAR es compatible con Android 10 o posterior y Windows 10/11." },
     ],
+  },
+  soilMap: {
+    badge: "Provincia de Buenos Aires",
+    title: "Mapa de Suelos de la Provincia de Buenos Aires",
+    subtitle: "Qué es, cómo se organiza y cómo consultarla con SuelosAR.",
+    intro: {
+      title: "¿Qué es un mapa de suelos?",
+      paragraph: "Organiza el territorio en unidades según sus características de suelo — una referencia para la agronomía, la planificación y el trabajo de campo.",
+    },
+    glossary: [
+      { term: "Unidad cartográfica", description: "Cada zona delimitada en el mapa según sus características de suelo." },
+      { term: "Serie de suelo", description: "Clasifica el tipo de suelo y sus propiedades dentro de una unidad." },
+      { term: "Carta de Suelo", description: "El informe oficial que documenta una unidad y sus series." },
+    ],
+    inta: {
+      title: "Mapa de suelos de Buenos Aires e INTA",
+      paragraph: "La cartografía se basa en fuentes oficiales del INTA, sin implicar afiliación con el organismo.",
+      linkLabel: "Conocé las fuentes de datos.",
+    },
+    stats: [
+      { value: "386", label: "Cartas de Suelo" },
+      { value: "407", label: "Series de suelo" },
+      { value: "2.274", label: "Unidades" },
+    ],
+    usage: {
+      title: "¿Para qué sirve?",
+      items: [
+        "Interpretar el territorio y sus características de suelo.",
+        "Planificar decisiones agrícolas y productivas.",
+        "Dar apoyo al trabajo de campo.",
+        "Habilitar análisis territoriales con GIS.",
+      ],
+    },
+    howTo: {
+      title: "¿Cómo consultarla?",
+      text: "Buscá una localidad, unidad o serie en SuelosAR para abrir su Carta de Suelo.",
+      linkLabel: "Ver todas las funcionalidades.",
+    },
+    coverage: {
+      title: "Cobertura actual",
+      text: "Otras provincias se sumarán si existen fuentes oficiales disponibles.",
+    },
+    faq: {
+      title: "Preguntas frecuentes",
+      items: [
+        { question: "¿Qué es un mapa de suelos?", answer: "Representación cartográfica que organiza el territorio en unidades según sus características de suelo." },
+        { question: "¿Qué es una Carta de Suelo?", answer: "El informe oficial que describe una unidad cartográfica y sus series de suelo asociadas." },
+        { question: "¿Qué diferencia hay entre un mapa de suelos y una Carta de Suelo?", answer: "El mapa muestra la ubicación de cada unidad; la Carta de Suelo la describe en detalle." },
+        { question: "¿Qué información puedo consultar en la cartografía?", answer: "Unidades cartográficas, series de suelo, descripciones del paisaje y Cartas de Suelo en PDF." },
+      ],
+    },
+    closing: {
+      title: "¿Querés explorar esta cartografía vos mismo?",
+      text: "Descargá SuelosAR para Android o Windows.",
+    },
+    imageAlt: "Carta de Suelo con unidades cartográficas y series de suelo consultada en SuelosAR",
+    deviceLabel: "Ejemplo de una Carta de Suelo",
   },
   downloadUnavailable: {
     eyebrow: "Descarga temporalmente no disponible",
@@ -233,6 +292,8 @@ const en: Dictionary = {
     androidDevice: "SuelosAR on an Android phone",
     windowsDevice: "SuelosAR on a Windows laptop",
     applicationCapabilities: "Application capabilities",
+    expandImage: "Expand image: {alt}",
+    closeImage: "Close expanded image",
   },
   theme: {
     activateLight: "Activate light theme",
@@ -297,6 +358,63 @@ const en: Dictionary = {
       { question: "Is it free?", answer: "Yes. SuelosAR can be downloaded and used free of charge." },
       { question: "Which devices are supported?", answer: "SuelosAR supports Android 10 or later and Windows 10/11." },
     ],
+  },
+  soilMap: {
+    badge: "Buenos Aires Province",
+    title: "Soil Map of Buenos Aires Province",
+    subtitle: "What it is, how it's organized and how to consult it with SuelosAR.",
+    intro: {
+      title: "What is a soil map?",
+      paragraph: "It organizes the territory into units based on soil characteristics — a reference for agronomy, planning and field work.",
+    },
+    glossary: [
+      { term: "Mapping unit", description: "Each area delimited on the map according to its soil characteristics." },
+      { term: "Soil series", description: "Classifies the soil type and its properties within a unit." },
+      { term: "Soil survey", description: "The official report documenting a unit and its series." },
+    ],
+    inta: {
+      title: "Buenos Aires Soil Map and INTA",
+      paragraph: "The cartography is based on official INTA sources, without implying affiliation with the organization.",
+      linkLabel: "Learn about the data sources.",
+    },
+    stats: [
+      { value: "386", label: "Soil Maps" },
+      { value: "407", label: "Soil Series" },
+      { value: "2,274", label: "Units" },
+    ],
+    usage: {
+      title: "What is a soil map used for?",
+      items: [
+        "Interpret the territory and its soil characteristics.",
+        "Plan agricultural and production decisions.",
+        "Support field work.",
+        "Enable land analysis with GIS.",
+      ],
+    },
+    howTo: {
+      title: "How to consult it?",
+      text: "Search for a locality, unit or series in SuelosAR to open its soil survey.",
+      linkLabel: "See all SuelosAR features.",
+    },
+    coverage: {
+      title: "Current coverage",
+      text: "Other provinces will be added if official sources become available.",
+    },
+    faq: {
+      title: "Frequently asked questions",
+      items: [
+        { question: "What is a soil map?", answer: "A cartographic representation that organizes the territory into units based on soil characteristics." },
+        { question: "What is a soil survey?", answer: "The official report that describes a mapping unit and its associated soil series." },
+        { question: "What's the difference between a soil map and a soil survey?", answer: "The map shows the location of each unit; the soil survey describes it in detail." },
+        { question: "What information can I consult in the cartography?", answer: "Mapping units, soil series, landscape descriptions and soil surveys in PDF." },
+      ],
+    },
+    closing: {
+      title: "Want to explore this cartography yourself?",
+      text: "Download SuelosAR for Android or Windows.",
+    },
+    imageAlt: "Soil survey with mapping units and soil series consulted in SuelosAR",
+    deviceLabel: "Example of a soil survey",
   },
   downloadUnavailable: {
     eyebrow: "Download temporarily unavailable",

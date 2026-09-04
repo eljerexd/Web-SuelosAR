@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, FileText, Layers, Tag } from "lucide-react";
 import Link from "next/link";
 
-import { SOIL_MAP_FAQ_ITEMS } from "@/components/soil-map/soil-map-data";
+import { useI18n } from "@/components/i18n/i18n-provider";
 import { ImageLightbox } from "@/components/ui/image-lightbox";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
 import { PlatformIcon } from "@/components/ui/platform-icon";
@@ -20,27 +20,13 @@ const linkClass = "font-medium text-[var(--primary)] underline decoration-[var(-
 const easing = [0.22, 1, 0.36, 1] as const;
 const textItem = { hidden: { opacity: 1, y: 18 }, visible: { opacity: 1, y: 0 } };
 
-const glosario = [
-  { icon: Layers, term: "Unidad cartográfica", description: "Cada zona delimitada en el mapa según sus características de suelo." },
-  { icon: Tag, term: "Serie de suelo", description: "Clasifica el tipo de suelo y sus propiedades dentro de una unidad." },
-  { icon: FileText, term: "Carta de Suelo", description: "El informe oficial que documenta una unidad y sus series." },
-] as const;
-
-const stats = [
-  { value: "386", label: "Cartas de Suelo" },
-  { value: "407", label: "Series de suelo" },
-  { value: "2.274", label: "Unidades" },
-] as const;
-
-const usoList = [
-  "Interpretar el territorio y sus características de suelo.",
-  "Planificar decisiones agrícolas y productivas.",
-  "Dar apoyo al trabajo de campo.",
-  "Habilitar análisis territoriales con GIS.",
-];
+/** Purely decorative, not translatable content — paired by index with dictionary.soilMap.glossary. */
+const glossaryIcons = [Layers, Tag, FileText] as const;
 
 export function SoilMapContent() {
   const reducedMotion = useReducedMotion();
+  const { dictionary } = useI18n();
+  const soilMap = dictionary.soilMap;
 
   return (
     <main id="contenido" tabIndex={-1} className="outline-none">
@@ -55,23 +41,23 @@ export function SoilMapContent() {
         >
           <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.5, ease: easing }} className="inline-flex items-center gap-2 rounded-full border border-[var(--outline-variant)] bg-[var(--surface-container)]/72 px-3.5 py-1.5 text-xs font-semibold tracking-[0.04em] text-[var(--on-surface-variant)] shadow-sm backdrop-blur-md">
             <span className="size-1.5 rounded-full bg-[var(--primary)]" aria-hidden="true" />
-            Provincia de Buenos Aires
+            {soilMap.badge}
           </motion.p>
-          <motion.h1 variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.62, ease: easing }} className="mt-7 text-4xl font-bold tracking-[-0.05em] text-[var(--on-surface)] sm:text-5xl lg:text-6xl">Mapa de Suelos de la Provincia de Buenos Aires</motion.h1>
-          <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className={`mx-auto mt-6 max-w-2xl ${paragraphClass}`}>Qué es, cómo se organiza y cómo consultarla con SuelosAR.</motion.p>
+          <motion.h1 variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.62, ease: easing }} className="mt-7 text-4xl font-bold tracking-[-0.05em] text-[var(--on-surface)] sm:text-5xl lg:text-6xl">{soilMap.title}</motion.h1>
+          <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className={`mx-auto mt-6 max-w-2xl ${paragraphClass}`}>{soilMap.subtitle}</motion.p>
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
             <motion.a href={ANDROID_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="android" size={20} /></span>
-              <span>Descargar para Android</span>
+              <span>{dictionary.hero.downloadAndroid}</span>
             </motion.a>
             <motion.a href={WINDOWS_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="windows" size={19} /></span>
-              <span>Descargar para Windows</span>
+              <span>{dictionary.hero.downloadWindows}</span>
             </motion.a>
           </motion.div>
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.5, ease: easing }}>
             <Link href="/" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold text-[var(--primary)] transition-colors duration-200 hover:bg-[var(--primary-container)] hover:text-[var(--on-primary-container)]">
-              <ArrowLeft aria-hidden="true" size={18} /> Volver al inicio
+              <ArrowLeft aria-hidden="true" size={18} /> {dictionary.legal.backHome}
             </Link>
           </motion.div>
         </motion.div>
@@ -89,8 +75,8 @@ export function SoilMapContent() {
           <div className="pointer-events-none absolute -right-16 -top-16 -z-10 size-72 rounded-full bg-[var(--primary-container)] opacity-25 blur-[90px] dark:opacity-15" aria-hidden="true" />
           <div className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-center lg:gap-8">
             <div>
-              <h2 id="que-es-un-mapa-de-suelos-title" className={h2Class}>¿Qué es un mapa de suelos?</h2>
-              <p className={`mt-3 ${paragraphClass}`}>Organiza el territorio en unidades según sus características de suelo — una referencia para la agronomía, la planificación y el trabajo de campo.</p>
+              <h2 id="que-es-un-mapa-de-suelos-title" className={h2Class}>{soilMap.intro.title}</h2>
+              <p className={`mt-3 ${paragraphClass}`}>{soilMap.intro.paragraph}</p>
 
               <motion.dl
                 className="mt-7 space-y-4"
@@ -99,15 +85,18 @@ export function SoilMapContent() {
                 viewport={{ once: true, amount: 0.4 }}
                 variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.09 } } }}
               >
-                {glosario.map(({ icon: Icon, term, description }) => (
-                  <motion.div key={term} variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.48, ease: easing }} className="flex items-start gap-3">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--primary-container)] text-[var(--on-primary-container)]" aria-hidden="true"><Icon size={17} strokeWidth={1.8} /></span>
-                    <div>
-                      <dt className="text-sm font-semibold text-[var(--on-surface)]">{term}</dt>
-                      <dd className="text-sm leading-6 text-[var(--on-surface-variant)]">{description}</dd>
-                    </div>
-                  </motion.div>
-                ))}
+                {soilMap.glossary.map(({ term, description }, index) => {
+                  const Icon = glossaryIcons[index];
+                  return (
+                    <motion.div key={term} variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.48, ease: easing }} className="flex items-start gap-3">
+                      <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--primary-container)] text-[var(--on-primary-container)]" aria-hidden="true"><Icon size={17} strokeWidth={1.8} /></span>
+                      <div>
+                        <dt className="text-sm font-semibold text-[var(--on-surface)]">{term}</dt>
+                        <dd className="text-sm leading-6 text-[var(--on-surface-variant)]">{description}</dd>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </motion.dl>
             </div>
 
@@ -120,8 +109,8 @@ export function SoilMapContent() {
               whileHover={reducedMotion ? undefined : { y: -4, transition: { duration: 0.22, ease: easing } }}
             >
               <div className="pointer-events-none absolute inset-x-6 -bottom-4 -z-10 h-16 rounded-full bg-[var(--primary)] opacity-[0.14] blur-[42px] dark:opacity-[0.1]" aria-hidden="true" />
-              <ImageLightbox src="/images/screenshots/feature-cartography.png" alt="Carta de Suelo con unidades cartográficas y series de suelo consultada en SuelosAR">
-                <LaptopMockup screenSrc="/images/screenshots/feature-cartography.png" screenAlt="Carta de Suelo con unidades cartográficas y series de suelo consultada en SuelosAR" deviceLabel="Ejemplo de una Carta de Suelo" className="w-full" />
+              <ImageLightbox src="/images/screenshots/feature-cartography.png" alt={soilMap.imageAlt}>
+                <LaptopMockup screenSrc="/images/screenshots/feature-cartography.png" screenAlt={soilMap.imageAlt} deviceLabel={soilMap.deviceLabel} className="w-full" />
               </ImageLightbox>
             </motion.div>
           </div>
@@ -133,12 +122,12 @@ export function SoilMapContent() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: reducedMotion ? 0 : 0.55, ease: easing }}
           >
-            <h2 id="suelosar-y-inta-title" className={h2Class}>Mapa de suelos de Buenos Aires e INTA</h2>
-            <p className={`mt-3 max-w-2xl ${paragraphClass}`}>La cartografía se basa en fuentes oficiales del INTA, sin implicar afiliación con el organismo.{" "}
-              <Link href="/data-sources" className={linkClass}>Conocé las fuentes de datos.</Link>
+            <h2 id="suelosar-y-inta-title" className={h2Class}>{soilMap.inta.title}</h2>
+            <p className={`mt-3 max-w-2xl ${paragraphClass}`}>{soilMap.inta.paragraph}{" "}
+              <Link href="/data-sources" className={linkClass}>{soilMap.inta.linkLabel}</Link>
             </p>
             <dl className="mt-6 grid max-w-md grid-cols-3">
-              {stats.map((stat) => (
+              {soilMap.stats.map((stat) => (
                 <div key={stat.label} className="flex min-w-0 flex-col border-l border-[var(--outline-variant)] px-3 first:border-l-0 sm:px-4">
                   <dd className="text-2xl font-semibold tracking-[-0.035em] text-[var(--on-surface)] sm:text-3xl">{stat.value}</dd>
                   <dt className="mt-1 text-xs font-medium text-[var(--on-surface-variant)]">{stat.label}</dt>
@@ -159,9 +148,9 @@ export function SoilMapContent() {
           variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.1 } } }}
         >
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.55, ease: easing }}>
-            <h2 id="para-que-sirve-title" className="text-lg font-bold tracking-[-0.025em] text-[var(--on-surface)]">¿Para qué sirve?</h2>
+            <h2 id="para-que-sirve-title" className="text-lg font-bold tracking-[-0.025em] text-[var(--on-surface)]">{soilMap.usage.title}</h2>
             <ul className="mt-4 space-y-2.5">
-              {usoList.map((item) => (
+              {soilMap.usage.items.map((item) => (
                 <li key={item} className="flex items-start gap-2.5 text-sm leading-6 text-[var(--on-surface-variant)]">
                   <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[var(--primary)]" aria-hidden="true" />
                   {item}
@@ -171,19 +160,19 @@ export function SoilMapContent() {
           </motion.div>
 
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.55, ease: easing }}>
-            <h2 id="como-consultar-title" className="text-lg font-bold tracking-[-0.025em] text-[var(--on-surface)]">¿Cómo consultarla?</h2>
-            <p className="mt-4 text-sm leading-6 text-[var(--on-surface-variant)]">Buscá una localidad, unidad o serie en SuelosAR para abrir su Carta de Suelo.{" "}
-              <Link href="/#features" className={linkClass}>Ver todas las funcionalidades.</Link>
+            <h2 id="como-consultar-title" className="text-lg font-bold tracking-[-0.025em] text-[var(--on-surface)]">{soilMap.howTo.title}</h2>
+            <p className="mt-4 text-sm leading-6 text-[var(--on-surface-variant)]">{soilMap.howTo.text}{" "}
+              <Link href="/#features" className={linkClass}>{soilMap.howTo.linkLabel}</Link>
             </p>
           </motion.div>
 
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.55, ease: easing }}>
-            <h2 id="cobertura-title" className="text-lg font-bold tracking-[-0.025em] text-[var(--on-surface)]">Cobertura actual</h2>
+            <h2 id="cobertura-title" className="text-lg font-bold tracking-[-0.025em] text-[var(--on-surface)]">{soilMap.coverage.title}</h2>
             <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-[var(--outline-variant)] bg-[var(--surface-container)]/72 px-3 py-1 text-xs font-semibold text-[var(--on-surface)]">
               <span className="size-1.5 rounded-full bg-[var(--primary)]" aria-hidden="true" />
-              Provincia de Buenos Aires
+              {soilMap.badge}
             </p>
-            <p className="mt-3 text-sm leading-6 text-[var(--on-surface-variant)]">Otras provincias se sumarán si existen fuentes oficiales disponibles.</p>
+            <p className="mt-3 text-sm leading-6 text-[var(--on-surface-variant)]">{soilMap.coverage.text}</p>
           </motion.div>
         </motion.div>
       </section>
@@ -199,7 +188,7 @@ export function SoilMapContent() {
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: reducedMotion ? 0 : 0.55, ease: easing }}
           >
-            Preguntas frecuentes
+            {soilMap.faq.title}
           </motion.h2>
           <motion.div
             className="mt-8 grid gap-3"
@@ -208,7 +197,7 @@ export function SoilMapContent() {
             viewport={{ once: true, amount: 0.15 }}
             variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.07 } } }}
           >
-            {SOIL_MAP_FAQ_ITEMS.map((item) => (
+            {soilMap.faq.items.map((item) => (
               <motion.div key={item.question} variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.48, ease: easing }} className={`${cardClass} p-5 transition-[background-color,box-shadow] duration-300 hover:bg-[var(--surface-container-high)] hover:shadow-md sm:p-7`}>
                 <h3 className="text-base font-semibold tracking-[-0.02em] text-[var(--on-surface)] sm:text-lg">{item.question}</h3>
                 <p className="mt-2 text-sm leading-6 text-[var(--on-surface-variant)] sm:text-base sm:leading-7">{item.answer}</p>
@@ -228,22 +217,22 @@ export function SoilMapContent() {
           transition={{ duration: reducedMotion ? 0 : 0.65, ease: easing }}
         >
           <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--primary-container)] opacity-35 blur-[100px] dark:opacity-20" aria-hidden="true" />
-          <h2 className="mx-auto max-w-3xl text-3xl font-bold tracking-[-0.045em] text-[var(--on-surface)] sm:text-4xl">¿Querés explorar esta cartografía vos mismo?</h2>
-          <p className={`mx-auto mt-5 max-w-2xl ${paragraphClass}`}>Descargá SuelosAR para Android o Windows.</p>
+          <h2 className="mx-auto max-w-3xl text-3xl font-bold tracking-[-0.045em] text-[var(--on-surface)] sm:text-4xl">{soilMap.closing.title}</h2>
+          <p className={`mx-auto mt-5 max-w-2xl ${paragraphClass}`}>{soilMap.closing.text}</p>
           <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
             <motion.a href={ANDROID_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="android" size={20} /></span>
-              <span>Descargar para Android</span>
+              <span>{dictionary.hero.downloadAndroid}</span>
             </motion.a>
             <motion.a href={WINDOWS_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="windows" size={19} /></span>
-              <span>Descargar para Windows</span>
+              <span>{dictionary.hero.downloadWindows}</span>
             </motion.a>
           </div>
           <p className="mt-7 text-sm text-[var(--on-surface-variant)]">
-            <Link href="/" className={linkClass}>Volver al inicio</Link>
+            <Link href="/" className={linkClass}>{dictionary.legal.backHome}</Link>
             {" · "}
-            <Link href="/data-sources" className={linkClass}>Fuentes de datos</Link>
+            <Link href="/data-sources" className={linkClass}>{dictionary.footer.dataSourcesTitle}</Link>
           </p>
         </motion.div>
       </section>

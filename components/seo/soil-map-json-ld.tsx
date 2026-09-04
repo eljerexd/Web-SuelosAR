@@ -1,5 +1,8 @@
-import { SOIL_MAP_FAQ_ITEMS } from "@/components/soil-map/soil-map-data";
+import { defaultLocale, dictionaries } from "@/lib/i18n/dictionaries";
 import { siteConfig } from "@/lib/site";
+
+/** Structured data always describes the default locale, matching how metadata is generated site-wide. */
+const soilMapFaqItems = dictionaries[defaultLocale].soilMap.faq.items;
 
 export function SoilMapJsonLd() {
   const organizationId = `${siteConfig.url}/#organization`;
@@ -28,7 +31,7 @@ export function SoilMapJsonLd() {
       {
         "@type": "FAQPage",
         "@id": `${pageUrl}/#faq`,
-        mainEntity: SOIL_MAP_FAQ_ITEMS.map((item) => ({
+        mainEntity: soilMapFaqItems.map((item) => ({
           "@type": "Question",
           name: item.question,
           acceptedAnswer: { "@type": "Answer", text: item.answer },

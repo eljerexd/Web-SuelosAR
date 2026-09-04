@@ -5,6 +5,8 @@ import { Maximize2, X } from "lucide-react";
 import { useEffect, useId, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
+import { useI18n } from "@/components/i18n/i18n-provider";
+
 const easing = [0.22, 1, 0.36, 1] as const;
 
 const noopSubscribe = () => () => {};
@@ -31,6 +33,7 @@ export function ImageLightbox({ src, alt, children, className = "" }: ImageLight
   const [open, setOpen] = useState(false);
   const mounted = useMounted();
   const reducedMotion = useReducedMotion();
+  const { dictionary } = useI18n();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const titleId = useId();
@@ -63,7 +66,7 @@ export function ImageLightbox({ src, alt, children, className = "" }: ImageLight
         ref={triggerRef}
         type="button"
         onClick={() => setOpen(true)}
-        aria-label={`Ampliar imagen: ${alt}`}
+        aria-label={dictionary.accessibility.expandImage.replace("{alt}", alt)}
         className={`group relative block w-full cursor-zoom-in text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface)] ${className}`}
       >
         {children}
@@ -91,7 +94,7 @@ export function ImageLightbox({ src, alt, children, className = "" }: ImageLight
                 ref={closeButtonRef}
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Cerrar imagen ampliada"
+                aria-label={dictionary.accessibility.closeImage}
                 className="fixed right-4 top-4 z-20 grid size-10 place-items-center rounded-full border border-[var(--outline-variant)] bg-[var(--surface-container)] text-[var(--on-surface)] shadow-[var(--shadow-soft)] transition-colors hover:bg-[var(--surface-container-high)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] sm:right-6 sm:top-6"
               >
                 <X size={18} strokeWidth={2} />
