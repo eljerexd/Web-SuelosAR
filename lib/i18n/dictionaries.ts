@@ -452,6 +452,7 @@ const en: Dictionary = {
     ],
     legalTitle: "Legal",
     legalItems: [
+      { label: "Buenos Aires Soil Map", href: "/mapa-suelos-buenos-aires" },
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms of Use", href: "/terms" },
       { label: "Disclaimer", href: "/disclaimer" },
