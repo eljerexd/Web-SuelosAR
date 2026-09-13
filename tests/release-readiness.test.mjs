@@ -74,8 +74,6 @@ test("footer contains real legal and contact destinations", async () => {
 test("critical marketing content is visible in server-rendered motion states", async () => {
   const files = [
     "components/home/hero.tsx",
-    "components/platforms/available-platforms.tsx",
-    "components/platforms/platform-card.tsx",
     "components/gallery/screenshot-gallery.tsx",
     "components/faq/faq.tsx",
     "components/cta/final-cta.tsx",

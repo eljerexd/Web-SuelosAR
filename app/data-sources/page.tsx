@@ -3,7 +3,7 @@ import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata(
   "Fuentes de cartografía de suelos",
-  "Consultá la procedencia, cobertura y criterios de verificación de las Cartas de Suelo de Buenos Aires utilizadas por SuelosAR.",
+  "Consultá la procedencia, cobertura y criterios de verificación de las fuentes de cartografía de suelos de Buenos Aires y Santa Fe utilizadas por SuelosAR.",
   "/data-sources",
 );
 

@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Map, MapPinned, WifiOff } from "lucide-react";
+import Link from "next/link";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { PlatformIcon } from "@/components/ui/platform-icon";
@@ -37,6 +38,9 @@ export function FinalCta() {
         <ul className="mt-7 flex flex-wrap justify-center gap-x-5 gap-y-3" aria-label={dictionary.cta.trustLabel}>
           {dictionary.cta.badges.map((label, index) => { const Icon = trustIcons[index]; return <li key={label} className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--on-surface-variant)]"><Icon aria-hidden="true" size={15} strokeWidth={1.8} />{label}</li>; })}
         </ul>
+        <p className="mt-7 text-sm text-[var(--on-surface-variant)]">
+          <Link href="/mapa-suelos-santa-fe" className="font-medium text-[var(--primary)] underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:decoration-[var(--primary)]">{dictionary.cta.santaFeLinkLabel}</Link>
+        </p>
       </motion.div>
     </section>
   );

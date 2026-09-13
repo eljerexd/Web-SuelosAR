@@ -20,7 +20,6 @@ test("contains the required local Next.js structure and i18n foundation", async 
   assert.match(layout, /lang=\{defaultLocale\}/);
   assert.match(layout, /<I18nProvider>/);
   assert.match(page, /<Hero \/>/);
-  assert.match(page, /<AvailablePlatforms \/>/);
   assert.match(page, /<Features \/>/);
   assert.match(page, /<ScreenshotGallery \/>/);
   assert.doesNotMatch(page, /<WhySuelosAR \/>/);

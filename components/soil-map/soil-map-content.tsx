@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, FileText, Layers, Tag } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
@@ -9,6 +10,7 @@ import { ImageLightbox } from "@/components/ui/image-lightbox";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
 import { PlatformIcon } from "@/components/ui/platform-icon";
 import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
+import { defaultHeroImageClassName, getCrossProvince, type ProvinceConfig } from "@/lib/provinces";
 
 const downloadButtonClass = "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]";
 const cardClass = "rounded-[2rem] border border-[var(--outline-variant)] bg-[var(--surface-container)]/72 shadow-[var(--shadow-soft)]";
@@ -23,16 +25,48 @@ const textItem = { hidden: { opacity: 1, y: 18 }, visible: { opacity: 1, y: 0 } 
 /** Purely decorative, not translatable content — paired by index with dictionary.soilMap.glossary. */
 const glossaryIcons = [Layers, Tag, FileText] as const;
 
-export function SoilMapContent() {
+interface SoilMapContentProps {
+  province: ProvinceConfig;
+}
+
+export function SoilMapContent({ province }: SoilMapContentProps) {
   const reducedMotion = useReducedMotion();
   const { dictionary } = useI18n();
-  const soilMap = dictionary.soilMap;
+  const soilMap = dictionary[province.dictionaryKey];
+  const crossProvince = getCrossProvince(province);
+  const heroImageSrc = province.heroImageSrc ?? province.imageSrc;
 
   return (
     <main id="contenido" tabIndex={-1} className="outline-none">
       {/* 1. Hero */}
-      <section className="relative isolate overflow-hidden px-5 pb-14 pt-14 sm:px-8 sm:pb-16 sm:pt-16 lg:pt-20">
+      <section className={`relative isolate overflow-hidden px-5 pt-14 sm:px-8 sm:pt-16 lg:pt-20 ${province.heroScreenshot ? "pb-20 sm:flex sm:min-h-[76svh] sm:flex-col sm:justify-center sm:pb-24 lg:min-h-[92svh] lg:pb-28" : "pb-14 sm:pb-16"}`}>
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,var(--hero-glow)_0%,transparent_46%)] opacity-70 dark:opacity-40" aria-hidden="true" />
+        {province.heroScreenshot ? (
+          <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: reducedMotion ? 0 : 1, ease: easing }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={heroImageSrc}
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                className={province.heroImageClassName ?? defaultHeroImageClassName}
+                style={{
+                  maskImage: "radial-gradient(ellipse 85% 72% at 50% 46%, black 30%, transparent 88%)",
+                  WebkitMaskImage: "radial-gradient(ellipse 85% 72% at 50% 46%, black 30%, transparent 88%)",
+                }}
+              />
+            </motion.div>
+            {/* Broad, soft darkening behind the headline column — a single smooth falloff, never a flat dark core, so edges stay naturally more visible without a hard boundary. */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_78%_72%_at_50%_42%,var(--surface)_0%,transparent_100%)] opacity-60 dark:opacity-[0.55]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--surface)_0%,transparent_16%,transparent_78%,var(--surface)_100%)]" />
+          </div>
+        ) : null}
         <motion.div
           className="mx-auto w-full max-w-3xl text-center"
           initial={reducedMotion ? false : "hidden"}
@@ -43,9 +77,9 @@ export function SoilMapContent() {
             <span className="size-1.5 rounded-full bg-[var(--primary)]" aria-hidden="true" />
             {soilMap.badge}
           </motion.p>
-          <motion.h1 variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.62, ease: easing }} className="mt-7 text-4xl font-bold tracking-[-0.05em] text-[var(--on-surface)] sm:text-5xl lg:text-6xl">{soilMap.title}</motion.h1>
-          <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className={`mx-auto mt-6 max-w-2xl ${paragraphClass}`}>{soilMap.subtitle}</motion.p>
-          <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+          <motion.h1 variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.62, ease: easing }} className={province.heroScreenshot ? "mt-9 text-5xl font-bold leading-[1.08] tracking-[-0.05em] text-[var(--on-surface)] sm:mt-10 sm:text-6xl sm:leading-[1.05] lg:text-7xl lg:leading-[1.03]" : "mt-7 text-4xl font-bold tracking-[-0.05em] text-[var(--on-surface)] sm:text-5xl lg:text-6xl"}>{soilMap.title}</motion.h1>
+          <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className={`mx-auto max-w-2xl ${paragraphClass} ${province.heroScreenshot ? "mt-7 sm:mt-8" : "mt-6"}`}>{soilMap.subtitle}</motion.p>
+          <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className={`flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center ${province.heroScreenshot ? "mt-11 sm:mt-12" : "mt-8"}`}>
             <motion.a href={ANDROID_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="android" size={20} /></span>
               <span>{dictionary.hero.downloadAndroid}</span>
@@ -65,77 +99,152 @@ export function SoilMapContent() {
 
       {/* Qué es + INTA: bloque informativo principal, con glosario visual, stats y una captura */}
       <section className="px-5 pb-14 sm:px-8 sm:pb-16">
-        <motion.article
-          className={`relative isolate mx-auto w-full max-w-5xl overflow-hidden ${cardClass} p-6 sm:p-10 lg:p-12`}
-          initial={reducedMotion ? false : { opacity: 1, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: reducedMotion ? 0 : 0.65, ease: easing }}
-        >
-          <div className="pointer-events-none absolute -right-16 -top-16 -z-10 size-72 rounded-full bg-[var(--primary-container)] opacity-25 blur-[90px] dark:opacity-15" aria-hidden="true" />
-          <div className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-center lg:gap-8">
-            <div>
-              <h2 id="que-es-un-mapa-de-suelos-title" className={h2Class}>{soilMap.intro.title}</h2>
-              <p className={`mt-3 ${paragraphClass}`}>{soilMap.intro.paragraph}</p>
+        {province.heroScreenshot ? (
+          <div className="mx-auto w-full max-w-5xl">
+            <motion.div
+              className="mx-auto max-w-2xl text-center"
+              initial={reducedMotion ? false : { opacity: 1, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: reducedMotion ? 0 : 0.6, ease: easing }}
+            >
+              <h2 className="text-4xl font-bold tracking-[-0.04em] text-[var(--on-surface)] sm:text-5xl lg:text-6xl">{soilMap.showcase.headline}</h2>
+              <p className={`mx-auto mt-4 max-w-xl ${paragraphClass}`}>{soilMap.showcase.supporting}</p>
+            </motion.div>
 
-              <motion.dl
-                className="mt-7 space-y-4"
-                initial={reducedMotion ? false : "hidden"}
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.4 }}
-                variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.09 } } }}
+            <motion.div
+              className="relative mx-auto mt-12 w-full max-w-4xl sm:mt-14"
+              initial={reducedMotion ? false : { opacity: 0, y: 24, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: reducedMotion ? 0 : 0.7, ease: easing }}
+            >
+              <div className="pointer-events-none absolute inset-x-10 -bottom-6 -z-10 h-20 rounded-full bg-[var(--primary)] opacity-[0.14] blur-[54px] dark:opacity-[0.09]" aria-hidden="true" />
+              <ImageLightbox src={province.imageSrc} alt={soilMap.imageAlt} className="overflow-hidden rounded-[1.75rem] border border-[var(--outline-variant)] shadow-[0_24px_60px_rgb(14_20_14/0.16)] dark:shadow-[0_28px_70px_rgb(0_0_0/0.4)]">
+                <Image src={province.imageSrc} alt={soilMap.imageAlt} width={1920} height={1080} className="h-auto w-full" sizes="(max-width: 639px) 92vw, (max-width: 1023px) 86vw, 896px" />
+              </ImageLightbox>
+            </motion.div>
+
+            <motion.dl
+              className="mx-auto mt-10 flex max-w-lg flex-wrap items-start justify-center gap-x-10 gap-y-5 text-center sm:mt-12"
+              initial={reducedMotion ? false : "hidden"}
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.08 } } }}
+            >
+              {soilMap.stats.map((stat) => (
+                <motion.div key={stat.label} variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.45, ease: easing }} className="flex flex-col items-center">
+                  <dd className="text-xl font-semibold tracking-[-0.03em] text-[var(--on-surface)] sm:text-2xl">{stat.value}</dd>
+                  <dt className="mt-1 text-xs font-medium text-[var(--on-surface-variant)]">{stat.label}</dt>
+                </motion.div>
+              ))}
+            </motion.dl>
+
+            <motion.div
+              className="mx-auto mt-14 grid max-w-4xl gap-x-8 gap-y-6 border-t border-[var(--outline-variant)] pt-10 sm:mt-16 sm:grid-cols-3 sm:pt-12"
+              initial={reducedMotion ? false : "hidden"}
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.4 }}
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.08 } } }}
+            >
+              {soilMap.glossary.map(({ term, description }, index) => {
+                const Icon = glossaryIcons[index];
+                return (
+                  <motion.div key={term} variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.45, ease: easing }} className="flex items-start gap-2.5">
+                    <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-[var(--primary-container)]/70 text-[var(--on-primary-container)]" aria-hidden="true"><Icon size={13} strokeWidth={1.8} /></span>
+                    <div>
+                      <dt className="text-xs font-semibold text-[var(--on-surface)]">{term}</dt>
+                      <dd className="mt-0.5 text-xs leading-5 text-[var(--on-surface-variant)]">{description}</dd>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+
+            <motion.p
+              className="mx-auto mt-8 max-w-2xl text-center text-xs leading-5 text-[var(--on-surface-variant)] sm:mt-10"
+              initial={reducedMotion ? false : { opacity: 1, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.6 }}
+              transition={{ duration: reducedMotion ? 0 : 0.45, ease: easing }}
+            >
+              {soilMap.inta.paragraph}{" "}
+              <Link href="/data-sources" className={linkClass}>{soilMap.inta.linkLabel}</Link>
+            </motion.p>
+          </div>
+        ) : (
+          <motion.article
+            className={`relative isolate mx-auto w-full max-w-5xl overflow-hidden ${cardClass} p-6 sm:p-10 lg:p-12`}
+            initial={reducedMotion ? false : { opacity: 1, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: reducedMotion ? 0 : 0.65, ease: easing }}
+          >
+            <div className="pointer-events-none absolute -right-16 -top-16 -z-10 size-72 rounded-full bg-[var(--primary-container)] opacity-25 blur-[90px] dark:opacity-15" aria-hidden="true" />
+            <div className="grid gap-10 lg:grid-cols-[0.72fr_1fr] lg:items-center lg:gap-8">
+              <div>
+                <h2 id="que-es-un-mapa-de-suelos-title" className={h2Class}>{soilMap.intro.title}</h2>
+                <p className={`mt-3 ${paragraphClass}`}>{soilMap.intro.paragraph}</p>
+
+                <motion.dl
+                  className="mt-7 space-y-4"
+                  initial={reducedMotion ? false : "hidden"}
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.4 }}
+                  variants={{ hidden: {}, visible: { transition: { staggerChildren: reducedMotion ? 0 : 0.09 } } }}
+                >
+                  {soilMap.glossary.map(({ term, description }, index) => {
+                    const Icon = glossaryIcons[index];
+                    return (
+                      <motion.div key={term} variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.48, ease: easing }} className="flex items-start gap-3">
+                        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--primary-container)] text-[var(--on-primary-container)]" aria-hidden="true"><Icon size={17} strokeWidth={1.8} /></span>
+                        <div>
+                          <dt className="text-sm font-semibold text-[var(--on-surface)]">{term}</dt>
+                          <dd className="text-sm leading-6 text-[var(--on-surface-variant)]">{description}</dd>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </motion.dl>
+              </div>
+
+              <motion.div
+                className="relative"
+                initial={reducedMotion ? false : { opacity: 1, y: 18, scale: 0.98 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: reducedMotion ? 0 : 0.7, ease: easing }}
+                whileHover={reducedMotion ? undefined : { y: -4, transition: { duration: 0.22, ease: easing } }}
               >
-                {soilMap.glossary.map(({ term, description }, index) => {
-                  const Icon = glossaryIcons[index];
-                  return (
-                    <motion.div key={term} variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.48, ease: easing }} className="flex items-start gap-3">
-                      <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--primary-container)] text-[var(--on-primary-container)]" aria-hidden="true"><Icon size={17} strokeWidth={1.8} /></span>
-                      <div>
-                        <dt className="text-sm font-semibold text-[var(--on-surface)]">{term}</dt>
-                        <dd className="text-sm leading-6 text-[var(--on-surface-variant)]">{description}</dd>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </motion.dl>
+                <div className="pointer-events-none absolute inset-x-6 -bottom-4 -z-10 h-16 rounded-full bg-[var(--primary)] opacity-[0.14] blur-[42px] dark:opacity-[0.1]" aria-hidden="true" />
+                <ImageLightbox src={province.imageSrc} alt={soilMap.imageAlt}>
+                  <LaptopMockup screenSrc={province.imageSrc} screenAlt={soilMap.imageAlt} deviceLabel={soilMap.deviceLabel} className="w-full" />
+                </ImageLightbox>
+              </motion.div>
             </div>
 
             <motion.div
-              className="relative"
-              initial={reducedMotion ? false : { opacity: 1, y: 18, scale: 0.98 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: reducedMotion ? 0 : 0.7, ease: easing }}
-              whileHover={reducedMotion ? undefined : { y: -4, transition: { duration: 0.22, ease: easing } }}
+              className="mt-10 border-t border-[var(--outline-variant)] pt-8"
+              initial={reducedMotion ? false : { opacity: 1, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: reducedMotion ? 0 : 0.55, ease: easing }}
             >
-              <div className="pointer-events-none absolute inset-x-6 -bottom-4 -z-10 h-16 rounded-full bg-[var(--primary)] opacity-[0.14] blur-[42px] dark:opacity-[0.1]" aria-hidden="true" />
-              <ImageLightbox src="/images/screenshots/feature-cartography.png" alt={soilMap.imageAlt}>
-                <LaptopMockup screenSrc="/images/screenshots/feature-cartography.png" screenAlt={soilMap.imageAlt} deviceLabel={soilMap.deviceLabel} className="w-full" />
-              </ImageLightbox>
+              <h2 id="suelosar-y-inta-title" className={h2Class}>{soilMap.inta.title}</h2>
+              <p className={`mt-3 max-w-2xl ${paragraphClass}`}>{soilMap.inta.paragraph}{" "}
+                <Link href="/data-sources" className={linkClass}>{soilMap.inta.linkLabel}</Link>
+              </p>
+              <dl className="mt-6 grid max-w-md grid-cols-3">
+                {soilMap.stats.map((stat) => (
+                  <div key={stat.label} className="flex min-w-0 flex-col border-l border-[var(--outline-variant)] px-3 first:border-l-0 sm:px-4">
+                    <dd className="text-2xl font-semibold tracking-[-0.035em] text-[var(--on-surface)] sm:text-3xl">{stat.value}</dd>
+                    <dt className="mt-1 text-xs font-medium text-[var(--on-surface-variant)]">{stat.label}</dt>
+                  </div>
+                ))}
+              </dl>
             </motion.div>
-          </div>
-
-          <motion.div
-            className="mt-10 border-t border-[var(--outline-variant)] pt-8"
-            initial={reducedMotion ? false : { opacity: 1, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: reducedMotion ? 0 : 0.55, ease: easing }}
-          >
-            <h2 id="suelosar-y-inta-title" className={h2Class}>{soilMap.inta.title}</h2>
-            <p className={`mt-3 max-w-2xl ${paragraphClass}`}>{soilMap.inta.paragraph}{" "}
-              <Link href="/data-sources" className={linkClass}>{soilMap.inta.linkLabel}</Link>
-            </p>
-            <dl className="mt-6 grid max-w-md grid-cols-3">
-              {soilMap.stats.map((stat) => (
-                <div key={stat.label} className="flex min-w-0 flex-col border-l border-[var(--outline-variant)] px-3 first:border-l-0 sm:px-4">
-                  <dd className="text-2xl font-semibold tracking-[-0.035em] text-[var(--on-surface)] sm:text-3xl">{stat.value}</dd>
-                  <dt className="mt-1 text-xs font-medium text-[var(--on-surface-variant)]">{stat.label}</dt>
-                </div>
-              ))}
-            </dl>
-          </motion.div>
-        </motion.article>
+          </motion.article>
+        )}
       </section>
 
       {/* Para qué sirve + cómo consultar + cobertura: franja compacta de tres columnas */}
@@ -233,6 +342,12 @@ export function SoilMapContent() {
             <Link href="/" className={linkClass}>{dictionary.legal.backHome}</Link>
             {" · "}
             <Link href="/data-sources" className={linkClass}>{dictionary.footer.dataSourcesTitle}</Link>
+            {crossProvince ? (
+              <>
+                {" · "}
+                <Link href={crossProvince.path} className={linkClass}>{soilMap.closing.crossLinkLabel}</Link>
+              </>
+            ) : null}
           </p>
         </motion.div>
       </section>

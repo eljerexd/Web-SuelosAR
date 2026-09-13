@@ -52,15 +52,25 @@ export function SoftwareApplicationJsonLd() {
           availability: "https://schema.org/OnlineOnly",
         },
         publisher: { "@id": organizationId },
-        areaServed: {
-          "@type": "AdministrativeArea",
-          name: "Provincia de Buenos Aires",
-          containedInPlace: {
-            "@type": "Country",
-            name: "Argentina",
+        areaServed: [
+          {
+            "@type": "AdministrativeArea",
+            name: "Provincia de Buenos Aires",
+            containedInPlace: {
+              "@type": "Country",
+              name: "Argentina",
+            },
           },
-        },
-        description: "Aplicación GIS independiente para consultar mapas y Cartas de Suelo de la Provincia de Buenos Aires, basados en cartografía publicada por el INTA.",
+          {
+            "@type": "AdministrativeArea",
+            name: "Provincia de Santa Fe",
+            containedInPlace: {
+              "@type": "Country",
+              name: "Argentina",
+            },
+          },
+        ],
+        description: "Aplicación GIS independiente para consultar mapas de suelos, Cartas de Suelo y series de suelo de las Provincias de Buenos Aires y Santa Fe, basados en cartografía publicada por el INTA.",
       },
     ],
   };

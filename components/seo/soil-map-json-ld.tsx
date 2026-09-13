@@ -1,12 +1,20 @@
 import { defaultLocale, dictionaries } from "@/lib/i18n/dictionaries";
+import type { ProvinceConfig } from "@/lib/provinces";
 import { siteConfig } from "@/lib/site";
 
-/** Structured data always describes the default locale, matching how metadata is generated site-wide. */
-const soilMapFaqItems = dictionaries[defaultLocale].soilMap.faq.items;
+interface SoilMapJsonLdProps {
+  province: ProvinceConfig;
+  /** Same title passed to `createPageMetadata` for this page, kept in sync with `<title>`. */
+  pageTitle: string;
+  /** Same description passed to `createPageMetadata` for this page. */
+  pageDescription: string;
+}
 
-export function SoilMapJsonLd() {
+/** Structured data always describes the default locale, matching how metadata is generated site-wide. */
+export function SoilMapJsonLd({ province, pageTitle, pageDescription }: SoilMapJsonLdProps) {
   const organizationId = `${siteConfig.url}/#organization`;
-  const pageUrl = `${siteConfig.url}/mapa-suelos-buenos-aires`;
+  const pageUrl = `${siteConfig.url}${province.path}`;
+  const faqItems = dictionaries[defaultLocale][province.dictionaryKey].faq.items;
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -14,8 +22,8 @@ export function SoilMapJsonLd() {
         "@type": "WebPage",
         "@id": `${pageUrl}/#webpage`,
         url: pageUrl,
-        name: "Mapa de Suelos de Buenos Aires | SuelosAR",
-        description: "Consultá el mapa de suelos de la Provincia de Buenos Aires con SuelosAR. Cartografía de suelos, Cartas de Suelo y herramientas GIS basadas en fuentes del INTA, también offline.",
+        name: `${pageTitle} | SuelosAR`,
+        description: pageDescription,
         inLanguage: "es-AR",
         isPartOf: { "@id": `${siteConfig.url}/#website` },
         about: { "@id": `${siteConfig.url}/#software-application` },
@@ -25,13 +33,13 @@ export function SoilMapJsonLd() {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Inicio", item: siteConfig.url },
-          { "@type": "ListItem", position: 2, name: "Mapa de Suelos de Buenos Aires", item: pageUrl },
+          { "@type": "ListItem", position: 2, name: pageTitle, item: pageUrl },
         ],
       },
       {
         "@type": "FAQPage",
         "@id": `${pageUrl}/#faq`,
-        mainEntity: soilMapFaqItems.map((item) => ({
+        mainEntity: faqItems.map((item) => ({
           "@type": "Question",
           name: item.question,
           acceptedAnswer: { "@type": "Answer", text: item.answer },

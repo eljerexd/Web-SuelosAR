@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 import { ImageResponse } from "next/og";
 
-export const alt = "SuelosAR, mapas de suelos y herramientas GIS para la Provincia de Buenos Aires";
+export const alt = "SuelosAR, mapas de suelos y herramientas GIS para las Provincias de Buenos Aires y Santa Fe";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -40,7 +40,7 @@ export default function OpenGraphImage() {
             Cartografía digital de suelos.
           </div>
           <div style={{ marginTop: 26, maxWidth: 700, fontSize: 26, lineHeight: 1.35, color: "#c3c9bf" }}>
-            Provincia de Buenos Aires · Android y Windows
+            Buenos Aires y Santa Fe · Android y Windows
           </div>
           <div style={{ display: "flex", gap: 14, marginTop: 42 }}>
             {[

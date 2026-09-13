@@ -5,7 +5,6 @@ import { Faq } from "@/components/faq/faq";
 import { Features } from "@/components/features/features";
 import { ScreenshotGallery } from "@/components/gallery/screenshot-gallery";
 import { Hero } from "@/components/home/hero";
-import { AvailablePlatforms } from "@/components/platforms/available-platforms";
 import { SoftwareApplicationJsonLd } from "@/components/seo/software-application-json-ld";
 import { getLatestReleaseMetadata } from "@/lib/downloads";
 import { indexableRobots } from "@/lib/metadata";
@@ -39,7 +38,6 @@ export default async function Home() {
       <SoftwareApplicationJsonLd />
       <Hero releaseLabel={releaseLabel} />
       <Features />
-      <AvailablePlatforms />
       <ScreenshotGallery />
       <Faq />
       <FinalCta />

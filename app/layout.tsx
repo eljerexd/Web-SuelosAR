@@ -52,14 +52,14 @@ export const metadata: Metadata = {
     siteName: "SuelosAR",
     title: defaultDictionary.meta.title,
     description: defaultDictionary.meta.description,
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "SuelosAR, mapas de suelos y herramientas GIS para la Provincia de Buenos Aires" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "SuelosAR, mapas de suelos y herramientas GIS para las Provincias de Buenos Aires y Santa Fe" }],
   },
 
   twitter: {
     card: "summary_large_image",
     title: defaultDictionary.meta.title,
     description: defaultDictionary.meta.description,
-    images: [{ url: "/opengraph-image", alt: "SuelosAR, mapas de suelos y herramientas GIS para la Provincia de Buenos Aires" }],
+    images: [{ url: "/opengraph-image", alt: "SuelosAR, mapas de suelos y herramientas GIS para las Provincias de Buenos Aires y Santa Fe" }],
   },
 
 };
