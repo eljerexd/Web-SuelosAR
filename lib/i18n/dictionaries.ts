@@ -8,8 +8,7 @@ const es = {
   },
   meta: {
     title: "SuelosAR | Mapas de Suelos de Buenos Aires y Santa Fe",
-    description: "Mapas de suelos y cartografía oficial de las Provincias de Buenos Aires y Santa Fe: Cartas de Suelo, series de suelo y herramientas GIS, también sin conexión. Disponible para Android y Windows.",
-  },
+description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, series de suelo y herramientas GIS, también sin conexión. Para Android y Windows.",  },
   language: {
     selectorLabel: "Seleccionar idioma",
     spanish: "Español",
