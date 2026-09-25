@@ -21,7 +21,7 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_0.8fr_1fr] lg:gap-12">
           <div>
             <div className="inline-flex items-center gap-3 text-lg font-semibold tracking-[-0.02em] text-[var(--on-surface)]">
-              <Image src="/icon.png" alt="" width={36} height={36} sizes="36px" className="size-9 shrink-0 object-contain" />
+              <Image src="/icon.png" alt="SuelosAR" width={36} height={36} sizes="36px" className="size-9 shrink-0 object-contain" />
               <span>{dictionary.brand.name}</span>
             </div>
             <p className="mt-4 max-w-sm text-sm leading-6 text-[var(--on-surface-variant)]">{dictionary.footer.description}</p>
