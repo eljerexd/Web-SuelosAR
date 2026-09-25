@@ -4,8 +4,7 @@ import { createPageMetadata } from "@/lib/metadata";
 import { buenosAiresProvince } from "@/lib/provinces";
 
 const title = "Mapa de Suelos de Buenos Aires";
-const description = "Consultá el mapa de suelos de la Provincia de Buenos Aires con SuelosAR. Cartografía de suelos, Cartas de Suelo y herramientas GIS basadas en fuentes del INTA, también offline.";
-
+const description = "Mapa de suelos de la Provincia de Buenos Aires con SuelosAR. Cartografía, Cartas de Suelo y herramientas GIS basadas en fuentes del INTA, también offline.";
 export const metadata = createPageMetadata(title, description, buenosAiresProvince.path);
 
 export default function MapaSuelosBuenosAiresPage() {
