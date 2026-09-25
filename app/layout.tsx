@@ -29,8 +29,11 @@ export const metadata: Metadata = {
   creator: "SuelosAR",
   publisher: "SuelosAR",
   verification: {
-    google: "IWmswU9kU0hLrcM3uDjO4uBnj_v65zD5CfaPV5kz-Mo",
+  google: "IWmswU9kU0hLrcM3uDjO4uBnj_v65zD5CfaPV5kz-Mo",
+  other: {
+    "msvalidate.01": "4A2A17FDE1B8D565B1BD3D98894696AD",
   },
+},
   category: "GIS Application",
   referrer: "origin-when-cross-origin",
   formatDetection: {
