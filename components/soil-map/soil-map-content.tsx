@@ -51,7 +51,7 @@ export function SoilMapContent({ province }: SoilMapContentProps) {
             >
               <Image
                 src={heroImageSrc}
-                alt=""
+                alt={soilMap.imageAlt}
                 fill
                 priority
                 sizes="100vw"
