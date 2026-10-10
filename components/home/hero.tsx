@@ -5,7 +5,7 @@ import { CircleDollarSign, MapPinned, Sparkles, WifiOff } from "lucide-react";
 
 import { HeroDeviceShowcase } from "@/components/home/hero-device-showcase";
 import { useI18n } from "@/components/i18n/i18n-provider";
-import { PlatformIcon } from "@/components/ui/platform-icon";
+import { GooglePlayIcon, PlatformIcon } from "@/components/ui/platform-icon";
 import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
 
 const trustIcons = [CircleDollarSign, WifiOff, MapPinned, Sparkles] as const;
@@ -13,10 +13,11 @@ const easing = [0.22, 1, 0.36, 1] as const;
 const textItem = { hidden: { opacity: 1, y: 18 }, visible: { opacity: 1, y: 0 } };
 
 interface HeroProps {
-  releaseLabel: string | null;
+  androidReleaseLabel: string | null;
+  windowsReleaseLabel: string | null;
 }
 
-export function Hero({ releaseLabel }: HeroProps) {
+export function Hero({ androidReleaseLabel, windowsReleaseLabel }: HeroProps) {
   const reducedMotion = Boolean(useReducedMotion());
   const { dictionary } = useI18n();
 
@@ -44,21 +45,21 @@ export function Hero({ releaseLabel }: HeroProps) {
 
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.6, ease: easing }} className="mt-11 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <motion.a href={ANDROID_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
-              <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">
-                <PlatformIcon platform="android" size={20} />
+              <span className="grid size-6 shrink-0 -translate-x-[10px] -translate-y-[2px] place-items-center" aria-hidden="true">
+                <GooglePlayIcon size={30} />
               </span>
               <span className="flex flex-col items-center">
                 <span>{dictionary.hero.downloadAndroid}</span>
-                {releaseLabel ? <span className="mt-0.5 text-[0.7125rem] font-medium leading-4 opacity-75">{releaseLabel}</span> : null}
+                {androidReleaseLabel ? <span className="mt-0.5 text-[0.7125rem] font-medium leading-4 opacity-75">{androidReleaseLabel}</span> : null}
               </span>
             </motion.a>
             <motion.a href={WINDOWS_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
-              <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">
-                <PlatformIcon platform="windows" size={19} />
+              <span className="grid size-6 shrink-0 -translate-x-[5px] place-items-center" aria-hidden="true">
+                <PlatformIcon platform="windows" size={25} />
               </span>
               <span className="flex flex-col items-center">
                 <span>{dictionary.hero.downloadWindows}</span>
-                {releaseLabel ? <span className="mt-0.5 text-[0.7125rem] font-medium leading-4 opacity-75">{releaseLabel}</span> : null}
+                {windowsReleaseLabel ? <span className="mt-0.5 text-[0.7125rem] font-medium leading-4 opacity-75">{windowsReleaseLabel}</span> : null}
               </span>
             </motion.a>
           </motion.div>

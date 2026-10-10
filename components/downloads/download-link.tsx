@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, type MotionProps } from "framer-motion";
-import { PanelsTopLeft, Smartphone } from "lucide-react";
+import { PanelsTopLeft } from "lucide-react";
 
-import { downloads, type DownloadPlatform } from "@/lib/downloads";
+import { GooglePlayIcon } from "@/components/ui/platform-icon";
+import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL, type DownloadPlatform } from "@/lib/downloads";
 
 interface DownloadLinkProps {
   platform: DownloadPlatform;
@@ -13,24 +14,22 @@ interface DownloadLinkProps {
   whileTap?: MotionProps["whileTap"];
 }
 
-const platformIcons = {
-  android: Smartphone,
-  windows: PanelsTopLeft,
-} as const;
+const standardDownloadUrls: Record<DownloadPlatform, string> = {
+  android: ANDROID_DOWNLOAD_URL,
+  windows: WINDOWS_DOWNLOAD_URL,
+};
 
-/** Every download CTA points to the same server-side canonical resolver. */
+/** Shared standard destinations: Google Play for Android and the release resolver for Windows. */
 export function DownloadLink({ platform, label, className, whileHover, whileTap }: DownloadLinkProps) {
-  const PlatformIcon = platformIcons[platform];
-
   return (
     <motion.a
-      href={downloads[platform].route}
+      href={standardDownloadUrls[platform]}
       className={className}
       whileHover={whileHover}
       whileTap={whileTap}
       aria-label={label}
     >
-      <PlatformIcon aria-hidden="true" size={18} />
+      {platform === "android" ? <GooglePlayIcon size={18} /> : <PanelsTopLeft aria-hidden="true" size={18} />}
       {label}
     </motion.a>
   );

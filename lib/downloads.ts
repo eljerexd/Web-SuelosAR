@@ -6,6 +6,9 @@
  * release and pick the newest one that is NOT a web release.
  */
 export const GITHUB_RELEASES_API_URL = "https://api.github.com/repos/eljerexd/Web-SuelosAR/releases?per_page=100";
+export const GOOGLE_PLAY_ANDROID_URL = "https://play.google.com/store/apps/details?id=ar.com.suelosar";
+
+const GOOGLE_PLAY_LISTING_URL = `${GOOGLE_PLAY_ANDROID_URL}&hl=es_AR&gl=AR`;
 
 /** Last known-good application release, used only when the GitHub API is unreachable. */
 const ANDROID_FALLBACK_DOWNLOAD_URL = "https://github.com/eljerexd/Web-SuelosAR/releases/download/1.5.1/SuelosAR-Android-v1.5.12.apk";
@@ -30,8 +33,10 @@ export const downloads = {
 
 export type DownloadPlatform = keyof typeof downloads;
 
-/** Stable routes used by every existing download button. */
-export const ANDROID_DOWNLOAD_URL = downloads.android.route;
+/** Standard Android destination used by all regular website download buttons. */
+export const ANDROID_DOWNLOAD_URL = GOOGLE_PLAY_ANDROID_URL;
+/** Intentional exception: the homepage closing CTA offers the directly downloadable APK. */
+export const ANDROID_APK_DOWNLOAD_URL = downloads.android.route;
 export const WINDOWS_DOWNLOAD_URL = downloads.windows.route;
 
 export function isDownloadPlatform(value: string): value is DownloadPlatform {
@@ -53,6 +58,11 @@ interface GitHubRelease {
 }
 
 export interface LatestReleaseMetadata {
+  version: string;
+  publishedAt: string;
+}
+
+export interface GooglePlayReleaseMetadata {
   version: string;
   publishedAt: string;
 }
@@ -99,6 +109,47 @@ export async function getLatestReleaseMetadata(): Promise<LatestReleaseMetadata 
     version: release.tag_name,
     publishedAt: release.published_at,
   };
+}
+
+/**
+ * Extracts the public version and update timestamp exposed by Google Play's listing payload.
+ * These fields are not a documented Google Play API, so invalid or changed markup deliberately
+ * results in no metadata instead of falling back to a potentially different GitHub release.
+ */
+function parseGooglePlayReleaseMetadata(listingHtml: string): GooglePlayReleaseMetadata | null {
+  const version = listingHtml.match(/"141":\[\[\["([^"\\]+)"\]\]/)?.[1];
+  const publishedTimestamp = listingHtml.match(/"146":\[\["[^"\\]+",\[(\d{10,13})/)?.[1];
+
+  if (!version || !publishedTimestamp) return null;
+
+  const numericTimestamp = Number(publishedTimestamp);
+  const publishedAt = new Date(publishedTimestamp.length === 10 ? numericTimestamp * 1000 : numericTimestamp);
+
+  if (Number.isNaN(publishedAt.getTime())) return null;
+
+  return { version, publishedAt: publishedAt.toISOString() };
+}
+
+/**
+ * Google Play is the authoritative Android metadata source. The request stays server-side and
+ * is revalidated hourly; failures intentionally render no Android version/date label.
+ */
+export async function getGooglePlayReleaseMetadata(): Promise<GooglePlayReleaseMetadata | null> {
+  try {
+    const response = await fetch(GOOGLE_PLAY_LISTING_URL, {
+      headers: {
+        Accept: "text/html,application/xhtml+xml",
+        "User-Agent": "Mozilla/5.0 (compatible; SuelosARWeb/1.0)",
+      },
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) return null;
+
+    return parseGooglePlayReleaseMetadata(await response.text());
+  } catch {
+    return null;
+  }
 }
 
 /** Resolves the newest application release asset and preserves the existing URL as fallback. */

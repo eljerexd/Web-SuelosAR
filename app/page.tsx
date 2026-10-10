@@ -6,7 +6,7 @@ import { Features } from "@/components/features/features";
 import { ScreenshotGallery } from "@/components/gallery/screenshot-gallery";
 import { Hero } from "@/components/home/hero";
 import { SoftwareApplicationJsonLd } from "@/components/seo/software-application-json-ld";
-import { getLatestReleaseMetadata } from "@/lib/downloads";
+import { getGooglePlayReleaseMetadata, getLatestReleaseMetadata } from "@/lib/downloads";
 import { indexableRobots } from "@/lib/metadata";
 
 export const metadata: Metadata = {
@@ -28,15 +28,23 @@ function formatReleaseDate(publishedAt: string) {
 }
 
 export default async function Home() {
-  const release = await getLatestReleaseMetadata();
-  const releaseLabel = release
-    ? `${release.version.startsWith("v") ? release.version : `v${release.version}`} · ${formatReleaseDate(release.publishedAt)}`
-    : null;
+  const [androidRelease, windowsRelease] = await Promise.all([
+    getGooglePlayReleaseMetadata(),
+    getLatestReleaseMetadata(),
+  ]);
+  const formatReleaseLabel = (release: { version: string; publishedAt: string } | null) => (
+    release
+      ? `${release.version.startsWith("v") ? release.version : `v${release.version}`} · ${formatReleaseDate(release.publishedAt)}`
+      : null
+  );
+
+  const androidReleaseLabel = formatReleaseLabel(androidRelease);
+  const windowsReleaseLabel = formatReleaseLabel(windowsRelease);
 
   return (
     <main id="contenido" tabIndex={-1} className="outline-none">
       <SoftwareApplicationJsonLd />
-      <Hero releaseLabel={releaseLabel} />
+      <Hero androidReleaseLabel={androidReleaseLabel} windowsReleaseLabel={windowsReleaseLabel} />
       <Features />
       <ScreenshotGallery />
       <Faq />

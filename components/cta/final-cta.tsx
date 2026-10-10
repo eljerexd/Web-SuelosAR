@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { PlatformIcon } from "@/components/ui/platform-icon";
-import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
+import { ANDROID_APK_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
 
 const trustIcons = [MapPinned, Map, WifiOff] as const;
 const easing = [0.22, 1, 0.36, 1] as const;
@@ -22,11 +22,11 @@ export function FinalCta() {
         <h2 id="final-cta-title" className="mx-auto max-w-4xl text-4xl font-bold tracking-[-0.05em] text-[var(--on-surface)] sm:text-5xl lg:text-6xl">{dictionary.cta.title}</h2>
         <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{dictionary.cta.description}</p>
         <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-          <motion.a href={ANDROID_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+          <motion.a href={ANDROID_APK_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
             <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">
               <PlatformIcon platform="android" size={20} />
             </span>
-            <span>{dictionary.cta.downloadAndroid}</span>
+            <span>{dictionary.cta.downloadOfflineApk}</span>
           </motion.a>
           <motion.a href={WINDOWS_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
             <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">

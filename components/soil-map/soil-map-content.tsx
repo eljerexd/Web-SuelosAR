@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { ImageLightbox } from "@/components/ui/image-lightbox";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
-import { PlatformIcon } from "@/components/ui/platform-icon";
+import { GooglePlayIcon, PlatformIcon } from "@/components/ui/platform-icon";
 import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
 import { defaultHeroImageClassName, getCrossProvince, type ProvinceConfig } from "@/lib/provinces";
 
@@ -81,11 +81,11 @@ export function SoilMapContent({ province }: SoilMapContentProps) {
           <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className={`mx-auto max-w-2xl ${paragraphClass} ${province.heroScreenshot ? "mt-7 sm:mt-8" : "mt-6"}`}>{soilMap.subtitle}</motion.p>
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className={`flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center ${province.heroScreenshot ? "mt-11 sm:mt-12" : "mt-8"}`}>
             <motion.a href={ANDROID_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
-              <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="android" size={20} /></span>
+              <span className="grid size-6 -translate-x-[3px] shrink-0 place-items-center" aria-hidden="true"><GooglePlayIcon size={25} /></span>
               <span>{dictionary.hero.downloadAndroid}</span>
             </motion.a>
             <motion.a href={WINDOWS_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
-              <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="windows" size={19} /></span>
+              <span className="grid size-6 -translate-x-[3px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="windows" size={21} /></span>
               <span>{dictionary.hero.downloadWindows}</span>
             </motion.a>
           </motion.div>
@@ -330,7 +330,7 @@ export function SoilMapContent({ province }: SoilMapContentProps) {
           <p className={`mx-auto mt-5 max-w-2xl ${paragraphClass}`}>{soilMap.closing.text}</p>
           <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
             <motion.a href={ANDROID_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
-              <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="android" size={20} /></span>
+              <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><GooglePlayIcon size={20} /></span>
               <span>{dictionary.hero.downloadAndroid}</span>
             </motion.a>
             <motion.a href={WINDOWS_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
