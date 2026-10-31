@@ -7,9 +7,18 @@ import type { Dictionary } from "@/lib/i18n/dictionaries";
  */
 export type ProvinceSoilMapContent = Dictionary["soilMap"];
 
-export interface ProvinceConfig {
+interface ProvinceCatalogBase {
   /** URL-safe identifier, e.g. "buenos-aires". */
   slug: string;
+  /** Key for this province's translated catalog card copy. */
+  catalogKey: keyof Dictionary["catalog"]["cards"];
+  /** Verified vector boundary asset used for the catalog silhouette. */
+  silhouetteSrc: string;
+}
+
+/** A province with a published soil-map landing page. */
+export interface ProvinceConfig extends ProvinceCatalogBase {
+  availability: "available";
   /** Route this province's landing is served at. */
   path: string;
   /** Key into the i18n dictionary holding this province's `ProvinceSoilMapContent`. */
@@ -28,11 +37,21 @@ export interface ProvinceConfig {
   heroImageClassName?: string;
 }
 
+/** A visible catalog entry that must not link anywhere until its landing page is published. */
+export interface UpcomingProvinceConfig extends ProvinceCatalogBase {
+  availability: "coming-soon";
+}
+
+export type ProvinceCatalogConfig = ProvinceConfig | UpcomingProvinceConfig;
+
 export const defaultHeroImageClassName = "object-cover object-center opacity-[0.62] dark:opacity-[0.5] sm:opacity-[0.42] dark:sm:opacity-[0.34]";
 
 export const buenosAiresProvince: ProvinceConfig = {
   slug: "buenos-aires",
   path: "/mapa-suelos-buenos-aires",
+  availability: "available",
+  catalogKey: "buenosAires",
+  silhouetteSrc: "/images/provinces/buenos-aires.svg",
   dictionaryKey: "soilMap",
   imageSrc: "/images/screenshots/captura-buenos-aires.png",
   heroImageSrc: "/images/screenshots/hero-buenos-aires.png",
@@ -45,19 +64,31 @@ export const buenosAiresProvince: ProvinceConfig = {
 export const santaFeProvince: ProvinceConfig = {
   slug: "santa-fe",
   path: "/mapa-suelos-santa-fe",
+  availability: "available",
+  catalogKey: "santaFe",
+  silhouetteSrc: "/images/provinces/santa-fe.svg",
   dictionaryKey: "soilMapSantaFe",
   imageSrc: "/images/screenshots/captura-santa-fe.png",
   heroImageSrc: "/images/screenshots/hero-santa-fe.png",
   heroScreenshot: true,
 };
 
+export const cordobaProvince: UpcomingProvinceConfig = {
+  slug: "cordoba",
+  availability: "coming-soon",
+  catalogKey: "cordoba",
+  silhouetteSrc: "/images/provinces/cordoba.svg",
+};
+
 /**
- * Registry of every province with its own soil-map landing. Adding another province means adding
- * one entry here plus its dictionary block — never a new page component.
+ * Catalog registry for provinces that are available or in preparation. Available entries carry
+ * their published route and page content; upcoming entries remain non-interactive until activated.
  */
-export const provinces: readonly ProvinceConfig[] = [buenosAiresProvince, santaFeProvince];
+export const provinces: readonly ProvinceCatalogConfig[] = [buenosAiresProvince, santaFeProvince, cordobaProvince];
 
 /** The other province currently in the registry, used for the mutual internal link between landings. */
 export function getCrossProvince(current: ProvinceConfig): ProvinceConfig | undefined {
-  return provinces.find((province) => province.slug !== current.slug);
+  return provinces.find((province): province is ProvinceConfig => (
+    province.availability === "available" && province.slug !== current.slug
+  ));
 }

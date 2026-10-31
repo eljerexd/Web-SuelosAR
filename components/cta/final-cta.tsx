@@ -39,7 +39,7 @@ export function FinalCta() {
           {dictionary.cta.badges.map((label, index) => { const Icon = trustIcons[index]; return <li key={label} className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--on-surface-variant)]"><Icon aria-hidden="true" size={15} strokeWidth={1.8} />{label}</li>; })}
         </ul>
         <p className="mt-7 text-sm text-[var(--on-surface-variant)]">
-          <Link href="/mapa-suelos-santa-fe" className="font-medium text-[var(--primary)] underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:decoration-[var(--primary)]">{dictionary.cta.santaFeLinkLabel}</Link>
+          <Link href="/mapas-de-suelos" className="font-medium text-[var(--primary)] underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:decoration-[var(--primary)]">{dictionary.cta.provincesLinkLabel}</Link>
         </p>
       </motion.div>
     </section>

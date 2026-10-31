@@ -14,6 +14,9 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
     spanish: "Español",
     english: "English",
   },
+  navigation: {
+    maps: "Provincias",
+  },
   accessibility: {
     skipToContent: "Saltar al contenido",
     siteHeader: "Encabezado del sitio",
@@ -79,6 +82,30 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
       { title: "Favoritos", description: "Accedé rápidamente a las unidades de suelo y los documentos que más usás desde una sección de favoritos.", imageAlt: "Sección de favoritos de SuelosAR con unidades de suelo y documentos guardados" },
     ],
   },
+  catalog: {
+    metaTitle: "Mapas de suelos de Argentina",
+    metaDescription: "Consultá mapas de suelos y cartografía provincial disponible en SuelosAR. Explorá las páginas de Buenos Aires y Santa Fe.",
+    eyebrow: "Cartografía provincial disponible",
+    title: "Mapas de suelos de Argentina",
+    description: "Conocé qué cartografía de suelos está disponible en cada provincia, cómo se organiza y cómo acceder a ella mediante SuelosAR.",
+    cards: {
+      buenosAires: {
+        title: "Buenos Aires",
+        description: "Consultá Cartas de Suelo por localidad, con series y unidades cartográficas.",
+      },
+      santaFe: {
+        title: "Santa Fe",
+        description: "Accedé al documento consolidado del INTA EEA Rafaela y consultá sus series de suelo.",
+      },
+      cordoba: {
+        title: "Córdoba",
+        description: "La cartografía de suelos de Córdoba está en preparación.",
+      },
+    },
+    availableLabel: "Disponible",
+    preparationLabel: "En preparación",
+    cardLinkLabel: "Conocer la cartografía",
+  },
   gallery: {
     title: "SuelosAR en Android",
     subtitle: "Mapas, documentos y ajustes pensados para un flujo de trabajo móvil ágil.",
@@ -95,8 +122,8 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
       { question: "¿Qué es SuelosAR?", answer: "SuelosAR es una aplicación independiente para Android y Windows que permite consultar cartografía de suelos y trabajar con herramientas GIS." },
       { question: "¿Funciona sin internet?", answer: "Sí. La cartografía y las herramientas principales siguen disponibles sin conexión." },
       { question: "¿Qué provincias incluye actualmente?", answer: "La versión actual incluye información de las Provincias de Buenos Aires y Santa Fe." },
-      { question: "¿Dónde puedo ver el mapa de suelos de la Provincia de Buenos Aires?", answer: "Podés explorarlo directamente desde SuelosAR, o conocer en detalle qué representa y cómo consultarlo.", link: { href: "/mapa-suelos-buenos-aires", label: "Mapa de suelos de la Provincia de Buenos Aires." } },
-      { question: "¿Dónde puedo ver el mapa de suelos de la Provincia de Santa Fe?", answer: "Podés explorarlo directamente desde SuelosAR, o conocer en detalle qué representa y cómo consultarlo.", link: { href: "/mapa-suelos-santa-fe", label: "Mapa de suelos de la Provincia de Santa Fe." } },
+      { question: "¿Dónde puedo ver el mapa de suelos de la Provincia de Buenos Aires?", answer: "Podés explorarlo directamente desde SuelosAR, o conocer en detalle qué representa y cómo consultarlo." },
+      { question: "¿Dónde puedo ver el mapa de suelos de la Provincia de Santa Fe?", answer: "Podés explorarlo directamente desde SuelosAR, o conocer en detalle qué representa y cómo consultarlo." },
       { question: "¿De dónde provienen los datos?", answer: "La información proviene de Cartas de Suelo y cartografía oficial publicada por el INTA.", link: { href: "/data-sources", label: "Consultá las fuentes de cartografía de suelos." } },
       { question: "¿Es gratuita?", answer: "Sí. SuelosAR se puede descargar y utilizar de forma gratuita." },
       { question: "¿Qué dispositivos son compatibles?", answer: "SuelosAR es compatible con Android 10 o posterior y Windows 10/11." },
@@ -250,7 +277,7 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
     downloadWindows: "Descargar para Windows",
     trustLabel: "Información de confianza",
     badges: ["Buenos Aires y Santa Fe", "Basado en cartografía oficial del INTA", "Funciona sin conexión"],
-    santaFeLinkLabel: "Conocé el mapa de suelos de Santa Fe.",
+    provincesLinkLabel: "Explorar provincias",
   },
   footer: {
     description: "Proyecto independiente de cartografía digital de suelos para el trabajo profesional y académico en el campo.",
@@ -260,11 +287,11 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
       { label: "Características", href: "#features" },
       { label: "Galería", href: "#screenshots" },
       { label: "Preguntas frecuentes", href: "#faq" },
+      { label: "Explorar provincias", href: "/mapas-de-suelos" },
       { label: "Descargar", href: "#download" },
     ],
     legalTitle: "Legal",
     legalItems: [
-      { label: "Mapa de suelos de Buenos Aires", href: "/mapa-suelos-buenos-aires" },
       { label: "Política de privacidad", href: "/privacy" },
       { label: "Términos de uso", href: "/terms" },
       { label: "Aviso legal", href: "/disclaimer" },
@@ -360,6 +387,9 @@ const en: Dictionary = {
     spanish: "Español",
     english: "English",
   },
+  navigation: {
+    maps: "Provinces",
+  },
   accessibility: {
     skipToContent: "Skip to content",
     siteHeader: "Site header",
@@ -425,6 +455,30 @@ const en: Dictionary = {
       { title: "Favorites", description: "Quickly access frequently used soil units and documents from a dedicated favorites section.", imageAlt: "SuelosAR favorites section with saved soil units and documents" },
     ],
   },
+  catalog: {
+    metaTitle: "Soil Maps of Argentina",
+    metaDescription: "Explore the provincial soil maps and cartography currently available in SuelosAR, including pages for Buenos Aires and Santa Fe.",
+    eyebrow: "Available provincial cartography",
+    title: "Soil Maps of Argentina",
+    description: "See what soil cartography is available in each province, how it is organized, and how to access it through SuelosAR.",
+    cards: {
+      buenosAires: {
+        title: "Buenos Aires",
+        description: "Explore soil surveys by locality, including soil series and mapping units.",
+      },
+      santaFe: {
+        title: "Santa Fe",
+        description: "Access the consolidated INTA EEA Rafaela document and consult its soil series.",
+      },
+      cordoba: {
+        title: "Córdoba",
+        description: "Soil cartography for Córdoba is in preparation.",
+      },
+    },
+    availableLabel: "Available",
+    preparationLabel: "In preparation",
+    cardLinkLabel: "Explore the soil information",
+  },
   gallery: {
     title: "SuelosAR on Android",
     subtitle: "Maps, documents and settings for an efficient mobile workflow. Screenshots are currently shown in Spanish.",
@@ -441,7 +495,7 @@ const en: Dictionary = {
       { question: "What is SuelosAR?", answer: "SuelosAR is an independent Android and Windows application for consulting soil cartography and working with GIS tools." },
       { question: "Does it work without internet?", answer: "Yes. The cartography and core tools remain available without a connection." },
       { question: "Which provinces are currently included?", answer: "The current version includes information for Buenos Aires and Santa Fe Provinces." },
-      { question: "Where can I see the Santa Fe Province soil map?", answer: "You can explore it directly from SuelosAR, or learn in detail what it covers and how to consult it.", link: { href: "/mapa-suelos-santa-fe", label: "Santa Fe Province soil map." } },
+      { question: "Where can I see the Santa Fe Province soil map?", answer: "You can explore it directly from SuelosAR, or learn in detail what it covers and how to consult it." },
       { question: "Where does the data come from?", answer: "The information comes from official INTA soil maps and soil survey publications.", link: { href: "/data-sources", label: "Review the soil cartography sources." } },
       { question: "Is it free?", answer: "Yes. SuelosAR can be downloaded and used free of charge." },
       { question: "Which devices are supported?", answer: "SuelosAR supports Android 10 or later and Windows 10/11." },
@@ -595,7 +649,7 @@ const en: Dictionary = {
     downloadWindows: "Download for Windows",
     trustLabel: "Trusted information",
     badges: ["Buenos Aires and Santa Fe", "Based on official INTA soil cartography", "Works offline"],
-    santaFeLinkLabel: "Check out the Santa Fe soil map.",
+    provincesLinkLabel: "Explore provinces",
   },
   footer: {
     description: "An independent digital soil cartography project for professional and academic field work.",
@@ -605,11 +659,11 @@ const en: Dictionary = {
       { label: "Features", href: "#features" },
       { label: "Gallery", href: "#screenshots" },
       { label: "FAQ", href: "#faq" },
+      { label: "Explore provinces", href: "/mapas-de-suelos" },
       { label: "Download", href: "#download" },
     ],
     legalTitle: "Legal",
     legalItems: [
-      { label: "Buenos Aires Soil Map", href: "/mapa-suelos-buenos-aires" },
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms of Use", href: "/terms" },
       { label: "Disclaimer", href: "/disclaimer" },

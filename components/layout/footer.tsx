@@ -13,7 +13,10 @@ export function Footer() {
   const { dictionary } = useI18n();
   const pathname = usePathname();
 
-  const resolveQuickLink = (href: string) => pathname === "/" ? href : `/${href}`;
+  const resolveQuickLink = (href: string) => {
+    if (href.startsWith("/")) return href;
+    return pathname === "/" ? href : `/${href}`;
+  };
 
   return (
     <footer className="w-full border-t border-[var(--outline-variant)] bg-[var(--surface-container)]/45" aria-label={dictionary.accessibility.footer}>

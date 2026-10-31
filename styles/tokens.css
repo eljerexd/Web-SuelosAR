@@ -11,6 +11,7 @@
   --on-primary-container: #0b4f2a;
   --outline: #747a70;
   --outline-variant: #c3c9bf;
+  --status-preparation: #a95300;
   --inverse-surface: #2e312d;
   --inverse-on-surface: #f0f2ed;
   --hero-glow: rgb(178 240 192 / 0.34);
@@ -31,6 +32,7 @@
   --on-primary-container: #b2f0c0;
   --outline: #8d9389;
   --outline-variant: #434940;
+  --status-preparation: #f2b544;
   --inverse-surface: #e1e4dd;
   --inverse-on-surface: #2e312d;
   --hero-glow: rgb(47 104 66 / 0.27);
