@@ -186,17 +186,27 @@ export function Features() {
         </motion.div>
         <div className="mt-12 lg:mt-20 lg:grid lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-start lg:gap-16 xl:gap-24">
           <div className="space-y-8 lg:space-y-0">
-            {features.map((feature, index) => (
-              <FeatureStory
-                key={feature.title}
-                {...feature}
-                index={index}
-                total={features.length}
-                active={activeIndex === index}
-                stepRef={stepCallbacks[index]}
-                reducedMotion={Boolean(reducedMotion)}
-              />
-            ))}
+            {features.map((feature, index) => {
+              const finalHold = index === features.length - 1 && !reducedMotion;
+              const story = (
+                <FeatureStory
+                  key={feature.title}
+                  {...feature}
+                  index={index}
+                  total={features.length}
+                  active={activeIndex === index}
+                  stepRef={stepCallbacks[index]}
+                  reducedMotion={Boolean(reducedMotion)}
+                  finalHold={finalHold}
+                />
+              );
+
+              return finalHold ? (
+                <div key={`hold-${feature.title}`} className="lg:min-h-[calc(69svh_+_90svh)]">
+                  {story}
+                </div>
+              ) : story;
+            })}
           </div>
 
           <div className="sticky top-20 hidden h-[calc(100svh-5rem)] items-center lg:flex">

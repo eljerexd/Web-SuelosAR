@@ -15,18 +15,19 @@ interface FeatureStoryProps {
   total: number;
   active: boolean;
   stepRef: RefCallback<HTMLElement>;
+  finalHold?: boolean;
   reducedMotion?: boolean;
 }
 
 /** One scroll chapter in the Features product tour, with its mobile screenshot. */
-export const FeatureStory = memo(function FeatureStory({ title, description, imageAlt, src, index, total, active, stepRef, reducedMotion = false }: FeatureStoryProps) {
+export const FeatureStory = memo(function FeatureStory({ title, description, imageAlt, src, index, total, active, stepRef, finalHold = false, reducedMotion = false }: FeatureStoryProps) {
   const label = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
   const progress = (index + 1) / total;
 
   return (
     <motion.article
       ref={stepRef}
-      className={`flex flex-col justify-center rounded-[2rem] border border-[var(--outline-variant)] bg-[var(--surface-container)]/72 p-5 shadow-[var(--shadow-soft)] transition-[opacity,transform] duration-300 ease-out motion-reduce:transform-none motion-reduce:transition-none sm:p-8 lg:min-h-[69svh] lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none ${active ? "lg:translate-y-0 lg:opacity-100" : "lg:translate-y-3 lg:opacity-40"}`}
+      className={`flex flex-col justify-center rounded-[2rem] border border-[var(--outline-variant)] bg-[var(--surface-container)]/72 p-5 shadow-[var(--shadow-soft)] transition-[opacity,transform] duration-300 ease-out motion-reduce:transform-none motion-reduce:transition-none sm:p-8 lg:min-h-[69svh] lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none ${finalHold ? "lg:sticky lg:top-[calc(15.5svh_+_2.5rem)]" : ""} ${active ? "lg:translate-y-0 lg:opacity-100" : "lg:translate-y-3 lg:opacity-40"}`}
       aria-current={active ? "step" : undefined}
     >
       <div>
