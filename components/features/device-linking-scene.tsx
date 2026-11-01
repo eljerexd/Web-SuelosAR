@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowLeftRight, Check } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
 
 import { DeviceMockup } from "@/components/ui/device-mockup";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
@@ -45,16 +45,212 @@ const easing = [0.22, 1, 0.36, 1] as const;
  * opacity, so nothing ever reads as translucent or fading. Neither mockup ever fades out: the
  * scene ends with both devices visibly connected, and only then hands off to the next section.
  */
-export function DeviceLinkingScene({ title, subtitle, windowsLabel, androidLabel, linkedLabel, indicators }: DeviceLinkingSceneProps) {
+export function DeviceLinkingScene(props: DeviceLinkingSceneProps) {
+  const reducedMotion = useReducedMotion();
+  const [hasCompleted, setHasCompleted] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const completedContentTopRef = useRef<number | null>(null);
+  const completedRef = useRef(false);
+
+  const completeScene = useCallback(() => {
+    if (completedRef.current) return;
+    completedRef.current = true;
+    completedContentTopRef.current = contentRef.current?.getBoundingClientRect().top ?? null;
+    setHasCompleted(true);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!hasCompleted || reducedMotion || completedContentTopRef.current === null) return;
+    const content = contentRef.current;
+    const scroller = document.scrollingElement;
+    if (content && scroller) {
+      scroller.scrollTop += content.getBoundingClientRect().top - completedContentTopRef.current;
+    }
+    completedContentTopRef.current = null;
+  }, [hasCompleted, reducedMotion]);
+
+  if (reducedMotion || hasCompleted) {
+    return <StaticDeviceLinkingScene {...props} contentRef={contentRef} reducedMotion={Boolean(reducedMotion)} />;
+  }
+
+  return <AnimatedDeviceLinkingScene {...props} contentRef={contentRef} onComplete={completeScene} />;
+}
+
+function StaticDeviceLinkingScene({
+  title,
+  subtitle,
+  windowsLabel,
+  androidLabel,
+  linkedLabel,
+  indicators,
+  contentRef,
+  reducedMotion,
+}: DeviceLinkingSceneProps & { contentRef: RefObject<HTMLDivElement | null>; reducedMotion: boolean }) {
+  return (
+    <div className={`relative mx-auto mt-16 flex w-full max-w-4xl flex-col items-center px-5 sm:mt-20 sm:px-0 ${reducedMotion ? "" : "min-h-svh justify-center"}`}>
+      <div ref={contentRef} className="mx-auto flex w-full max-w-4xl flex-col items-center">
+        <MockupComposition laptopStyle={{}} phoneStyle={{}} phoneStyleMobile={{}} connectorStyle={{}} connectorStyleMobile={{}} connected linkedVisible linkedLabel={linkedLabel} windowsLabel={windowsLabel} androidLabel={androidLabel} reducedMotion />
+        <h3 className="mt-12 text-center text-2xl font-bold tracking-[-0.03em] text-[var(--on-surface)] sm:mt-16 sm:text-3xl">{title}</h3>
+        <p className="mx-auto mt-3 max-w-md text-center text-sm leading-6 text-[var(--on-surface-variant)] sm:text-base">{subtitle}</p>
+        <IndicatorRow indicators={indicators} className="mt-5" />
+      </div>
+    </div>
+  );
+}
+
+function AnimatedDeviceLinkingScene({ title, subtitle, windowsLabel, androidLabel, linkedLabel, indicators, contentRef, onComplete }: DeviceLinkingSceneProps & { contentRef: RefObject<HTMLDivElement | null>; onComplete: () => void }) {
   const reducedMotion = useReducedMotion();
   const sceneRef = useRef<HTMLDivElement>(null);
   const [connected, setConnected] = useState(false);
   const [linkedVisible, setLinkedVisible] = useState(false);
+  const scrollPausedRef = useRef(false);
+  const wheelReadyRef = useRef(false);
+  const touchActiveRef = useRef(false);
+  const touchReadyRef = useRef(false);
+  const pauseCycleArmedRef = useRef(true);
+  const previousScrollYRef = useRef(0);
+  const wheelIdleTimerRef = useRef<number | null>(null);
+  const armWheelIdleTimerRef = useRef<() => void>(() => undefined);
 
   const { scrollYProgress } = useScroll({
     target: sceneRef,
     offset: ["start start", "end end"],
   });
+
+  useEffect(() => {
+    const clearWheelIdleTimer = () => {
+      if (wheelIdleTimerRef.current !== null) {
+        window.clearTimeout(wheelIdleTimerRef.current);
+        wheelIdleTimerRef.current = null;
+      }
+    };
+
+    const armWheelIdleTimer = () => {
+      clearWheelIdleTimer();
+      wheelReadyRef.current = false;
+      // Let inertial wheel events from the current gesture finish before treating a new one as resume input.
+      wheelIdleTimerRef.current = window.setTimeout(() => {
+        wheelReadyRef.current = true;
+        wheelIdleTimerRef.current = null;
+      }, 250);
+    };
+
+    const resumeScene = () => {
+      scrollPausedRef.current = false;
+      wheelReadyRef.current = false;
+      touchReadyRef.current = false;
+      clearWheelIdleTimer();
+    };
+
+    armWheelIdleTimerRef.current = armWheelIdleTimer;
+
+    const handleWheel = (event: WheelEvent) => {
+      if (!scrollPausedRef.current) return;
+      if (wheelReadyRef.current) {
+        resumeScene();
+        return;
+      }
+
+      event.preventDefault();
+      armWheelIdleTimer();
+    };
+
+    const handleTouchStart = () => {
+      const wasAlreadyTouching = touchActiveRef.current;
+      touchActiveRef.current = true;
+      if (scrollPausedRef.current && touchReadyRef.current && !wasAlreadyTouching) resumeScene();
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (scrollPausedRef.current && event.cancelable) event.preventDefault();
+    };
+
+    const handleTouchEnd = () => {
+      touchActiveRef.current = false;
+      if (scrollPausedRef.current) touchReadyRef.current = true;
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const scrollKeys = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"];
+      if (!scrollPausedRef.current || !scrollKeys.includes(event.key)) return;
+
+      const target = event.target;
+      if (target instanceof HTMLElement && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName))) return;
+
+      if (event.repeat) {
+        event.preventDefault();
+        return;
+      }
+
+      resumeScene();
+    };
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const scrollbarStart = document.documentElement.clientWidth;
+      if (scrollPausedRef.current && event.clientX >= scrollbarStart && event.clientX <= window.innerWidth) {
+        resumeScene();
+      }
+    };
+
+    previousScrollYRef.current = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const previousScrollY = previousScrollYRef.current;
+      previousScrollYRef.current = currentScrollY;
+
+      if (scrollPausedRef.current) {
+        return;
+      }
+
+      const scene = sceneRef.current;
+      if (!scene) return;
+
+      const sceneStart = currentScrollY + scene.getBoundingClientRect().top;
+      const sceneScrollRange = Math.max(0, scene.clientHeight - document.documentElement.clientHeight);
+      if (sceneScrollRange === 0) return;
+
+      const progress = (currentScrollY - sceneStart) / sceneScrollRange;
+
+      const movingDown = currentScrollY > previousScrollY;
+      if (reducedMotion || !movingDown || progress < 0.92 || !pauseCycleArmedRef.current) return;
+
+      // Clamp in the native scroll event so a fast wheel gesture cannot pass the completed scene.
+      pauseCycleArmedRef.current = false;
+      scrollPausedRef.current = true;
+      wheelReadyRef.current = false;
+      touchReadyRef.current = !touchActiveRef.current;
+      const holdPosition = sceneStart + sceneScrollRange * 0.92;
+      previousScrollYRef.current = holdPosition;
+      armWheelIdleTimerRef.current();
+
+      const scroller = document.scrollingElement;
+      if (scroller) scroller.scrollTop = holdPosition;
+    };
+
+    window.addEventListener("wheel", handleWheel, { capture: true, passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { capture: true, passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { capture: true, passive: false });
+    window.addEventListener("touchend", handleTouchEnd, true);
+    window.addEventListener("touchcancel", handleTouchEnd, true);
+    window.addEventListener("keydown", handleKeyDown, true);
+    window.addEventListener("pointerdown", handlePointerDown, true);
+    window.addEventListener("scroll", handleScroll, true);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel, true);
+      window.removeEventListener("touchstart", handleTouchStart, true);
+      window.removeEventListener("touchmove", handleTouchMove, true);
+      window.removeEventListener("touchend", handleTouchEnd, true);
+      window.removeEventListener("touchcancel", handleTouchEnd, true);
+      window.removeEventListener("keydown", handleKeyDown, true);
+      window.removeEventListener("pointerdown", handlePointerDown, true);
+      window.removeEventListener("scroll", handleScroll, true);
+      scrollPausedRef.current = false;
+      armWheelIdleTimerRef.current = () => undefined;
+      clearWheelIdleTimer();
+    };
+  }, [reducedMotion]);
 
   // Phase 1 (0–0.20): laptop settles — position/scale only, always fully opaque.
   const laptopX = useTransform(scrollYProgress, [0, 0.2], [-24, 0]);
@@ -76,18 +272,21 @@ export function DeviceLinkingScene({ title, subtitle, windowsLabel, androidLabel
   // Phase 4: message resolves in a zone separated from the mockups. Title and subtitle use
   // non-overlapping scroll ranges — sharing overlapping ranges on the same accelerated scroll
   // timeline caused one of the two to get stuck at its start value on native-timeline browsers.
-  const titleOpacity = useTransform(scrollYProgress, [0.68, 0.78], [0, 1]);
-  const titleY = useTransform(scrollYProgress, [0.68, 0.78], [14, 0]);
+  const titleOpacity = useTransform(scrollYProgress, [0.68, 0.76], [0, 1]);
+  const titleY = useTransform(scrollYProgress, [0.68, 0.76], [14, 0]);
 
-  const subtitleOpacity = useTransform(scrollYProgress, [0.8, 0.9], [0, 1]);
-  const subtitleY = useTransform(scrollYProgress, [0.8, 0.9], [14, 0]);
+  const subtitleOpacity = useTransform(scrollYProgress, [0.76, 0.84], [0, 1]);
+  const subtitleY = useTransform(scrollYProgress, [0.76, 0.84], [14, 0]);
 
-  const indicatorsOpacity = useTransform(scrollYProgress, [0.9, 1], [0, 1]);
-  const indicatorsY = useTransform(scrollYProgress, [0.9, 1], [8, 0]);
+  const indicatorsOpacity = useTransform(scrollYProgress, [0.84, 0.92], [0, 1]);
+  const indicatorsY = useTransform(scrollYProgress, [0.84, 0.92], [8, 0]);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
     if (!connected && value >= 0.6) setConnected(true);
     if (!linkedVisible && value >= 0.68) setLinkedVisible(true);
+    // At the completed visual state, the parent replaces this scroll-driven component
+    // with a static scene and removes its timeline/pinning range.
+    if (value >= 0.92) onComplete();
   });
 
   const content = reducedMotion ? (
@@ -145,9 +344,9 @@ export function DeviceLinkingScene({ title, subtitle, windowsLabel, androidLabel
   }
 
   return (
-    <div ref={sceneRef} className="relative mt-16 h-[280vh] sm:mt-20 sm:h-[260vh]">
-      <div className="sticky top-0 flex h-svh flex-col items-center justify-center overflow-hidden px-5 sm:px-8">
-        <div className="mx-auto flex w-full max-w-4xl flex-col items-center">{content}</div>
+    <div ref={sceneRef} className="relative mt-16 h-[330vh] sm:mt-20 sm:h-[310vh]">
+      <div className="sticky top-[8.375rem] flex h-svh flex-col items-center justify-center overflow-hidden px-5 sm:top-[5.0625rem] sm:px-8">
+        <div ref={contentRef} className="mx-auto flex w-full max-w-4xl flex-col items-center">{content}</div>
       </div>
     </div>
   );
