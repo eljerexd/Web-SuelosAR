@@ -20,6 +20,14 @@ yarn-error.log*
 .pnpm-debug.log*
 .devserver.log
 .devserver.err.log
+.prodserver.log
+.prodserver.err.log
+.crossplatform.log
+.crossplatform.err.log
+
+# Local assistant and editor configuration
+.claude/
+.vscode/
 
 # Editor and operating system files
 .DS_Store

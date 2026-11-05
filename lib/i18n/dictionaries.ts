@@ -48,7 +48,11 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
   },
   features: {
     title: "Mapas de suelos y herramientas GIS para el campo",
-    subtitle: "Mapas de suelos, Cartas de Suelo y herramientas GIS para la agronomía y la planificación agrícola en Buenos Aires y Santa Fe, Argentina. Pensado para productores agropecuarios, consultores, investigadores y estudiantes.",
+    subtitle: {
+      beforeProvinces: "Mapas de suelos, Cartas de Suelo y herramientas GIS para la agronomía y la planificación agrícola en ",
+      conjunction: " y ",
+      afterProvinces: ", Argentina. Pensado para productores agropecuarios, consultores, investigadores y estudiantes.",
+    },
     statisticsIntro: "SuelosAR actualmente cuenta con",
     statistics: [
       { label: "Cartas y series de suelo", shortLabel: "Cartas" },
@@ -122,8 +126,8 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
       { question: "¿Qué es SuelosAR?", answer: "SuelosAR es una aplicación independiente para Android y Windows que permite consultar cartografía de suelos y trabajar con herramientas GIS." },
       { question: "¿Funciona sin internet?", answer: "Sí. La cartografía y las herramientas principales siguen disponibles sin conexión." },
       { question: "¿Qué provincias incluye actualmente?", answer: "La versión actual incluye información de las Provincias de Buenos Aires y Santa Fe." },
-      { question: "¿Dónde puedo ver el mapa de suelos de la Provincia de Buenos Aires?", answer: "Podés explorarlo directamente desde SuelosAR, o conocer en detalle qué representa y cómo consultarlo." },
-      { question: "¿Dónde puedo ver el mapa de suelos de la Provincia de Santa Fe?", answer: "Podés explorarlo directamente desde SuelosAR, o conocer en detalle qué representa y cómo consultarlo." },
+      { question: "¿Dónde puedo ver el mapa de suelos de la Provincia de Buenos Aires?", answer: "La página provincial detalla la cobertura disponible y cómo consultarla.", link: { href: "/mapa-suelos-buenos-aires", label: "Ver el mapa y las Cartas de Suelo de Buenos Aires." } },
+      { question: "¿Dónde puedo ver el mapa de suelos de la Provincia de Santa Fe?", answer: "La página provincial explica el documento consolidado y cómo consultar sus series.", link: { href: "/mapa-suelos-santa-fe", label: "Ver las series de suelo de Santa Fe." } },
       { question: "¿De dónde provienen los datos?", answer: "La información proviene de Cartas de Suelo y cartografía oficial publicada por el INTA.", link: { href: "/data-sources", label: "Consultá las fuentes de cartografía de suelos." } },
       { question: "¿Es gratuita?", answer: "Sí. SuelosAR se puede descargar y utilizar de forma gratuita." },
       { question: "¿Qué dispositivos son compatibles?", answer: "SuelosAR es compatible con Android 10 o posterior y Windows 10/11." },
@@ -132,7 +136,7 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
   soilMap: {
     badge: "Provincia de Buenos Aires",
     title: "Mapa de Suelos de la Provincia de Buenos Aires",
-    subtitle: "Qué es, cómo se organiza y cómo consultarla con SuelosAR.",
+    subtitle: "Consultá las 386 Cartas de Suelo de Buenos Aires en PDF y sin conexión, basadas en fuentes oficiales del INTA.",
     intro: {
       title: "¿Qué es un mapa de suelos?",
       paragraph: "Organiza el territorio en unidades según sus características de suelo — una referencia para la agronomía, la planificación y el trabajo de campo.",
@@ -194,7 +198,7 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
   soilMapSantaFe: {
     badge: "Provincia de Santa Fe",
     title: "Mapa de Suelos de la Provincia de Santa Fe",
-    subtitle: "213 series de suelo de Santa Fe, reunidas en un documento consolidado del INTA EEA Rafaela.",
+    subtitle: "213 series de suelo en un documento consolidado de 640 páginas del INTA EEA Rafaela.",
     intro: {
       title: "¿Qué cubre SuelosAR en Santa Fe?",
       paragraph: "SuelosAR reúne la información de suelos de la Provincia de Santa Fe en un documento consolidado de 640 páginas que describe sus 213 series de suelo, elaborado por el INTA EEA Rafaela.",
@@ -421,7 +425,11 @@ const en: Dictionary = {
   },
   features: {
     title: "Soil maps and GIS tools for field work",
-    subtitle: "Soil maps, soil surveys and GIS tools for agronomy and agricultural planning in Buenos Aires and Santa Fe, Argentina. Built for agricultural producers, consultants, researchers and students.",
+    subtitle: {
+      beforeProvinces: "Soil maps, soil surveys and GIS tools for agronomy and agricultural planning in ",
+      conjunction: " and ",
+      afterProvinces: ", Argentina. Built for agricultural producers, consultants, researchers and students.",
+    },
     statisticsIntro: "SuelosAR currently includes",
     statistics: [
       { label: "Soil maps & series", shortLabel: "Maps" },
@@ -495,7 +503,8 @@ const en: Dictionary = {
       { question: "What is SuelosAR?", answer: "SuelosAR is an independent Android and Windows application for consulting soil cartography and working with GIS tools." },
       { question: "Does it work without internet?", answer: "Yes. The cartography and core tools remain available without a connection." },
       { question: "Which provinces are currently included?", answer: "The current version includes information for Buenos Aires and Santa Fe Provinces." },
-      { question: "Where can I see the Santa Fe Province soil map?", answer: "You can explore it directly from SuelosAR, or learn in detail what it covers and how to consult it." },
+      { question: "Where can I see the Buenos Aires Province soil map?", answer: "The provincial page explains its available coverage and how to consult it.", link: { href: "/mapa-suelos-buenos-aires", label: "View Buenos Aires maps and soil surveys." } },
+      { question: "Where can I see the Santa Fe Province soil map?", answer: "The provincial page explains the consolidated document and how to consult its soil series.", link: { href: "/mapa-suelos-santa-fe", label: "View Santa Fe soil series." } },
       { question: "Where does the data come from?", answer: "The information comes from official INTA soil maps and soil survey publications.", link: { href: "/data-sources", label: "Review the soil cartography sources." } },
       { question: "Is it free?", answer: "Yes. SuelosAR can be downloaded and used free of charge." },
       { question: "Which devices are supported?", answer: "SuelosAR supports Android 10 or later and Windows 10/11." },
@@ -504,7 +513,7 @@ const en: Dictionary = {
   soilMap: {
     badge: "Buenos Aires Province",
     title: "Soil Map of Buenos Aires Province",
-    subtitle: "What it is, how it's organized and how to consult it with SuelosAR.",
+    subtitle: "Consult 386 Buenos Aires soil surveys in PDF, offline, based on official INTA sources.",
     intro: {
       title: "What is a soil map?",
       paragraph: "It organizes the territory into units based on soil characteristics — a reference for agronomy, planning and field work.",
@@ -566,7 +575,7 @@ const en: Dictionary = {
   soilMapSantaFe: {
     badge: "Santa Fe Province",
     title: "Soil Map of Santa Fe Province",
-    subtitle: "213 soil series for Santa Fe, brought together in a consolidated document from INTA EEA Rafaela.",
+    subtitle: "213 soil series in a 640-page consolidated document from INTA EEA Rafaela.",
     intro: {
       title: "What does SuelosAR cover in Santa Fe?",
       paragraph: "SuelosAR brings together Santa Fe Province's soil information in a 640-page consolidated document describing its 213 soil series, prepared by INTA EEA Rafaela.",

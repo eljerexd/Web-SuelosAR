@@ -2,12 +2,14 @@
 
 import { animate, AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { ImageLightbox } from "@/components/ui/image-lightbox";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
 import { getActiveFeatureIndex } from "@/lib/product-tour-scroll";
+import { buenosAiresProvince, santaFeProvince } from "@/lib/provinces";
 import { homeStats } from "@/lib/stats";
 import { DeviceLinkingScene } from "./device-linking-scene";
 import { FeatureStory } from "./feature-story";
@@ -139,7 +141,17 @@ export function Features() {
       <div className="mx-auto w-full max-w-7xl">
         <motion.div className="mx-auto max-w-3xl text-center" initial={reducedMotion ? false : { opacity: 1, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: reducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}>
           <h2 id="features-title" className="text-4xl font-bold tracking-[-0.045em] text-[var(--on-surface)] sm:text-5xl">{dictionary.features.title}</h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{dictionary.features.subtitle}</p>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">
+            {dictionary.features.subtitle.beforeProvinces}
+            <Link href={buenosAiresProvince.path} className="rounded-sm underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:text-[var(--primary)] hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]">
+              {dictionary.features.roadmap.buenosAires}
+            </Link>
+            {dictionary.features.subtitle.conjunction}
+            <Link href={santaFeProvince.path} className="rounded-sm underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:text-[var(--primary)] hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]">
+              {dictionary.features.roadmap.santaFe}
+            </Link>
+            {dictionary.features.subtitle.afterProvinces}
+          </p>
           <p className="mt-7 text-center text-sm font-medium text-[var(--on-surface-variant)] opacity-80 sm:mt-8">{dictionary.features.statisticsIntro}</p>
 
           <div className="mt-3 flex flex-col items-center">
