@@ -10,6 +10,7 @@ import { ImageLightbox } from "@/components/ui/image-lightbox";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
 import { GooglePlayIcon, PlatformIcon } from "@/components/ui/platform-icon";
 import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
+import { trackDownloadClick, trackProvinceLinkClick } from "@/lib/analytics";
 import { defaultHeroImageClassName, getCrossProvince, type ProvinceConfig } from "@/lib/provinces";
 
 const downloadButtonClass = "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]";
@@ -80,11 +81,11 @@ export function SoilMapContent({ province }: SoilMapContentProps) {
           <motion.h1 variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.62, ease: easing }} className={province.heroScreenshot ? "mt-9 text-5xl font-bold leading-[1.08] tracking-[-0.05em] text-[var(--on-surface)] sm:mt-10 sm:text-6xl sm:leading-[1.05] lg:text-7xl lg:leading-[1.03]" : "mt-7 text-4xl font-bold tracking-[-0.05em] text-[var(--on-surface)] sm:text-5xl lg:text-6xl"}>{soilMap.title}</motion.h1>
           <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className={`mx-auto max-w-2xl ${paragraphClass} ${province.heroScreenshot ? "mt-7 sm:mt-8" : "mt-6"}`}>{soilMap.subtitle}</motion.p>
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.56, ease: easing }} className={`flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center ${province.heroScreenshot ? "mt-11 sm:mt-12" : "mt-8"}`}>
-            <motion.a href={ANDROID_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+            <motion.a href={ANDROID_DOWNLOAD_URL} onClick={() => trackDownloadClick("android", "google_play", "province_hero")} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[3px] shrink-0 place-items-center" aria-hidden="true"><GooglePlayIcon size={25} /></span>
               <span>{dictionary.hero.downloadAndroid}</span>
             </motion.a>
-            <motion.a href={WINDOWS_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+            <motion.a href={WINDOWS_DOWNLOAD_URL} onClick={() => trackDownloadClick("windows", "exe", "province_hero")} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[3px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="windows" size={21} /></span>
               <span>{dictionary.hero.downloadWindows}</span>
             </motion.a>
@@ -329,11 +330,11 @@ export function SoilMapContent({ province }: SoilMapContentProps) {
           <h2 className="mx-auto max-w-3xl text-3xl font-bold tracking-[-0.045em] text-[var(--on-surface)] sm:text-4xl">{soilMap.closing.title}</h2>
           <p className={`mx-auto mt-5 max-w-2xl ${paragraphClass}`}>{soilMap.closing.text}</p>
           <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-            <motion.a href={ANDROID_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+            <motion.a href={ANDROID_DOWNLOAD_URL} onClick={() => trackDownloadClick("android", "google_play", "province_closing")} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><GooglePlayIcon size={20} /></span>
               <span>{dictionary.hero.downloadAndroid}</span>
             </motion.a>
-            <motion.a href={WINDOWS_DOWNLOAD_URL} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+            <motion.a href={WINDOWS_DOWNLOAD_URL} onClick={() => trackDownloadClick("windows", "exe", "province_closing")} className={downloadButtonClass} whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true"><PlatformIcon platform="windows" size={19} /></span>
               <span>{dictionary.hero.downloadWindows}</span>
             </motion.a>
@@ -345,7 +346,7 @@ export function SoilMapContent({ province }: SoilMapContentProps) {
             {crossProvince ? (
               <>
                 {" · "}
-                <Link href={crossProvince.path} className={linkClass}>{soilMap.closing.crossLinkLabel}</Link>
+                <Link href={crossProvince.path} onClick={() => trackProvinceLinkClick(crossProvince.slug === "buenos-aires" ? "buenos_aires" : "santa_fe", "cross_province")} className={linkClass}>{soilMap.closing.crossLinkLabel}</Link>
               </>
             ) : null}
           </p>

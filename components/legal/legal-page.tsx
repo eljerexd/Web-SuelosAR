@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
+import { AnalyticsPreferencesButton } from "@/components/analytics/analytics-preferences-button";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 export type LegalPageKey = keyof Dictionary["legal"]["pages"];
@@ -24,7 +25,7 @@ export function LegalPage({ pageKey }: { pageKey: LegalPageKey }) {
           <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{page.intro}</p>
           <p className="mt-5 text-sm text-[var(--on-surface-variant)]">
             <span className="font-semibold text-[var(--on-surface)]">{legal.lastUpdated}:</span>{" "}
-            <time dateTime="2026-07-15">{legal.updatedDate}</time>
+            <time dateTime={pageKey === "privacy" ? "2026-11-05" : "2026-07-15"}>{pageKey === "privacy" ? legal.privacyUpdatedDate : legal.updatedDate}</time>
           </p>
         </header>
 
@@ -42,6 +43,7 @@ export function LegalPage({ pageKey }: { pageKey: LegalPageKey }) {
             </section>
           ))}
         </div>
+        {pageKey === "privacy" ? <div className="mt-9 border-t border-[var(--outline-variant)] pt-6"><AnalyticsPreferencesButton /></div> : null}
       </article>
     </main>
   );

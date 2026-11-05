@@ -3,6 +3,14 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "es-AR";
 
 const es = {
+  analyticsConsent: {
+    title: "Privacidad y analítica",
+    description: "Nos ayudás a mejorar SuelosAR. Con tu permiso, medimos visitas, páginas consultadas y acciones generales para entender qué contenidos resultan más útiles.",
+    privacyLink: "Más información",
+    accept: "Aceptar analíticas",
+    reject: "Rechazar analíticas",
+    managePreference: "Cambiar preferencia de analítica",
+  },
   brand: {
     name: "SuelosAR",
   },
@@ -322,12 +330,14 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
     backHome: "Volver al inicio",
     lastUpdated: "Última actualización",
     updatedDate: "15 de julio de 2026",
+    privacyUpdatedDate: "5 de noviembre de 2026",
     pages: {
       privacy: {
         title: "Política de privacidad",
         intro: "Esta política describe cómo el sitio web y la aplicación SuelosAR tratan la información necesaria para ofrecer sus funciones.",
         sections: [
           { heading: "Información del sitio web", paragraphs: ["El sitio no requiere crear una cuenta ni completar formularios. Las preferencias de idioma y tema se guardan localmente en el navegador para mantener la configuración elegida."] },
+          { heading: "Analítica y consentimiento", paragraphs: ["Solo si aceptás las analíticas, este sitio carga Google Analytics 4 (GA4) para medir visitas y uso general. GA4 puede recibir la ruta de la página, el título, la referencia, el idioma, información técnica del navegador/dispositivo y eventos con contexto como plataforma y formato del clic de descarga, versión publicada visible, provincia o paso de función. También puede usar cookies propias. Google informa que usa la dirección IP en el momento de la recopilación para derivar información de ubicación general y luego descarta la IP bruta; consultá sus políticas para conocer el tratamiento completo. Para atribución de campañas solo se conservan valores UTM limitados y permitidos; no se envían otros parámetros de consulta, nombres, correos, identificadores de cuenta ni ubicación GPS precisa.", "Al aceptar también se activan Vercel Web Analytics y Speed Insights, integrados previamente en el sitio: el primero presenta métricas agregadas de visitas sin cookies y usa un hash de solicitud de duración limitada, y el segundo mide datos de rendimiento como Web Vitals. Google Signals y la personalización publicitaria están desactivados; las mediciones mejoradas innecesarias deben permanecer desactivadas en la configuración del flujo GA4. Si rechazás o retirás tu aceptación, los tres proveedores dejan de enviar nuevas mediciones desde este sitio; las cookies propias de GA4 se eliminan cuando es posible. La elección se guarda localmente en el navegador y podés cambiarla en cualquier momento desde esta política mediante el control de preferencias."] },
           { heading: "Ubicación y funciones del dispositivo", paragraphs: ["SuelosAR puede solicitar acceso a la ubicación cuando se utilizan herramientas GPS. El permiso es administrado por el sistema operativo y puede desactivarse desde la configuración del dispositivo.", "La aplicación está diseñada para funcionar localmente y sin conexión. Las funciones de ubicación se utilizan para representar la posición y asistir el trabajo cartográfico dentro de la aplicación."] },
           { heading: "Servicios de terceros", paragraphs: ["Los enlaces externos, las plataformas de distribución y los repositorios de código pueden aplicar sus propias políticas de privacidad. SuelosAR no controla las prácticas de esos servicios."] },
           { heading: "Contacto", paragraphs: ["Las consultas relacionadas con privacidad pueden enviarse al correo de contacto publicado en el pie de página."] },
@@ -379,6 +389,14 @@ type DeepString<T> = T extends string
 export type Dictionary = DeepString<typeof es>;
 
 const en: Dictionary = {
+  analyticsConsent: {
+    title: "Privacy and analytics",
+    description: "Help us improve SuelosAR. With your permission, we measure visits, pages viewed, and general interactions to understand which content is most useful.",
+    privacyLink: "Learn more",
+    accept: "Accept analytics",
+    reject: "Reject analytics",
+    managePreference: "Change analytics preference",
+  },
   brand: {
     name: "SuelosAR",
   },
@@ -699,12 +717,14 @@ const en: Dictionary = {
     backHome: "Back to home",
     lastUpdated: "Last updated",
     updatedDate: "July 15, 2026",
+    privacyUpdatedDate: "November 5, 2026",
     pages: {
       privacy: {
         title: "Privacy Policy",
         intro: "This policy explains how the SuelosAR website and application handle the information required to provide their functions.",
         sections: [
           { heading: "Website information", paragraphs: ["The website does not require an account or forms. Language and theme preferences are stored locally in the browser to preserve the selected configuration."] },
+          { heading: "Analytics and consent", paragraphs: ["Only if you accept analytics does this site load Google Analytics 4 (GA4) to measure visits and general usage. GA4 may receive the page path, title, referrer, language, technical browser/device information, and event context such as download platform and format, the visible release version, province, or feature step. It may also use first-party cookies. Google states that it uses IP addresses at collection time to derive general location information and then discards raw IP addresses; consult its policies for full details. Only limited, allow-listed UTM values are retained for campaign attribution; other query parameters, names, email addresses, account identifiers, and precise GPS location are not sent.", "Accepting also enables Vercel Web Analytics and Speed Insights, which were already integrated into the site: the former provides aggregated visit metrics without cookies and uses a short-lived request hash, while the latter measures performance data such as Web Vitals. Google Signals and advertising personalization are disabled; unnecessary enhanced measurements must remain disabled in the GA4 stream settings. If you reject or withdraw consent, all three providers stop sending new measurements from this site; GA4 first-party analytics cookies are deleted where possible. Your choice is stored locally in the browser and can be changed at any time on this policy page using the preference control."] },
           { heading: "Location and device features", paragraphs: ["SuelosAR may request location access when GPS tools are used. Permission is managed by the operating system and can be disabled in the device settings.", "The application is designed to work locally and offline. Location features are used to display position and support cartographic work inside the application."] },
           { heading: "Third-party services", paragraphs: ["External links, distribution platforms and code repositories may apply their own privacy policies. SuelosAR does not control the practices of those services."] },
           { heading: "Contact", paragraphs: ["Privacy-related questions can be sent to the contact email published in the footer."] },

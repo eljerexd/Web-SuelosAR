@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { LanguageSelector } from "@/components/i18n/language-selector";
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { trackCatalogNavigationClick } from "@/lib/analytics";
 import brandIcon from "@/public/icons/icon-512.png";
 
 export function Navbar() {
@@ -49,6 +50,7 @@ export function Navbar() {
           </Link>
           <Link
             href="/mapas-de-suelos"
+            onClick={() => trackCatalogNavigationClick("navbar")}
             aria-current={isCatalogPage ? "page" : undefined}
             className={`group col-span-2 row-start-2 flex w-fit min-h-11 -translate-y-1 cursor-pointer items-center justify-center justify-self-center rounded-md px-3 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] sm:col-span-1 sm:relative sm:before:absolute sm:before:left-0 sm:before:top-1/2 sm:before:h-5 sm:before:w-px sm:before:-translate-y-1/2 sm:before:bg-[var(--outline-variant)]/65 sm:before:content-[''] sm:row-start-auto sm:translate-y-0 sm:justify-self-auto ${isCatalogPage ? "text-[var(--primary)]" : "text-[var(--on-surface)]/85 hover:text-[var(--primary)]"}`}
           >
