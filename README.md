@@ -40,7 +40,7 @@ npm run dev
 
 Then open [http://localhost:3000](http://localhost:3000).
 
-No environment variables, external services, database, deployment account, or additional setup are required.
+The public website runs without environment variables. The private metrics dashboard requires the Upstash Redis and GitHub OAuth settings documented in [metrics setup](docs/metrics-setup.md).
 
 ## Commands
 
@@ -67,7 +67,8 @@ tests/        Lightweight project tests
 
 - Next.js App Router and TypeScript
 - React, Tailwind CSS, Framer Motion and Lucide React
-- Vercel Analytics and Speed Insights
+- Auth.js with GitHub OAuth for the private metrics dashboard
+- Upstash Redis for anonymous aggregate metrics
 
 ## Coverage and data
 

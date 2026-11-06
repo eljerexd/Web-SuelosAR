@@ -5,7 +5,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
-import { trackCatalogNavigationClick } from "@/lib/analytics";
 import { FacebookIcon, InstagramIcon, TiktokIcon, YoutubeIcon } from "@/components/ui/social-icons";
 import { siteConfig } from "@/lib/site";
 import { socialLinks } from "@/lib/social";
@@ -34,7 +33,7 @@ export function Footer() {
           <nav aria-label={dictionary.footer.quickLinksTitle}>
             <h2 className="text-sm font-semibold text-[var(--on-surface)]">{dictionary.footer.quickLinksTitle}</h2>
             <ul className="mt-4 space-y-3 text-sm text-[var(--on-surface-variant)]">
-              {dictionary.footer.quickLinks.map((link) => <li key={link.href}><a onClick={link.href === "/mapas-de-suelos" ? () => trackCatalogNavigationClick("footer") : undefined} className="rounded-md transition-colors hover:text-[var(--primary)]" href={resolveQuickLink(link.href)}>{link.label}</a></li>)}
+              {dictionary.footer.quickLinks.map((link) => <li key={link.href}><a className="rounded-md transition-colors hover:text-[var(--primary)]" href={resolveQuickLink(link.href)}>{link.label}</a></li>)}
             </ul>
           </nav>
 

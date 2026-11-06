@@ -4,8 +4,6 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useId, useState } from "react";
 
-import { trackProvinceLinkClick } from "@/lib/analytics";
-
 interface FaqItemProps {
   question: string;
   answer: string;
@@ -36,11 +34,7 @@ export function FaqItem({ question, answer, link }: FaqItemProps) {
               {link ? (
                 <>
                   {" "}
-                  <a
-                    href={link.href}
-                    onClick={link.href === "/mapa-suelos-buenos-aires" ? () => trackProvinceLinkClick("buenos_aires", "faq") : link.href === "/mapa-suelos-santa-fe" ? () => trackProvinceLinkClick("santa_fe", "faq") : undefined}
-                    className="font-medium text-[var(--primary)] underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:decoration-[var(--primary)]"
-                  >
+                  <a href={link.href} className="font-medium text-[var(--primary)] underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:decoration-[var(--primary)]">
                     {link.label}
                   </a>
                 </>

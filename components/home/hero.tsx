@@ -7,7 +7,7 @@ import { HeroDeviceShowcase } from "@/components/home/hero-device-showcase";
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { GooglePlayIcon, PlatformIcon } from "@/components/ui/platform-icon";
 import { ANDROID_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
-import { trackDownloadClick } from "@/lib/analytics";
+import { recordAndroidPlayButtonClick } from "@/lib/android-play-click";
 
 const trustIcons = [CircleDollarSign, WifiOff, MapPinned, Sparkles] as const;
 const easing = [0.22, 1, 0.36, 1] as const;
@@ -21,8 +21,6 @@ interface HeroProps {
 export function Hero({ androidReleaseLabel, windowsReleaseLabel }: HeroProps) {
   const reducedMotion = Boolean(useReducedMotion());
   const { dictionary } = useI18n();
-  const androidVersion = androidReleaseLabel?.match(/v?\d+(?:\.\d+){1,3}/)?.[0];
-  const windowsVersion = windowsReleaseLabel?.match(/v?\d+(?:\.\d+){1,3}/)?.[0];
 
   return (
     <section className="relative isolate overflow-hidden px-5 pb-20 pt-12 sm:px-8 sm:pb-24 sm:pt-16 lg:min-h-[calc(100svh-5rem)] lg:py-16" aria-labelledby="hero-title">
@@ -47,7 +45,7 @@ export function Hero({ androidReleaseLabel, windowsReleaseLabel }: HeroProps) {
           <motion.p variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.62, ease: easing }} className="mx-auto mt-9 max-w-lg text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8 lg:mx-0">{dictionary.hero.description}</motion.p>
 
           <motion.div variants={textItem} transition={{ duration: reducedMotion ? 0 : 0.6, ease: easing }} className="mt-11 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            <motion.a href={ANDROID_DOWNLOAD_URL} onClick={() => trackDownloadClick("android", "google_play", "hero", androidVersion)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+            <motion.a href={ANDROID_DOWNLOAD_URL} onClick={(event) => recordAndroidPlayButtonClick(event.isTrusted)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 shrink-0 -translate-x-[10px] -translate-y-[2px] place-items-center" aria-hidden="true">
                 <GooglePlayIcon size={30} />
               </span>
@@ -56,7 +54,7 @@ export function Hero({ androidReleaseLabel, windowsReleaseLabel }: HeroProps) {
                 {androidReleaseLabel ? <span className="mt-0.5 text-[0.7125rem] font-medium leading-4 opacity-75">{androidReleaseLabel}</span> : null}
               </span>
             </motion.a>
-            <motion.a href={WINDOWS_DOWNLOAD_URL} onClick={() => trackDownloadClick("windows", "exe", "hero", windowsVersion)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+            <motion.a href={WINDOWS_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
               <span className="grid size-6 shrink-0 -translate-x-[5px] place-items-center" aria-hidden="true">
                 <PlatformIcon platform="windows" size={25} />
               </span>

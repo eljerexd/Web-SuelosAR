@@ -4,7 +4,6 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
-import { AnalyticsPreferencesButton } from "@/components/analytics/analytics-preferences-button";
 import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 export type LegalPageKey = keyof Dictionary["legal"]["pages"];
@@ -43,7 +42,6 @@ export function LegalPage({ pageKey }: { pageKey: LegalPageKey }) {
             </section>
           ))}
         </div>
-        {pageKey === "privacy" ? <div className="mt-9 border-t border-[var(--outline-variant)] pt-6"><AnalyticsPreferencesButton /></div> : null}
       </article>
     </main>
   );

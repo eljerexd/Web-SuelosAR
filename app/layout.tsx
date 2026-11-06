@@ -1,6 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { AnalyticsConsentBanner } from "@/components/analytics/analytics-consent-banner";
-import { AnalyticsSuite } from "@/components/analytics/analytics-suite";
 import { I18nProvider } from "@/components/i18n/i18n-provider";
 import { SkipLink } from "@/components/i18n/skip-link";
 import { Footer } from "@/components/layout/footer";
@@ -94,10 +92,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               {children}
               <Footer />
             </div>
-            <AnalyticsConsentBanner />
           </ThemeProvider>
         </I18nProvider>
-        <AnalyticsSuite />
       </body>
     </html>
   );

@@ -9,7 +9,6 @@ import { useI18n } from "@/components/i18n/i18n-provider";
 import { ImageLightbox } from "@/components/ui/image-lightbox";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
 import { getActiveFeatureIndex } from "@/lib/product-tour-scroll";
-import { trackProvinceLinkClick, trackAnalyticsEvent } from "@/lib/analytics";
 import { buenosAiresProvince, santaFeProvince } from "@/lib/provinces";
 import { homeStats } from "@/lib/stats";
 import { DeviceLinkingScene } from "./device-linking-scene";
@@ -26,7 +25,6 @@ const featureImages = [
 ] as const;
 
 const featureOrder = [0, 1, 2, 5, 4, 3] as const;
-const featureIds = ["interactive_gis_map", "official_cartography", "integrated_pdf_viewer", "measurements", "custom_markers", "favorites"] as const;
 const easing = [0.22, 1, 0.36, 1] as const;
 const glowOpacity = [0.052, 0.064, 0.056, 0.07, 0.06, 0.066] as const;
 
@@ -35,7 +33,6 @@ export function Features() {
   const { dictionary } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
-  const trackedFeatureIds = useRef(new Set<string>());
   const hasAnimatedStatsRef = useRef(false);
   const [soilMapsValue, setSoilMapsValue] = useState<number>(() => reducedMotion ? homeStats.soilMaps.end : homeStats.soilMaps.start);
   const [provincesValue, setProvincesValue] = useState<number>(() => reducedMotion ? homeStats.provinces.end : homeStats.provinces.start);
@@ -87,7 +84,6 @@ export function Features() {
     });
   }, [reducedMotion]);
   const features = useMemo(() => featureOrder.map((sourceIndex) => ({
-    id: featureIds[sourceIndex],
     ...dictionary.features.items[sourceIndex],
     ...featureImages[sourceIndex],
   })), [dictionary.features.items]);
@@ -140,19 +136,6 @@ export function Features() {
     };
   }, [features.length]);
 
-  useEffect(() => {
-    const feature = features[activeIndex];
-    const step = stepRefs.current[activeIndex];
-    if (!feature || !step || trackedFeatureIds.current.has(feature.id) || document.visibilityState !== "visible") return;
-
-    const rect = step.getBoundingClientRect();
-    const visibleHeight = Math.max(0, Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0));
-    if (rect.height <= 0 || visibleHeight / rect.height < 0.35) return;
-
-    trackedFeatureIds.current.add(feature.id);
-    trackAnalyticsEvent("feature_step_view", { feature_id: feature.id, page_path: window.location.pathname });
-  }, [activeIndex, features]);
-
   return (
     <section id="features" className="scroll-mt-20 px-5 py-20 sm:px-8 sm:py-24 lg:py-28" aria-labelledby="features-title">
       <div className="mx-auto w-full max-w-7xl">
@@ -160,11 +143,11 @@ export function Features() {
           <h2 id="features-title" className="text-4xl font-bold tracking-[-0.045em] text-[var(--on-surface)] sm:text-5xl">{dictionary.features.title}</h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">
             {dictionary.features.subtitle.beforeProvinces}
-            <Link href={buenosAiresProvince.path} onClick={() => trackProvinceLinkClick("buenos_aires", "homepage_text")} className="rounded-sm underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:text-[var(--primary)] hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]">
+            <Link href={buenosAiresProvince.path} className="rounded-sm underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:text-[var(--primary)] hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]">
               {dictionary.features.roadmap.buenosAires}
             </Link>
             {dictionary.features.subtitle.conjunction}
-            <Link href={santaFeProvince.path} onClick={() => trackProvinceLinkClick("santa_fe", "homepage_text")} className="rounded-sm underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:text-[var(--primary)] hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]">
+            <Link href={santaFeProvince.path} className="rounded-sm underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:text-[var(--primary)] hover:decoration-[var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--primary)]">
               {dictionary.features.roadmap.santaFe}
             </Link>
             {dictionary.features.subtitle.afterProvinces}

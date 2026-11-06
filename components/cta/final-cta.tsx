@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useI18n } from "@/components/i18n/i18n-provider";
 import { PlatformIcon } from "@/components/ui/platform-icon";
 import { ANDROID_APK_DOWNLOAD_URL, WINDOWS_DOWNLOAD_URL } from "@/lib/downloads";
-import { trackCatalogNavigationClick, trackDownloadClick } from "@/lib/analytics";
 
 const trustIcons = [MapPinned, Map, WifiOff] as const;
 const easing = [0.22, 1, 0.36, 1] as const;
@@ -23,13 +22,13 @@ export function FinalCta() {
         <h2 id="final-cta-title" className="mx-auto max-w-4xl text-4xl font-bold tracking-[-0.05em] text-[var(--on-surface)] sm:text-5xl lg:text-6xl">{dictionary.cta.title}</h2>
         <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[var(--on-surface-variant)] sm:text-lg sm:leading-8">{dictionary.cta.description}</p>
         <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-          <motion.a href={ANDROID_APK_DOWNLOAD_URL} onClick={() => trackDownloadClick("android", "apk", "final_cta")} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+          <motion.a href={ANDROID_APK_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
             <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">
               <PlatformIcon platform="android" size={20} />
             </span>
             <span>{dictionary.cta.downloadOfflineApk}</span>
           </motion.a>
-          <motion.a href={WINDOWS_DOWNLOAD_URL} onClick={() => trackDownloadClick("windows", "exe", "final_cta")} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
+          <motion.a href={WINDOWS_DOWNLOAD_URL} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--primary)] py-3 pl-4 pr-6 text-sm font-semibold text-[var(--on-primary)] shadow-[0_8px_22px_rgb(47_104_66/0.13)] transition-[box-shadow,filter] duration-300 hover:brightness-105 hover:shadow-[0_12px_28px_rgb(47_104_66/0.18)]" whileHover={reducedMotion ? undefined : { y: -2, transition: { duration: 0.28, ease: easing } }} whileTap={reducedMotion ? undefined : { scale: 0.99 }}>
             <span className="grid size-6 -translate-x-[5px] shrink-0 place-items-center" aria-hidden="true">
               <PlatformIcon platform="windows" size={19} />
             </span>
@@ -40,7 +39,7 @@ export function FinalCta() {
           {dictionary.cta.badges.map((label, index) => { const Icon = trustIcons[index]; return <li key={label} className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--on-surface-variant)]"><Icon aria-hidden="true" size={15} strokeWidth={1.8} />{label}</li>; })}
         </ul>
         <p className="mt-7 text-sm text-[var(--on-surface-variant)]">
-          <Link href="/mapas-de-suelos" onClick={() => trackCatalogNavigationClick("final_cta")} className="font-medium text-[var(--primary)] underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:decoration-[var(--primary)]">{dictionary.cta.provincesLinkLabel}</Link>
+          <Link href="/mapas-de-suelos" className="font-medium text-[var(--primary)] underline decoration-[var(--outline-variant)] underline-offset-4 transition-colors hover:decoration-[var(--primary)]">{dictionary.cta.provincesLinkLabel}</Link>
         </p>
       </motion.div>
     </section>

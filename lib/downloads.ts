@@ -46,6 +46,7 @@ export function isDownloadPlatform(value: string): value is DownloadPlatform {
 interface GitHubReleaseAsset {
   name: string;
   browser_download_url: string;
+  download_count?: number;
 }
 
 interface GitHubRelease {
@@ -76,28 +77,49 @@ function isAppRelease(release: GitHubRelease) {
   return label.length > 0 && !WEB_RELEASE_PATTERN.test(label);
 }
 
-/** Fetches every release and returns the newest one that belongs to the application, never the website. */
-async function fetchLatestAppRelease() {
+/** Fetches all published application releases (never website releases), with each page cached by Next.js. */
+async function fetchPublishedAppReleases() {
   try {
-    const response = await fetch(GITHUB_RELEASES_API_URL, {
-      headers: { Accept: "application/vnd.github+json" },
-      next: { revalidate: 300 },
-    });
+    const releases: GitHubRelease[] = [];
+    for (let page = 1; page <= 100; page += 1) {
+      const separator = GITHUB_RELEASES_API_URL.includes("?") ? "&" : "?";
+      const response = await fetch(`${GITHUB_RELEASES_API_URL}${separator}page=${page}`, {
+        headers: { Accept: "application/vnd.github+json" },
+        next: { revalidate: 900 },
+      });
 
-    if (!response.ok) return null;
+      if (!response.ok) return null;
+      const batch = await response.json() as GitHubRelease[];
+      if (!Array.isArray(batch)) return null;
+      releases.push(...batch);
+      if (batch.length < 100) break;
+    }
 
-    const releases = await response.json() as GitHubRelease[];
-    const appReleases = releases
+    return releases
       .filter(isAppRelease)
       .filter((release): release is GitHubRelease & { published_at: string } => (
         Boolean(release.published_at) && !Number.isNaN(Date.parse(release.published_at!))
       ))
       .sort((a, b) => Date.parse(b.published_at) - Date.parse(a.published_at));
-
-    return appReleases[0] ?? null;
   } catch {
     return null;
   }
+}
+
+/** Fetches every published SuelosAR app release and returns the newest first. */
+async function fetchLatestAppRelease() {
+  const releases = await fetchPublishedAppReleases();
+  return releases?.[0] ?? null;
+}
+
+/** GitHub's aggregate .exe asset count; it does not confirm completion or website attribution. */
+export async function getGitHubReportedWindowsInstallerDownloads(): Promise<number | null> {
+  const releases = await fetchPublishedAppReleases();
+  if (!releases) return null;
+
+  return releases.reduce((total, release) => total + (release.assets ?? [])
+    .filter((asset) => asset.name.toLowerCase().endsWith(".exe"))
+    .reduce((assetTotal, asset) => assetTotal + (Number.isSafeInteger(asset.download_count) && asset.download_count! >= 0 ? asset.download_count! : 0), 0), 0);
 }
 
 export async function getLatestReleaseMetadata(): Promise<LatestReleaseMetadata | null> {

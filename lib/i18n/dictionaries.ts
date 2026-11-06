@@ -3,14 +3,6 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "es-AR";
 
 const es = {
-  analyticsConsent: {
-    title: "Privacidad y analítica",
-    description: "Nos ayudás a mejorar SuelosAR. Con tu permiso, medimos visitas, páginas consultadas y acciones generales para entender qué contenidos resultan más útiles.",
-    privacyLink: "Más información",
-    accept: "Aceptar analíticas",
-    reject: "Rechazar analíticas",
-    managePreference: "Cambiar preferencia de analítica",
-  },
   brand: {
     name: "SuelosAR",
   },
@@ -337,7 +329,7 @@ description: "Mapas de suelos de Buenos Aires y Santa Fe: Cartas de Suelo, serie
         intro: "Esta política describe cómo el sitio web y la aplicación SuelosAR tratan la información necesaria para ofrecer sus funciones.",
         sections: [
           { heading: "Información del sitio web", paragraphs: ["El sitio no requiere crear una cuenta ni completar formularios. Las preferencias de idioma y tema se guardan localmente en el navegador para mantener la configuración elegida."] },
-          { heading: "Analítica y consentimiento", paragraphs: ["Solo si aceptás las analíticas, este sitio carga Google Analytics 4 (GA4) para medir visitas y uso general. GA4 puede recibir la ruta de la página, el título, la referencia, el idioma, información técnica del navegador/dispositivo y eventos con contexto como plataforma y formato del clic de descarga, versión publicada visible, provincia o paso de función. También puede usar cookies propias. Google informa que usa la dirección IP en el momento de la recopilación para derivar información de ubicación general y luego descarta la IP bruta; consultá sus políticas para conocer el tratamiento completo. Para atribución de campañas solo se conservan valores UTM limitados y permitidos; no se envían otros parámetros de consulta, nombres, correos, identificadores de cuenta ni ubicación GPS precisa.", "Al aceptar también se activan Vercel Web Analytics y Speed Insights, integrados previamente en el sitio: el primero presenta métricas agregadas de visitas sin cookies y usa un hash de solicitud de duración limitada, y el segundo mide datos de rendimiento como Web Vitals. Google Signals y la personalización publicitaria están desactivados; las mediciones mejoradas innecesarias deben permanecer desactivadas en la configuración del flujo GA4. Si rechazás o retirás tu aceptación, los tres proveedores dejan de enviar nuevas mediciones desde este sitio; las cookies propias de GA4 se eliminan cuando es posible. La elección se guarda localmente en el navegador y podés cambiarla en cualquier momento desde esta política mediante el control de preferencias."] },
+          { heading: "Mediciones agregadas", paragraphs: ["El sitio mantiene dos contadores agregados: los clics en los botones que abren SuelosAR en Google Play y la suma del contador de descargas que GitHub reporta para los instaladores .exe de releases públicas de la aplicación. El contador de clics no guarda direcciones IP, agentes de usuario, cookies, identificadores ni datos por visitante. Un límite antiabuso usa temporalmente un contador global, sin claves por persona.", "La cifra de GitHub puede incluir descargas iniciadas desde cualquier origen; no permite confirmar que la transferencia haya terminado ni que la aplicación se haya instalado. No medimos páginas vistas, ubicaciones, características del dispositivo ni comportamiento de navegación. Para proteger el acceso al panel privado, Auth.js usa OAuth de GitHub y una cookie de sesión segura, HttpOnly y limitada al administrador; esta autenticación no se utiliza para los contadores.", "Vercel, Upstash y GitHub, como proveedores de alojamiento, almacenamiento, autenticación y archivos, pueden procesar o conservar metadatos técnicos de solicitudes conforme a sus propias políticas y configuraciones. El sistema de métricas solo persiste los contadores agregados; no copia esos metadatos técnicos a Redis."] },
           { heading: "Ubicación y funciones del dispositivo", paragraphs: ["SuelosAR puede solicitar acceso a la ubicación cuando se utilizan herramientas GPS. El permiso es administrado por el sistema operativo y puede desactivarse desde la configuración del dispositivo.", "La aplicación está diseñada para funcionar localmente y sin conexión. Las funciones de ubicación se utilizan para representar la posición y asistir el trabajo cartográfico dentro de la aplicación."] },
           { heading: "Servicios de terceros", paragraphs: ["Los enlaces externos, las plataformas de distribución y los repositorios de código pueden aplicar sus propias políticas de privacidad. SuelosAR no controla las prácticas de esos servicios."] },
           { heading: "Contacto", paragraphs: ["Las consultas relacionadas con privacidad pueden enviarse al correo de contacto publicado en el pie de página."] },
@@ -389,14 +381,6 @@ type DeepString<T> = T extends string
 export type Dictionary = DeepString<typeof es>;
 
 const en: Dictionary = {
-  analyticsConsent: {
-    title: "Privacy and analytics",
-    description: "Help us improve SuelosAR. With your permission, we measure visits, pages viewed, and general interactions to understand which content is most useful.",
-    privacyLink: "Learn more",
-    accept: "Accept analytics",
-    reject: "Reject analytics",
-    managePreference: "Change analytics preference",
-  },
   brand: {
     name: "SuelosAR",
   },
@@ -724,7 +708,7 @@ const en: Dictionary = {
         intro: "This policy explains how the SuelosAR website and application handle the information required to provide their functions.",
         sections: [
           { heading: "Website information", paragraphs: ["The website does not require an account or forms. Language and theme preferences are stored locally in the browser to preserve the selected configuration."] },
-          { heading: "Analytics and consent", paragraphs: ["Only if you accept analytics does this site load Google Analytics 4 (GA4) to measure visits and general usage. GA4 may receive the page path, title, referrer, language, technical browser/device information, and event context such as download platform and format, the visible release version, province, or feature step. It may also use first-party cookies. Google states that it uses IP addresses at collection time to derive general location information and then discards raw IP addresses; consult its policies for full details. Only limited, allow-listed UTM values are retained for campaign attribution; other query parameters, names, email addresses, account identifiers, and precise GPS location are not sent.", "Accepting also enables Vercel Web Analytics and Speed Insights, which were already integrated into the site: the former provides aggregated visit metrics without cookies and uses a short-lived request hash, while the latter measures performance data such as Web Vitals. Google Signals and advertising personalization are disabled; unnecessary enhanced measurements must remain disabled in the GA4 stream settings. If you reject or withdraw consent, all three providers stop sending new measurements from this site; GA4 first-party analytics cookies are deleted where possible. Your choice is stored locally in the browser and can be changed at any time on this policy page using the preference control."] },
+          { heading: "Aggregate measurements", paragraphs: ["The website keeps two aggregate counters: clicks on buttons that open SuelosAR on Google Play, and the sum of GitHub-reported downloads for .exe installers attached to public application releases. The click counter does not store IP addresses, user agents, cookies, identifiers, or visitor-level data. A global anti-abuse limit temporarily uses an aggregate counter, without per-person keys.", "GitHub's reported figure may include downloads started from any source; it cannot confirm that a transfer completed or that the application was installed. We do not measure page views, locations, device characteristics, or browsing behavior. To protect the private dashboard, Auth.js uses GitHub OAuth and a secure, HttpOnly session cookie restricted to the administrator; this authentication is not used for the counters.", "Vercel, Upstash, and GitHub, as hosting, storage, authentication, and file providers, may process or retain technical request metadata under their own policies and settings. The metrics system persists only aggregate counters; it does not copy technical request metadata into Redis."] },
           { heading: "Location and device features", paragraphs: ["SuelosAR may request location access when GPS tools are used. Permission is managed by the operating system and can be disabled in the device settings.", "The application is designed to work locally and offline. Location features are used to display position and support cartographic work inside the application."] },
           { heading: "Third-party services", paragraphs: ["External links, distribution platforms and code repositories may apply their own privacy policies. SuelosAR does not control the practices of those services."] },
           { heading: "Contact", paragraphs: ["Privacy-related questions can be sent to the contact email published in the footer."] },

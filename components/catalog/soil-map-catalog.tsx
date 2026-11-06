@@ -5,7 +5,6 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 import { useI18n } from "@/components/i18n/i18n-provider";
-import { trackProvinceLinkClick } from "@/lib/analytics";
 import { provinces } from "@/lib/provinces";
 
 const easing = [0.22, 1, 0.36, 1] as const;
@@ -88,7 +87,6 @@ export function SoilMapCatalog() {
                   {isAvailable ? (
                     <Link
                       href={province.path}
-                      onClick={() => trackProvinceLinkClick(province.slug === "buenos-aires" ? "buenos_aires" : "santa_fe", "catalog_card")}
                       aria-label={`${card.title}. ${card.description} ${copy.availableLabel}. ${copy.cardLinkLabel}.`}
                       className="group flex h-full flex-col rounded-[inherit] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--focus-ring)] md:flex-row"
                     >
