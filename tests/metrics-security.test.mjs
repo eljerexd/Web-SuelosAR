@@ -77,9 +77,42 @@ test("Auth.js blocks all non-admin GitHub accounts and uses JWT sessions", async
   assert.doesNotMatch(auth, /user:email|\/user\/emails/);
 });
 
+test("Auth.js explicitly uses AUTH_SECRET and the route exports that same configured handler", async () => {
+  const auth = await read("../auth.ts");
+  const route = await read("../app/api/auth/[...nextauth]/route.ts");
+  const adminSession = await read("../lib/admin-session.ts");
+
+  assert.match(auth, /export const \{ auth, handlers, signIn, signOut \} = NextAuth\(/);
+  assert.match(auth, /secret:\s*process\.env\.AUTH_SECRET/);
+  assert.doesNotMatch(auth, /NEXTAUTH_SECRET|secret:\s*["'`]/);
+  assert.match(route, /import \{ handlers \} from "@\/auth"/);
+  assert.match(route, /export const \{ GET, POST \} = handlers/);
+  assert.doesNotMatch(route, /NextAuth\(|NEXTAUTH_SECRET|secret\s*:/);
+  assert.match(adminSession, /if \(!process\.env\.AUTH_SECRET[\s\S]*?return false/);
+});
+
 test("public layout has no analytics consent UI or general analytics providers", async () => {
   const layout = await read("../app/layout.tsx");
   const packageJson = await read("../package.json");
   assert.doesNotMatch(layout, /AnalyticsConsentBanner|AnalyticsSuite|GoogleAnalytics|SpeedInsights/);
   assert.doesNotMatch(packageJson, /@vercel\/analytics|@vercel\/speed-insights/);
+});
+
+test("download charts use aggregate daily buckets and the Windows snapshot cron is server-authenticated", async () => {
+  const metrics = await read("../lib/metrics.ts");
+  const cron = await read("../app/api/cron/snapshot-installer-downloads/route.ts");
+  const chart = await read("../app/admin/metricas/metrics-charts.tsx");
+  const schedule = await read("../vercel.json");
+
+  assert.match(metrics, /HINCRBY", KEYS\[3\], ARGV\[3\]/);
+  assert.match(metrics, /America\/Argentina\/Buenos_Aires/);
+  assert.match(metrics, /daily-snapshots/);
+  assert.match(cron, /timingSafeEqual/);
+  assert.match(cron, /authorization\.startsWith\("Bearer "\)/);
+  assert.ok(cron.indexOf("if (!isAuthorizedCronRequest(request))") < cron.indexOf("getGitHubReportedWindowsInstallerDownloads()"));
+  assert.match(schedule, /"0 3 \* \* \*"/);
+  assert.match(chart, /label: "7 días"/);
+  assert.match(chart, /label: "Meses"/);
+  assert.match(chart, /label: "Años"/);
+  assert.match(chart, /getWindowsDailyDeltas/);
 });

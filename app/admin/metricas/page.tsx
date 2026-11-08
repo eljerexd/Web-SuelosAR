@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { signOut } from "@/auth";
 import { getGitHubReportedWindowsInstallerDownloads } from "@/lib/downloads";
 import { hasAdminSession } from "@/lib/admin-session";
-import { getAndroidPlayClickCount } from "@/lib/metrics";
+import { getAndroidPlayClickCount, getAndroidPlayClickHistory, getWindowsInstallerDownloadSnapshots } from "@/lib/metrics";
+
+import { MetricsCharts } from "./metrics-charts";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
@@ -19,9 +21,11 @@ function formattedCount(value: number | null) {
 export default async function PrivateMetricsPage() {
   if (!await hasAdminSession()) notFound();
 
-  const [androidClicks, githubInstallerDownloads] = await Promise.all([
+  const [androidClicks, githubInstallerDownloads, androidByDay, windowsSnapshots] = await Promise.all([
     getAndroidPlayClickCount().catch(() => null),
     getGitHubReportedWindowsInstallerDownloads(),
+    getAndroidPlayClickHistory().catch(() => ({})),
+    getWindowsInstallerDownloadSnapshots().catch(() => ({})),
   ]);
 
   return (
@@ -48,6 +52,8 @@ export default async function PrivateMetricsPage() {
           <p className="mt-3 text-xs leading-5 text-[var(--on-surface-variant)]">Suma del contador de assets .exe de releases publicadas de la aplicación; incluye descargas desde cualquier origen y no confirma instalaciones ni transferencias completas.</p>
         </div>
       </dl>
+
+      <MetricsCharts androidByDay={androidByDay} windowsSnapshots={windowsSnapshots} />
     </main>
   );
 }

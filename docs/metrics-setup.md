@@ -1,6 +1,6 @@
 # SuelosAR aggregate metrics
 
-The website stores only two metrics: an aggregate count of trusted clicks on Google Play buttons and the sum of GitHub-reported `.exe` asset download counts for published application releases. The GitHub value is not a completed-transfer, installation, or website-attribution count.
+The website stores two anonymous aggregate metrics: Google Play button clicks grouped by Buenos Aires calendar day, and daily snapshots of GitHub's cumulative `.exe` asset download totals for published application releases. The GitHub value is not a completed-transfer, installation, or website-attribution count. Time-series collection starts when this version is deployed; older daily history cannot be reconstructed from the existing totals.
 
 ## Upstash Redis (Vercel Marketplace)
 
@@ -9,6 +9,12 @@ The website stores only two metrics: an aggregate count of trusted clicks on Goo
 3. Redeploy after the variables are available. Do not prefix credentials with `NEXT_PUBLIC_` and do not commit them.
 
 Redis persists the single metric total `suelosar:aggregate:android-google-play-clicks:v1`. A short-lived, global minute-window integer counter enforces a cap of 120 accepted clicks per minute. It expires automatically and has no visitor-specific key, IP address, or identifier.
+
+The chart additionally stores one aggregate hash field per Buenos Aires date at `suelosar:aggregate:android-google-play-clicks:daily:v1`. These are counts only, with no user or request identifiers. The original lifetime total remains available.
+
+## Windows download history (Vercel Cron)
+
+Add a server-only `CRON_SECRET` variable in Vercel Production. Generate a long random secret and keep it encrypted; never prefix it with `NEXT_PUBLIC_`. `vercel.json` schedules `/api/cron/snapshot-installer-downloads` daily at 03:00 UTC (midnight in Buenos Aires). Vercel supplies the bearer authorization using `CRON_SECRET`; the route checks it before reading GitHub or writing Redis. Each successful run stores only the current aggregate GitHub-reported `.exe` download total keyed by date. The dashboard derives daily changes from adjacent snapshots. The first snapshot is only a baseline, missed runs can combine changes into a later day, and GitHub does not provide historical daily counts. This is not a completed-download metric.
 
 ## GitHub OAuth / Auth.js
 
