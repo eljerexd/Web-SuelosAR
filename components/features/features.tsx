@@ -30,7 +30,7 @@ const glowOpacity = [0.052, 0.064, 0.056, 0.07, 0.06, 0.066] as const;
 
 export function Features() {
   const reducedMotion = useReducedMotion();
-  const { dictionary } = useI18n();
+  const { dictionary, locale } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
   const hasAnimatedStatsRef = useRef(false);
@@ -166,7 +166,11 @@ export function Features() {
           <div className="mt-8 flex items-center justify-center gap-8 sm:gap-14">
             <div className="flex flex-col items-center">
               <span className="text-2xl font-semibold tracking-[-0.03em] text-[var(--on-surface)] sm:text-3xl">{statisticValues[1]}</span>
-              <span className="mt-1 text-xs font-medium text-[var(--on-surface-variant)] sm:text-sm">{dictionary.features.statistics[1].label}</span>
+              <span className="mt-1 text-xs font-medium text-[var(--on-surface-variant)] sm:text-sm">
+                {provincesValue === 1
+                  ? locale === "es-AR" ? "Provincia disponible" : "Available province"
+                  : dictionary.features.statistics[1].label}
+              </span>
             </div>
             <div className="h-9 w-px bg-[var(--outline-variant)] sm:h-10" aria-hidden="true" />
             <div className="flex flex-col items-center">
