@@ -6,7 +6,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { defaultLocale, dictionaries } from "@/lib/i18n/dictionaries";
 import { siteConfig } from "@/lib/site";
-
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const defaultDictionary = dictionaries[defaultLocale];
@@ -94,6 +94,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </div>
           </ThemeProvider>
         </I18nProvider>
+        <Analytics />
       </body>
     </html>
   );
