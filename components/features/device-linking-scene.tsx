@@ -104,7 +104,12 @@ function AnimatedDeviceLinkingScene({ title, subtitle, windowsLabel, androidLabe
     const scroller = document.scrollingElement;
     const previousContentTop = completedContentTopRef.current;
     if (content && scroller && previousContentTop !== null) {
-      scroller.scrollTop += content.getBoundingClientRect().top - previousContentTop;
+      const delta = content.getBoundingClientRect().top - previousContentTop;
+      if (delta !== 0) {
+        // The page enables smooth scrolling globally; this one-time layout correction must
+        // be instant so the completed scene stays in place without a visible scroll animation.
+        window.scrollTo({ top: scroller.scrollTop + delta, behavior: "instant" });
+      }
     }
 
     document.documentElement.style.overflowAnchor = previousOverflowAnchorRef.current;
