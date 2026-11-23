@@ -38,3 +38,6 @@ Thumbs.db
 # Local packaging artifacts
 /outputs/
 /work/
+
+.vercel
+.env*
