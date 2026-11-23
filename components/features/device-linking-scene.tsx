@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowLeftRight, Check } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { DeviceMockup } from "@/components/ui/device-mockup";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
@@ -47,26 +47,12 @@ const easing = [0.22, 1, 0.36, 1] as const;
  */
 export function DeviceLinkingScene(props: DeviceLinkingSceneProps) {
   const reducedMotion = useReducedMotion();
-  const [hasCompleted, setHasCompleted] = useState(false);
-  const completedRef = useRef(false);
-
-  const completeScene = useCallback(() => {
-    if (completedRef.current) return;
-    completedRef.current = true;
-    setHasCompleted(true);
-  }, []);
 
   if (reducedMotion) {
     return <StaticDeviceLinkingScene {...props} reducedMotion />;
   }
 
-  if (hasCompleted) {
-    // Keep the same tall scene and sticky viewport as the animated version. Replacing it
-    // with a short static block changes document height mid-scroll and makes the page jump.
-    return <StaticDeviceLinkingScene {...props} reducedMotion={false} pinned />;
-  }
-
-  return <AnimatedDeviceLinkingScene {...props} onComplete={completeScene} />;
+  return <AnimatedDeviceLinkingScene {...props} />;
 }
 
 function StaticDeviceLinkingScene({
@@ -77,32 +63,15 @@ function StaticDeviceLinkingScene({
   linkedLabel,
   indicators,
   reducedMotion,
-  pinned = false,
-}: DeviceLinkingSceneProps & { reducedMotion: boolean; pinned?: boolean }) {
+}: DeviceLinkingSceneProps & { reducedMotion: boolean }) {
   const content = (
     <div className="mx-auto flex w-full max-w-4xl flex-col items-center">
       <MockupComposition laptopStyle={{}} phoneStyle={{}} phoneStyleMobile={{}} connectorStyle={{}} connectorStyleMobile={{}} connected linkedVisible linkedLabel={linkedLabel} windowsLabel={windowsLabel} androidLabel={androidLabel} reducedMotion />
       <h3 className="mt-12 text-center text-2xl font-bold tracking-[-0.03em] text-[var(--on-surface)] sm:mt-16 sm:text-3xl">{title}</h3>
       <p className="mx-auto mt-3 max-w-md text-center text-sm leading-6 text-[var(--on-surface-variant)] sm:text-base">{subtitle}</p>
-      {pinned ? (
-        <div>
-          <IndicatorRow indicators={indicators} className="mt-5" />
-        </div>
-      ) : (
-        <IndicatorRow indicators={indicators} className="mt-5" />
-      )}
+      <IndicatorRow indicators={indicators} className="mt-5" />
     </div>
   );
-
-  if (pinned) {
-    return (
-      <div className="relative mt-16 h-[330vh] sm:mt-20 sm:h-[310vh]">
-        <div className="sticky top-[8.375rem] flex h-svh flex-col items-center justify-center overflow-hidden px-5 sm:top-[5.0625rem] sm:px-8">
-          {content}
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className={`relative mx-auto mt-16 flex w-full max-w-4xl flex-col items-center px-5 sm:mt-20 sm:px-0 ${reducedMotion ? "" : "min-h-svh justify-center"}`}>
@@ -111,7 +80,7 @@ function StaticDeviceLinkingScene({
   );
 }
 
-function AnimatedDeviceLinkingScene({ title, subtitle, windowsLabel, androidLabel, linkedLabel, indicators, onComplete }: DeviceLinkingSceneProps & { onComplete: () => void }) {
+function AnimatedDeviceLinkingScene({ title, subtitle, windowsLabel, androidLabel, linkedLabel, indicators }: DeviceLinkingSceneProps) {
   const reducedMotion = useReducedMotion();
   const sceneRef = useRef<HTMLDivElement>(null);
   const [connected, setConnected] = useState(false);
@@ -154,8 +123,6 @@ function AnimatedDeviceLinkingScene({ title, subtitle, windowsLabel, androidLabe
   useMotionValueEvent(scrollYProgress, "change", (value) => {
     if (!connected && value >= 0.6) setConnected(true);
     if (!linkedVisible && value >= 0.68) setLinkedVisible(true);
-    // Latch the final display; keep the sticky track until it releases naturally.
-    if (value >= 0.92) onComplete();
   });
 
   const content = reducedMotion ? (
