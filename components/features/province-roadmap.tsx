@@ -10,7 +10,7 @@ interface ProvinceRoadmapProps {
     buenosAires: string;
     santaFe: string;
     cordoba: string;
-    rioNegro: string;
+    entreRios: string;
     available: string;
     nextObjective: string;
     buenosAiresMilestone: string;
@@ -27,7 +27,7 @@ interface ProvinceRoadmapProps {
   reducedMotion: boolean;
 }
 /**
- * Thin horizontal coverage timeline: Buenos Aires → Santa Fe → Córdoba → Río Negro.
+ * Thin horizontal coverage timeline: Buenos Aires → Santa Fe → Córdoba → Entre Ríos.
  * The connector line is the protagonist; nodes stay small and refined, not a corporate roadmap.
  * A much quieter second layer under each available province notes one product milestone shipped
  * alongside that province's coverage — deliberately far less prominent than the province itself.
@@ -62,7 +62,7 @@ export function ProvinceRoadmap({ labels, progress, santaFeActive, cordobaActive
         reducedMotion={reducedMotion}
       />
       <Connector filled={0} faint />
-      <Milestone label={labels.rioNegro} status={labels.nextObjective} state="next" reducedMotion={reducedMotion} />
+      <Milestone label={labels.entreRios} status={labels.nextObjective} state="next" reducedMotion={reducedMotion} />
     </div>
   );
 }

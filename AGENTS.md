@@ -18,7 +18,7 @@ Esta guía describe la implementación que existe en este repositorio. Antes de 
 - El contenido público presenta la app, sus plataformas, provincias y páginas explicativas de cartografía.
 - Los datos cartográficos pertenecen a sus organizaciones de origen. SuelosAR es un proyecto independiente y no está afiliado institucionalmente al INTA.
 - La app cubre Buenos Aires, Santa Fe y Córdoba. En este sitio hay páginas provinciales publicadas para Buenos Aires y Santa Fe; Córdoba está en el catálogo como provincia en preparación y no tiene ruta pública propia. No enlazar ni crear una página Córdoba vacía.
-- La hoja de ruta de la home presenta Córdoba como disponible en la app y Río Negro como próximo objetivo. Esto no promete una fecha ni significa que haya cobertura o página publicada para Río Negro.
+- La hoja de ruta de la home presenta Córdoba como disponible en la app y Entre Ríos como próximo objetivo. Esto no promete una fecha ni significa que haya cobertura o página publicada para Entre Ríos.
 - `README.md` puede quedarse atrás respecto de cambios recientes de cobertura. Para modificar datos actuales, contrastar `lib/i18n/dictionaries.ts`, `lib/provinces.ts`, `lib/stats.ts` y el código de la app cuando corresponda; no inventar cifras.
 
 ## 2. Tecnología y comandos
@@ -78,12 +78,12 @@ Otros endpoints de descubrimiento son `app/sitemap.ts`, `app/robots.ts`, `app/ma
 
 - `components/features/features.tsx` junta introducción, cifras, roadmap, seis capítulos del tour y escena de vinculación.
 - Estadísticas verificadas viven en `lib/stats.ts`: 386 Cartas de Suelo Buenos Aires, 213 series Santa Fe y 409 series Córdoba son unidades diferentes. No sumarlas como si fueran el mismo tipo de dato. El contador de cobertura de la home termina en tres provincias.
-- `components/features/province-roadmap.tsx` solo presenta: Buenos Aires (Vinculación entre dispositivos), Santa Fe (Descarga bajo demanda), Córdoba (Nuevo motor de render) y Río Negro como próximo objetivo. Traducciones/estados vienen de `dictionary.features.roadmap`.
+- `components/features/province-roadmap.tsx` solo presenta: Buenos Aires (Vinculación entre dispositivos), Santa Fe (Descarga bajo demanda), Córdoba (Nuevo motor de render) y Entre Ríos como próximo objetivo. Traducciones/estados vienen de `dictionary.features.roadmap`.
 - Animación actual del roadmap: dispara al entrar en viewport mediante `onViewportEnter` y `viewport={{ once: true, amount: 0.55 }}`. `hasAnimatedStatsRef` impide repetirla al volver a entrar. No usa progreso ligado al scroll ni intercepta rueda/touch. El primer conector BA→Santa Fe tiene `duration: 0.8s`, `delay: 0.35s` y easing `[0.22, 1, 0.36, 1]`; al llegar activa Santa Fe, espera `160ms` y empieza Santa Fe→Córdoba a `1.2s` con el mismo easing. Al llegar activa Córdoba. Los hitos aparecen escalonados; con movimiento reducido se muestran estados finales sin la secuencia. El conector a Río Negro nunca se pinta y el nodo permanece `next`/flecha gris. Si se toca el ritmo, cambiar solo el tramo solicitado.
 - `FeatureStory` (`components/features/feature-story.tsx`) es un capítulo memoizado con texto, progreso local y captura móvil. El orden está en `featureOrder`; imágenes y alts vienen de `featureImages` y `lib/i18n/dictionaries.ts`.
 - El Product Tour de escritorio es sticky: una laptop con la imagen del capítulo activo acompaña los capítulos de texto. `getActiveFeatureIndex()` en `lib/product-tour-scroll.ts` elige el capítulo cuyo centro está más cerca de la línea de lectura del viewport. `features.tsx` toma mediciones en `requestAnimationFrame` ante scroll pasivo/resize/pageshow y usa `ResizeObserver`; evitar lógica adicional de scroll o `setState` en cada evento sin necesidad. En mobile las capturas quedan dentro de cada capítulo, sin la composición sticky.
 - El último capítulo tiene wrapper alto y `finalHold`; preservar su comportamiento de retención. No mezclar el roadmap con la animación del Product Tour.
-- `components/features/device-linking-scene.tsx` es una escena distinta, scroll-driven y sticky, con transforms y estados de dispositivos enlazados. No modificarla cuando el pedido se limita al roadmap.
+- `components/features/device-linking-scene.tsx` es una escena distinta, scroll-driven y sticky, con transforms y estados de dispositivos enlazados. Al completar, conserva el mismo wrapper/pinning para evitar cambiar la altura del documento mientras se scrollea; deja que el track sticky se libere de forma natural. No intercepta wheel/touch. No modificarla cuando el pedido se limita al roadmap.
 
 ## 8. Catálogo y páginas provinciales
 
