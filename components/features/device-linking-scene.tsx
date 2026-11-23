@@ -1,8 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowLeftRight, Check } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { DeviceMockup } from "@/components/ui/device-mockup";
 import { LaptopMockup } from "@/components/ui/laptop-mockup";
@@ -83,6 +83,11 @@ function StaticDeviceLinkingScene({
 function AnimatedDeviceLinkingScene({ title, subtitle, windowsLabel, androidLabel, linkedLabel, indicators }: DeviceLinkingSceneProps) {
   const reducedMotion = useReducedMotion();
   const sceneRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const hasCompletedRef = useRef(false);
+  const completedContentTopRef = useRef<number | null>(null);
+  const previousOverflowAnchorRef = useRef("");
+  const [hasCompleted, setHasCompleted] = useState(false);
   const [connected, setConnected] = useState(false);
   const [linkedVisible, setLinkedVisible] = useState(false);
 
@@ -90,39 +95,68 @@ function AnimatedDeviceLinkingScene({ title, subtitle, windowsLabel, androidLabe
     target: sceneRef,
     offset: ["start start", "end end"],
   });
+  const animationProgress = useMotionValue(0);
+
+  useLayoutEffect(() => {
+    if (!hasCompleted) return;
+
+    const content = contentRef.current;
+    const scroller = document.scrollingElement;
+    const previousContentTop = completedContentTopRef.current;
+    if (content && scroller && previousContentTop !== null) {
+      scroller.scrollTop += content.getBoundingClientRect().top - previousContentTop;
+    }
+
+    document.documentElement.style.overflowAnchor = previousOverflowAnchorRef.current;
+    completedContentTopRef.current = null;
+  }, [hasCompleted]);
 
   // Phase 1 (0–0.20): laptop settles — position/scale only, always fully opaque.
-  const laptopX = useTransform(scrollYProgress, [0, 0.2], [-24, 0]);
-  const laptopScale = useTransform(scrollYProgress, [0, 0.2], [0.96, 1]);
+  const laptopX = useTransform(animationProgress, [0, 0.2], [-24, 0]);
+  const laptopScale = useTransform(animationProgress, [0, 0.2], [0.96, 1]);
 
   // Phase 2 (0.20–0.40): phone enters from the right — position/scale only, opacity stays 1.
   // The start offset is a percentage of the phone's own width (not a fixed px value) so it's
   // reliably clipped outside the scene's overflow-hidden frame during Phase 1, regardless of
   // viewport size, and only becomes visible as it slides in during this phase.
-  const phoneX = useTransform(scrollYProgress, [0.2, 0.4], ["220%", "0%"]);
-  const phoneScale = useTransform(scrollYProgress, [0.2, 0.4], [0.9, 1]);
+  const phoneX = useTransform(animationProgress, [0.2, 0.4], ["220%", "0%"]);
+  const phoneScale = useTransform(animationProgress, [0.2, 0.4], [0.9, 1]);
   // Mobile's composition is vertical (laptop → phone below it), so the phone enters from
   // below instead of from the side — same phase, same duration, only the axis changes.
-  const phoneY = useTransform(scrollYProgress, [0.2, 0.4], ["45%", "0%"]);
+  const phoneY = useTransform(animationProgress, [0.2, 0.4], ["45%", "0%"]);
 
   // Phase 3 (0.40–0.60): connector line fills left → right once both devices are in place.
-  const connectorFill = useTransform(scrollYProgress, [0.4, 0.6], [0, 1]);
+  const connectorFill = useTransform(animationProgress, [0.4, 0.6], [0, 1]);
 
   // Phase 4: message resolves in a zone separated from the mockups. Title and subtitle use
   // non-overlapping scroll ranges — sharing overlapping ranges on the same accelerated scroll
   // timeline caused one of the two to get stuck at its start value on native-timeline browsers.
-  const titleOpacity = useTransform(scrollYProgress, [0.68, 0.76], [0, 1]);
-  const titleY = useTransform(scrollYProgress, [0.68, 0.76], [14, 0]);
+  const titleOpacity = useTransform(animationProgress, [0.68, 0.76], [0, 1]);
+  const titleY = useTransform(animationProgress, [0.68, 0.76], [14, 0]);
 
-  const subtitleOpacity = useTransform(scrollYProgress, [0.76, 0.84], [0, 1]);
-  const subtitleY = useTransform(scrollYProgress, [0.76, 0.84], [14, 0]);
+  const subtitleOpacity = useTransform(animationProgress, [0.76, 0.84], [0, 1]);
+  const subtitleY = useTransform(animationProgress, [0.76, 0.84], [14, 0]);
 
-  const indicatorsOpacity = useTransform(scrollYProgress, [0.84, 0.92], [0, 1]);
-  const indicatorsY = useTransform(scrollYProgress, [0.84, 0.92], [8, 0]);
+  const indicatorsOpacity = useTransform(animationProgress, [0.84, 0.92], [0, 1]);
+  const indicatorsY = useTransform(animationProgress, [0.84, 0.92], [8, 0]);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
+    if (hasCompletedRef.current) return;
+
     if (!connected && value >= 0.6) setConnected(true);
     if (!linkedVisible && value >= 0.68) setLinkedVisible(true);
+
+    if (value >= 0.92) {
+      animationProgress.set(0.92);
+      completedContentTopRef.current = contentRef.current?.getBoundingClientRect().top ?? null;
+      previousOverflowAnchorRef.current = document.documentElement.style.overflowAnchor;
+      document.documentElement.style.overflowAnchor = "none";
+      hasCompletedRef.current = true;
+      setHasCompleted(true);
+      return;
+    }
+
+    animationProgress.set(value);
   });
 
   const content = reducedMotion ? (
@@ -180,9 +214,14 @@ function AnimatedDeviceLinkingScene({ title, subtitle, windowsLabel, androidLabe
   }
 
   return (
-    <div ref={sceneRef} className="relative mt-16 h-[330vh] sm:mt-20 sm:h-[310vh]">
-      <div className="sticky top-[8.375rem] flex h-svh flex-col items-center justify-center overflow-hidden px-5 sm:top-[5.0625rem] sm:px-8">
-        <div className="mx-auto flex w-full max-w-4xl flex-col items-center">{content}</div>
+    <div
+      ref={sceneRef}
+      className={`relative mt-16 sm:mt-20 ${hasCompleted ? "min-h-svh" : "h-[330vh] sm:h-[310vh]"}`}
+    >
+      <div
+        className={`${hasCompleted ? "relative min-h-svh" : "sticky top-[8.375rem] h-svh sm:top-[5.0625rem]"} flex flex-col items-center justify-center overflow-hidden px-5 sm:px-8`}
+      >
+        <div ref={contentRef} className="mx-auto flex w-full max-w-4xl flex-col items-center">{content}</div>
       </div>
     </div>
   );
