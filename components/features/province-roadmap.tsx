@@ -10,55 +10,62 @@ interface ProvinceRoadmapProps {
     buenosAires: string;
     santaFe: string;
     cordoba: string;
-    next: string;
+    rioNegro: string;
+    available: string;
+    nextObjective: string;
     buenosAiresMilestone: string;
     santaFeMilestone: string;
+    cordobaMilestone: string;
   };
-  /** 0 → 1, fills the thin Buenos Aires → Santa Fe connector. Every other segment stays neutral. */
+  /** 0 → 1 progress animated once when the roadmap enters the viewport. */
   progress: number;
-  /** True once Santa Fe's check should appear — flips a short beat after `progress` reaches 1, not exactly at it, so the check reads as its own deliberate step. */
   santaFeActive: boolean;
-  /** True once Buenos Aires' product milestone note should fade in — a beat after mount, not simultaneous with its check. */
+  cordobaActive: boolean;
   buenosAiresMilestoneVisible: boolean;
-  /** True once Santa Fe's product milestone note should fade in — a beat after `santaFeActive`. */
   santaFeMilestoneVisible: boolean;
+  cordobaMilestoneVisible: boolean;
   reducedMotion: boolean;
 }
-
 /**
- * Thin horizontal coverage timeline: Buenos Aires → Santa Fe → Córdoba → next expansion.
+ * Thin horizontal coverage timeline: Buenos Aires → Santa Fe → Córdoba → Río Negro.
  * The connector line is the protagonist; nodes stay small and refined, not a corporate roadmap.
- * A much quieter second layer under Buenos Aires/Santa Fe notes one product milestone shipped
+ * A much quieter second layer under each available province notes one product milestone shipped
  * alongside that province's coverage — deliberately far less prominent than the province itself.
  */
-export function ProvinceRoadmap({ labels, progress, santaFeActive, buenosAiresMilestoneVisible, santaFeMilestoneVisible, reducedMotion }: ProvinceRoadmapProps) {
+export function ProvinceRoadmap({ labels, progress, santaFeActive, cordobaActive, buenosAiresMilestoneVisible, santaFeMilestoneVisible, cordobaMilestoneVisible, reducedMotion }: ProvinceRoadmapProps) {
   return (
     <div className="mx-auto mt-10 flex items-start justify-center sm:mt-12">
       <Milestone
         label={labels.buenosAires}
-        status="Disponible"
+        status={labels.available}
         state="active"
         note={labels.buenosAiresMilestone}
         noteVisible={buenosAiresMilestoneVisible}
         reducedMotion={reducedMotion}
       />
-      <Connector filled={progress} />
+      <Connector filled={Math.min(progress * 2, 1)} />
       <Milestone
         label={labels.santaFe}
-        status="Disponible"
+        status={labels.available}
         state={santaFeActive ? "active" : "pending"}
         note={labels.santaFeMilestone}
         noteVisible={santaFeMilestoneVisible}
         reducedMotion={reducedMotion}
       />
-      <Connector filled={0} />
-      <Milestone label={labels.cordoba} status="Próximo objetivo" state="next" reducedMotion={reducedMotion} />
+      <Connector filled={Math.max((progress - 0.5) * 2, 0)} />
+      <Milestone
+        label={labels.cordoba}
+        status={labels.available}
+        state={cordobaActive ? "active" : "pending"}
+        note={labels.cordobaMilestone}
+        noteVisible={cordobaMilestoneVisible}
+        reducedMotion={reducedMotion}
+      />
       <Connector filled={0} faint />
-      <FutureNode label={labels.next} />
+      <Milestone label={labels.rioNegro} status={labels.nextObjective} state="next" reducedMotion={reducedMotion} />
     </div>
   );
 }
-
 function Connector({ filled, faint = false }: { filled: number; faint?: boolean }) {
   return (
     <div className={`relative mt-[15px] h-px w-4 shrink-0 overflow-hidden bg-[var(--outline-variant)] min-[375px]:w-6 sm:mt-[17px] sm:w-14 lg:w-20 ${faint ? "opacity-50" : ""}`}>
@@ -126,17 +133,6 @@ function Milestone({ label, status, state, note, noteVisible, reducedMotion }: {
           </AnimatePresence>
         </span>
       ) : null}
-    </div>
-  );
-}
-
-function FutureNode({ label }: { label: string }) {
-  return (
-    <div className="flex w-12 shrink-0 flex-col items-center gap-1.5 min-[375px]:w-14 sm:w-20">
-      <span className="grid h-[30px] place-items-center text-[var(--on-surface-variant)] opacity-45 sm:h-9">
-        <span className="text-sm font-semibold tracking-[0.12em] sm:text-base">···</span>
-      </span>
-      <span className="text-center text-[0.6rem] font-medium leading-tight text-[var(--on-surface-variant)] opacity-45 sm:text-xs">{label}</span>
     </div>
   );
 }

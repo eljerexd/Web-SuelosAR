@@ -30,56 +30,64 @@ const glowOpacity = [0.052, 0.064, 0.056, 0.07, 0.06, 0.066] as const;
 
 export function Features() {
   const reducedMotion = useReducedMotion();
-  const { dictionary, locale } = useI18n();
+  const { dictionary } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
   const hasAnimatedStatsRef = useRef(false);
-  const [soilMapsValue, setSoilMapsValue] = useState<number>(() => reducedMotion ? homeStats.soilMaps.end : homeStats.soilMaps.start);
   const [provincesValue, setProvincesValue] = useState<number>(() => reducedMotion ? homeStats.provinces.end : homeStats.provinces.start);
   const [roadmapProgress, setRoadmapProgress] = useState(() => reducedMotion ? 1 : 0);
   const [santaFeActive, setSantaFeActive] = useState<boolean>(() => Boolean(reducedMotion));
+  const [cordobaActive, setCordobaActive] = useState<boolean>(() => Boolean(reducedMotion));
   const [buenosAiresMilestoneVisible, setBuenosAiresMilestoneVisible] = useState<boolean>(() => Boolean(reducedMotion));
   const [santaFeMilestoneVisible, setSantaFeMilestoneVisible] = useState<boolean>(() => Boolean(reducedMotion));
-  const statisticValues = [String(soilMapsValue), String(provincesValue), homeStats.mainFeatures];
+  const [cordobaMilestoneVisible, setCordobaMilestoneVisible] = useState<boolean>(() => Boolean(reducedMotion));
 
   const startStatsSequence = useCallback(() => {
     if (hasAnimatedStatsRef.current) return;
     hasAnimatedStatsRef.current = true;
 
     if (reducedMotion) {
-      setSoilMapsValue(homeStats.soilMaps.end);
       setProvincesValue(homeStats.provinces.end);
       setRoadmapProgress(1);
       setSantaFeActive(true);
+      setCordobaActive(true);
       setBuenosAiresMilestoneVisible(true);
       setSantaFeMilestoneVisible(true);
+      setCordobaMilestoneVisible(true);
       return;
     }
 
-    // Cartas y series counts up first; provincias + the roadmap connector start slightly after,
-    // driven by the same slow tween (1.2s) so the green line is easy to follow as it moves from
-    // Buenos Aires to Santa Fe. Santa Fe's check only appears a short beat after the line
-    // finishes — not mid-tween — so it reads as its own deliberate step. Each province's quiet
-    // product-milestone note fades in a beat after that province's own check, never with it.
-    animate(homeStats.soilMaps.start, homeStats.soilMaps.end, {
-      duration: 1.05,
-      ease: [0.22, 1, 0.36, 1],
-      onUpdate: (value) => setSoilMapsValue(Math.round(value)),
-    });
-
+    // Keep the stable roadmap's viewport trigger and timing. Animate each connector with
+    // the same easing, pausing briefly at Santa Fe before continuing to Córdoba.
     window.setTimeout(() => setBuenosAiresMilestoneVisible(true), 550);
 
-    animate(0, 1, {
-      duration: 1.2,
+    animate(homeStats.provinces.start, homeStats.provinces.end, {
+      duration: 1.05,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (value) => setProvincesValue(Math.round(value)),
+    });
+
+    const animateCordobaSegment = () => {
+      animate(0.5, 1, {
+        duration: 1.2,
+        ease: [0.22, 1, 0.36, 1],
+        onUpdate: setRoadmapProgress,
+        onComplete: () => {
+          setCordobaActive(true);
+          window.setTimeout(() => setCordobaMilestoneVisible(true), 450);
+        },
+      });
+    };
+
+    animate(0, 0.5, {
+      duration: 0.8,
       delay: 0.35,
       ease: [0.22, 1, 0.36, 1],
-      onUpdate: (t) => {
-        setProvincesValue(Math.round(homeStats.provinces.start + t * (homeStats.provinces.end - homeStats.provinces.start)));
-        setRoadmapProgress(t);
-      },
+      onUpdate: setRoadmapProgress,
       onComplete: () => {
-        window.setTimeout(() => setSantaFeActive(true), 160);
-        window.setTimeout(() => setSantaFeMilestoneVisible(true), 160 + 450);
+        setSantaFeActive(true);
+        window.setTimeout(() => setSantaFeMilestoneVisible(true), 450);
+        window.setTimeout(animateCordobaSegment, 160);
       },
     });
   }, [reducedMotion]);
@@ -156,33 +164,22 @@ export function Features() {
 
           <div className="mt-3 flex flex-col items-center">
             <span className="text-6xl font-bold leading-none tracking-[-0.04em] text-[var(--on-surface)] sm:text-7xl lg:text-8xl">
-              {statisticValues[0]}
+              {provincesValue}
             </span>
             <span className="mt-3 text-sm font-semibold text-[var(--on-surface-variant)] sm:text-base">
-              {dictionary.features.statistics[0].label}
+              {dictionary.features.statistics.provinces.label}
             </span>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-8 sm:gap-14">
-            <div className="flex flex-col items-center">
-              <span className="text-2xl font-semibold tracking-[-0.03em] text-[var(--on-surface)] sm:text-3xl">{statisticValues[1]}</span>
-              <span className="mt-1 text-xs font-medium text-[var(--on-surface-variant)] sm:text-sm">
-                {provincesValue === 1
-                  ? locale === "es-AR" ? "Provincia disponible" : "Available province"
-                  : dictionary.features.statistics[1].label}
-              </span>
-            </div>
+          <div className="mt-8 grid grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)_1px_minmax(0,1fr)] items-center justify-center gap-2 sm:gap-6">
+            <Statistic value={homeStats.soilMaps.buenosAires} label={dictionary.features.statistics.buenosAires.label} />
             <div className="h-9 w-px bg-[var(--outline-variant)] sm:h-10" aria-hidden="true" />
-            <div className="flex flex-col items-center">
-              <span className="text-2xl font-semibold tracking-[-0.03em] text-[var(--on-surface)] sm:text-3xl">{statisticValues[2]}</span>
-              <span className="mt-1 text-xs font-medium text-[var(--on-surface-variant)] sm:text-sm">{dictionary.features.statistics[2].label}</span>
-            </div>
+            <Statistic value={homeStats.soilMaps.santaFe} label={dictionary.features.statistics.santaFe.label} />
+            <div className="h-9 w-px bg-[var(--outline-variant)] sm:h-10" aria-hidden="true" />
+            <Statistic value={homeStats.soilMaps.cordoba} label={dictionary.features.statistics.cordoba.label} />
           </div>
 
-          {/* The count-up + connector-line sequence triggers specifically off the roadmap itself
-              coming into view — not the 599 stat, not the section as a whole — so the numbers can
-              sit static on screen while the user scrolls, and the whole animation only plays once
-              the timeline is actually what the user is looking at. */}
+          {/* Start the count-up and roadmap sequence only when the roadmap itself enters view. */}
           <motion.div
             initial={reducedMotion ? false : { opacity: 1, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -194,8 +191,10 @@ export function Features() {
               labels={dictionary.features.roadmap}
               progress={roadmapProgress}
               santaFeActive={santaFeActive}
+              cordobaActive={cordobaActive}
               buenosAiresMilestoneVisible={buenosAiresMilestoneVisible}
               santaFeMilestoneVisible={santaFeMilestoneVisible}
+              cordobaMilestoneVisible={cordobaMilestoneVisible}
               reducedMotion={Boolean(reducedMotion)}
             />
           </motion.div>
@@ -275,5 +274,14 @@ export function Features() {
         />
       </div>
     </section>
+  );
+}
+
+function Statistic({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="flex min-w-0 flex-col items-center">
+      <span className="text-xl font-semibold tracking-[-0.03em] text-[var(--on-surface)] sm:text-3xl">{value.toLocaleString("es-AR")}</span>
+      <span className="mt-1 max-w-28 text-center text-[0.65rem] font-medium leading-tight text-[var(--on-surface-variant)] sm:text-sm">{label}</span>
+    </div>
   );
 }
